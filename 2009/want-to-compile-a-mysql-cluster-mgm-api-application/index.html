@@ -150,7 +150,7 @@ int main()
   struct ndb_mgm_cluster_state *state = ndb_mgm_get_status(handle);
   for(int i=0; i &lt; state-&gt;no_of_nodes; i++)
   {
-    struct ndb_mgm_node_state *node_state= &amp;amp;state-&gt;node_states[i];
+    struct ndb_mgm_node_state *node_state= &amp;state-&gt;node_states[i];
     printf(&quot;node with ID=%d &quot;, node_state-&gt;node_id);
 
     if(node_state-&gt;version != 0)
@@ -159,7 +159,7 @@ int main()
       printf(&quot;not connected\n&quot;);
   }
   free((void*)state);
-  ndb_mgm_destroy_handle(&amp;amp;handle);
+  ndb_mgm_destroy_handle(&amp;handle);
 }
 </code></pre>
 

@@ -181,7 +181,7 @@ waituntildown() {
 exec_mysqld_safe() {
     (
         cd $BASEDIR
-        ./bin/mysqld_safe --defaults-file=$CNF 2&gt;/dev/null 1&gt;&amp;amp;2 &lt;/dev/null &amp;amp;
+        ./bin/mysqld_safe --defaults-file=$CNF 2&gt;/dev/null 1&gt;&amp;2 &lt;/dev/null &amp;
     )
 }
 

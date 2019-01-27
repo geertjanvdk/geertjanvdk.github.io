@@ -151,7 +151,7 @@ int main()
 
   logevent = ndb_mgm_create_logevent_handle(handle, filter);
   while(true) {
-    res = ndb_logevent_get_next(logevent,&amp;amp;event,timeout);
+    res = ndb_logevent_get_next(logevent,&amp;event,timeout);
     category = event.category + CFG_MIN_LOGLEVEL;
     if (category == NDB_MGM_EVENT_CATEGORY_CHECKPOINT) {
       printf(&quot;We got a checkpoint event!\n&quot;);
@@ -161,7 +161,7 @@ int main()
     usleep(500); // temporize!
   }
 
-  ndb_mgm_destroy_handle(&amp;amp;handle);
+  ndb_mgm_destroy_handle(&amp;handle);
 }
 </code></pre>
 

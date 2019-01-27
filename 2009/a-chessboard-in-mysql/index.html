@@ -258,7 +258,7 @@ def set_start_position(db):
         <time>Thu Dec 24 2009, 13:39</time>
       </div>
     <div>
-      The MySQL client still behaves badly with characters different than 0-9A-Za-z..<br /><br />mysql&gt; SELECT LENGTH(&#39;Cafe&#39;);<br />+----------------+<br />| LENGTH(&#39;Cafe&#39;) |<br />+----------------+<br />|              4 |<br />+----------------+<br />1 row in set (0.00 sec)<br /><br />mysql&gt; SELECT LENGTH(&#39;Caf&eacute;&#39;);<br />+-----------------+<br />| LENGTH(&#39;Caf&eacute;&#39;) |<br />+-----------------+<br />|               5 |<br />+-----------------+<br />1 row in set (0.00 sec)<br /><br /><a href="http://bugs.mysql.com/bug.php?id=32271">http://bugs.mysql.com/bug.php?id=32271</a>
+      The MySQL client still behaves badly with characters different than 0-9A-Za-z..<br /><br />mysql&gt; SELECT LENGTH(&#39;Cafe&#39;);<br />+----------------+<br />| LENGTH(&#39;Cafe&#39;) |<br />+----------------+<br />|              4 |<br />+----------------+<br />1 row in set (0.00 sec)<br /><br />mysql&gt; SELECT LENGTH(&#39;Café&#39;);<br />+-----------------+<br />| LENGTH(&#39;Café&#39;) |<br />+-----------------+<br />|               5 |<br />+-----------------+<br />1 row in set (0.00 sec)<br /><br /><a href="http://bugs.mysql.com/bug.php?id=32271">http://bugs.mysql.com/bug.php?id=32271</a>
     </div>
     </dd>
   
