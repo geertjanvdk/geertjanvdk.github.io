@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/howto/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/howto/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/howto/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../../../css/font-awesome.min.css" />
+  <title>Howto</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/howto/page/3/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 4 of 8</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/howto/page/5/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/howto/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/howto/page/8/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/using-globals-in-pylons-everywhere/">Using Globals in Pylons.. everywhere</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/pylons">pylons</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">In Pylons v1.0 you can define global variables by adding them to the Globals-class. If you want a variable called spam and you want it to be globally available, your `lib.app_globals.
+Globals`-class would look like this:
+class Globals(object): def __init__(self, config): self.cache = CacheManager(**parse_cache_config_options(config)) self.spam = False  To use it in a model-module for example, you have to import app_globals from the pylons module, like this:
+from pylons import app_globals as g print g.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/using-globals-in-pylons-everywhere/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/mysql-connectorpython-and-database-pooling/">MySQL Connector/Python and database pooling</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">MySQL Connector/Python is (or should be) compliant with the Python DB-API 2.0 specification. This means that you can use DBUtils&rsquo; PooledDB module to implement database connection pooling.
+Here below you&rsquo;ll find an example which will output the connection ID of each connection requested through the pooling mechanism.
+from DBUtils.PooledDB import PooledDB import mysql.connector def main(): pool_size = 3 pool = PooledDB(mysql.connector, pool_size, database='test', user='root', host='127.0.0.1') cnx = [None,] * pool_size for i in xrange(0,pool_size): cnx[i] = pool.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/mysql-connectorpython-and-database-pooling/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/running-mysql-cluster-without-arbitrator-dont-but-if-you-have-to/">Running MySQL Cluster without Arbitrator: don&#39;t, but if you have to..</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Jun 16, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">This post explains how to disable Arbitration when using MySQL Cluster. It gives a case where this could be useful.
+First, a piece of advice: you do not want to run MySQL Cluster with arbitration disabled. But if you must, e.g. because of an oversight in your implementation, you can. Arbitration is very important in MySQL Cluster. It makes sure you don&rsquo;t end up with a Split Brain situation: 2 halves working independently, continuing changing data, making it impossible for them to work together later on.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/running-mysql-cluster-without-arbitrator-dont-but-if-you-have-to/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/make-your-hostname-stick-in-macosx/">Make your hostname stick in MacOSX</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri May 14, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Using MacOSX, when your ISP or wireless access point is changing your hostname, make it sticky editing /etc/hostconfig.
+Add or change the following line in /etc/hostconfig to reflect your hostname:
+HOSTNAME=&quot;your hostname&quot;  You could use [Terminal.app](http://en.wikipedia.org/wiki/Apple_Terminal) to do this, but using Finder works too.
+ Open a Finder window. Using the Menu: Go &gt; Go to Folder.. In the dialog that&rsquo;s opening, type: /etc/ /etc/ should now be available in your Finder window.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/make-your-hostname-stick-in-macosx/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Insert data into a VARCHAR field using NDB API: a solution</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Apr 2, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">You are using MySQL Cluster and crazy enough to digest NDB API? Sick of SQL? Here&rsquo;s a treat: a function to make C/C++ strings ready for inserting into a VARCHAR field. The special thing about them is that the length is prefixed in the first 2 bytes.
+void make_ndb_varchar(char *buffer, char *str) { int len = strlen(str); int hlen = (len &gt; 255) ? 2 : 1; buffer[0] = len &amp; 0xff; if( len &gt; 255 ) buffer[1] = (len / 256); strcpy(buffer+hlen, str); }  Yes, you can use memcpy.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/howto/page/3/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 4 of 8</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/howto/page/5/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/howto/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/howto/page/8/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../../../js/main.js"></script>
+</body>
+</html>
+

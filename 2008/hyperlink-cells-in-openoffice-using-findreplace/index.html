@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2008/hyperlink-cells-in-openoffice-using-findreplace/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Hyperlink cells in OpenOffice using Find/Replace</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/apple-itunes-gift-cards-unusable-in-eu/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/turning-31-today/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Hyperlink cells in OpenOffice using Find/Replace
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Jun 18, 2008</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/openoffice">openoffice</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>I&rsquo;m using spreadsheets from time to time to keep minutes of phone calls. Definitely not the best way to do it, but.. well..</p>
+
+<p>In these spreadsheets I have a column with numbers and I want them to link to a website so it opens up the case the notes are related too. I ended up using &lsquo;Find &amp; Replace&rsquo; like this in OpenOffice 3.0 (should work since 2.4):</p>
+
+<ul>
+<li>Find: <code>([0-9]{4,5})</code></li>
+<li>Replace: <code>=HYPERLINK(&quot;https://yourwebsite.loc/$1&quot;; &quot;$1&quot;)</code></li>
+</ul>
+
+<p>Make sure you switch on the &lsquo;Regular expressions&rsquo; in &lsquo;More Options&rsquo;.</p>
+
+<p>Silly, but it kept me busy for 14 minutes..</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/apple-itunes-gift-cards-unusable-in-eu/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/turning-31-today/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mysql-connectorpython-0-1-2-devel-available/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python 0.1.2-devel available!</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/using-character-sets-with-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python 0.1.2-devel available!
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 23, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><a href="http://dev.mysql.com">MySQL</a> <a href="https://launchpad.net/myconnpy">Connector/Python</a> 0.1.2-devel is a quick follow-up release for 0.1.1 fixing a few problems around character sets and unicode.</p>
+
+<p>You can <a href="https://launchpad.net/myconnpy/+download">download Connector/Python from LaunchPad</a>.</p>
+
+<p>Release notes for MySQL Connector/Python 0.1.2-devel:</p>
+
+<pre><code>o Fixing unicode usage for both Python 2.4+ and 3.1
+    * Setting 'use_unicode' at connection time is now working.
+    * conversion.py: removing regular expression for quoting backslashes.
+    * Adding test case for bug lp:499410
+o Py3k specific:
+    * Strings from MySQL are decoded to the given character
+      when use_unicode is false
+    * The statement is encoded just before sending it to the
+      MySQL server. Internally, all is done in unicode.
+    * In conversion.py: removing _unicode_to_mysql, adding
+      _bytes_to_mysql
+    * MySQLCursor.__unicode__ is obsolete and replaced with __str__ 
+    * Removing tests for which the methods were deleted.
+o Fix setting character set at connection
+    * mysql.connector.Connect(charset='latin1') now works as expected
+    * Default character set is (still) UTF-8.
+    * SET NAMES is only used when changing character set
+      after connecting. Use MySQL.set_charset(charsetname) to change.
+    * Test case added for bug report; fixing test case in
+      test_protocol.py to reflect the new default character set 'utf-8'.
+</code></pre>
+
+<p>Please <a href="https://bugs.launchpad.net/myconnpy">report problems on LaunchPad</a>. Thanks!</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/using-character-sets-with-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

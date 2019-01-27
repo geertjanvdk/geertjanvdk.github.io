@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/fun/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/fun/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/fun/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Fun</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 9</div>
+
+  <div class="page-next">
+  
+  <a href="../../tags/fun/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../tags/fun/page/9/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2010/find-out-if-every-element-of-a-list-is-part-of-another-with-python/">Find out if every element of a list is part of another, with Python</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">I wanted to check if every element of one list or tuple is part of another one using Python. A set has the issubset()-method, but I couldn&rsquo;t find anything build-in for a tuple. It was, however, rather quickly done:
+&gt;&gt;&gt; r = (1,2) &gt;&gt;&gt; l = (3,4,1,5,2) &gt;&gt;&gt; False not in [ e in l for e in r ] True &gt;&gt;&gt; r = (1,9) &gt;&gt;&gt; False not in [ e in l for e in r ] False  Why I&rsquo;m posting this?</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2010/find-out-if-every-element-of-a-list-is-part-of-another-with-python/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2009/chessboard-in-mysql/">A chessboard in MySQL: make your moves</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 30, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Playing chess within MySQL? Over the network? In the .. cloud? Yes! This is a follow-up post of my &lsquo;A chessboard in MySQL&rsquo; where we create and populate a chessboard. But pieces need to move, and a few wondered how. Easy!
+As an example, white openes with 1.e4:
+BEGIN; UPDATE chessboard SET e='♙' WHERE x = 4; UPDATE chessboard SET e='' WHERE x = 2; COMMIT;  Pretty obvious. Now lets put it in a stored procedure (source included in post) so the next move is easier on the fingers and more fun to play.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/chessboard-in-mysql/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2009/a-chessboard-in-mysql/">A chessboard in MySQL</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 23, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Something to keep you warm during cold winter nights, or cool during hot summer days: a chessboard in MySQL!
+Note: You should see chess pieces here below. If not, you&rsquo;re not watching it using UTF-8, or get yourself a good browser!
+CREATE TABLE `chessboard` ( `x` tinyint unsigned NOT NULL, `a` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `b` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `c` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `d` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `e` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `f` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `g` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `h` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟') ) DEFAULT CHARSET=utf8;  Populating it with Python using MySQL Connector/Python (only piece of script shown):</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/a-chessboard-in-mysql/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2009/clusterious-defined/">Clusterious defined</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Dec 10, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"> clus&middot;te&middot;ri&middot;ous |ˈkləstərēəs;| adjective highly pleasant to MySQL Support Engineers: *A clusterious issue a day, keeps the spouse away. &middot; clusterful : a hard day. DERIVATIVES clusteriously adverb clusteriousness noun
+ORIGIN MySQL Support Team: via Sun Microsystems. Clusterious noun a rare variety of MySQL Support Engineers originally cultivated in Sweden.
+ </p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2009/resize-and-set-default-column-size-in-mac-os-x-finder/">Resize and set default column size in Mac OS X Finder</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Oct 28, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">This bugged me for a long time, and just today I googled for a solution. And it&rsquo;s darn simple! To set a new default column size, size them while holding the Option (Alt) key. Open a new Finder window, et voila: default size changed!
+There are lots of these little tricks in Mac OS (and I&rsquo;m sure in other desktop GUIs). Fun to find one each day!</p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 9</div>
+
+  <div class="page-next">
+  
+  <a href="../../tags/fun/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../tags/fun/page/9/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

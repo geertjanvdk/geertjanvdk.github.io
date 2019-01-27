@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/adding-mysql-user-and-group-on-red-hatcentos/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Adding MySQL user and group on Red Hat/CentOS</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/a-depressing-chore/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-synonym-of-the-day-long-is-mediumtext/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Adding MySQL user and group on Red Hat/CentOS
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Oct 22, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/red-hat">Red Hat</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/centos">CentOS</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/sysadmin">sysadmin</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>For the DIY folks out there!</p>
+
+<p>You&rsquo;re installing MySQL using the <a href="http://dev.mysql.com/doc/refman/5.1/en/installing-binary.html">Generic Linux Binary</a> tar ball? If you do, you&rsquo;ll need to create a system user and group using <code>useradd</code> and <code>groupadd</code>. However, you would like to use the <em>standard</em> system IDs. No problem, Red Hat defines their standard system users and groups in <a href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5.4/html/Deployment_Guide/s1-users-groups-standard-users.html">their manual</a> respectively as 27 and 27.</p>
+
+<p>Here are the commands to create the system user <code>mysql</code> and its group <code>mysql</code>:</p>
+
+<pre><code class="language-shell">$ sudo groupadd -r -g 27 mysql
+$ sudo useradd -u 27 -g 27 -r -d /var/lib/mysql -s /bin/bash mysql
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/a-depressing-chore/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-synonym-of-the-day-long-is-mediumtext/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

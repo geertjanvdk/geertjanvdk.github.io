@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mysql-workbench-enabling-python-in-the-grt-shell/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Workbench: Enabling Python in the GRT shell</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/running-python-scripts-within-mysql-workbench/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/which-python-versions-should-mysql-connectorpython-support/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Workbench: Enabling Python in the GRT shell
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Oct 8, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/workbench">workbench</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Yesterday, 7 Oct 2009, <a href="http://www.mysql.com/products/workbench/">MySQL Workbench</a> <a href="http://dev.mysql.com/downloads/workbench/5.1.html">5.2.4-alpha</a> <a href="http://wb.mysql.com/?p=370">was released</a>. What interests me in particular is that Workbench 5.2 brings support for writing plugins using <a href="http://www.python.org">Python</a>. Before it was only possible using <a href="http://www.lua.org/">LUA</a>.</p>
+
+<p>Workbench comes with GRT (Generic RunTime) shell which allows you to access objects at runtime. It&rsquo;s pretty neat, but how you enable it to use Python? Here is how:</p>
+
+<ol>
+<li>Open the <em>Workbench Preferences</em> dialog</li>
+<li>In the <em>General</em> section, set <em>Interactive GRT Shell Language</em> to Python.</li>
+<li>Restart Workbench</li>
+<li>Go to <em>View &gt; Advanced</em> and choose <em>CRT Shell</em>.</li>
+</ol>
+
+<p>It&rsquo;s a bit of a chore writing in that shell as you can&rsquo;t copy/paste (at least <a href="http://bugs.mysql.com/bug.php?id=47437">not in MacOS</a>, workaround is to drag!). Here are a few commands you can do there (or check on the Workbench team <a href="http://wb.mysql.com/?p=197">blog</a>). Make sure you have at least one Model open, and one table defined.</p>
+
+<pre><code>&gt;&gt;&gt; import grt
+&gt;&gt;&gt; model = grt.root.wb.doc.physicalModels[0]
+&gt;&gt;&gt; for tab in model.catalog.schemata[0].tables:
+...   print &quot;Table: `%s`&quot; % (tab.name)
+... Table: `t1`
+</code></pre>
+
+<p>Using the GRT shell it makes it possible to test first some lines of code. I do personally like it, although the shell feels still a bit buggy, but usable.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/running-python-scripts-within-mysql-workbench/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/which-python-versions-should-mysql-connectorpython-support/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

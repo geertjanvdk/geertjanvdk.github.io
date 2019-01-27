@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/signals-to-freeze-a-data-node-simulating-trouble/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Signals to freeze a Data Node: simulating trouble</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/waiting/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mobileme-is-still-useless/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Signals to freeze a Data Node: simulating trouble
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 3, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>Last week I was struggling to find an <strong>easy way to simulate a troubled *Data Node</strong>* (<code>ndbd</code> process) using <a href="http://dev.mysql.com/downloads/cluster/">MySQL Cluster</a>. It&rsquo;s as simple as <a href="http://en.wikipedia.org/wiki/Pancake">pancackes</a>: using the <a href="http://en.wikipedia.org/wiki/Kill_(command)"><code>kill</code></a> command!</p>
+
+<p>To freeze a process you just need to kill the process using the <code>SIGSTOP</code> signal. To let the processes continue, use <code>SIGCONT</code>. Here&rsquo;s <strong>an example shell script</strong> showing how you would use these two signals on a data node:</p>
+
+<pre><code class="language-shell"># 2010-05-03 08:11:46 [ndbd] INFO     -- Angel pid: 542 ndb pid: 543
+NDBDPID=`grep 'Angel pid' ndb_3_out.log | tail -n1 | awk '{ print $11 }'`
+kill -STOP $NDBDPID
+sleep 10
+kill -CONT $NDBDPID
+</code></pre>
+
+<p>I&rsquo;m using the out-log because the file <code>ndb_3.pid</code> contains only the PID of the <em>Angel process</em>. The sleep command is something variable which you can set as low or as high as you want.</p>
+
+<p>In the above example the script sleeps long enough for data node to fail with an <em>Arbitration Error</em>. If you would set options <code>HeartbeatIntervalDbDb</code> and <code>TimeBetweenWatchDogCheck</code> to a lower value than the default, you would only be able to sleep for a few seconds. The result:</p>
+
+<pre><code> [MgmtSrvr] WARNING  -- Node 2: Node 3 missed heartbeat 2
+ [MgmtSrvr] WARNING  -- Node 2: Node 3 missed heartbeat 3
+ [MgmtSrvr] ALERT    -- Node 1: Node 3 Disconnected
+ [MgmtSrvr] ALERT    -- Node 1: Node 3 Disconnected
+ [MgmtSrvr] WARNING  -- Node 2: Node 3 missed heartbeat 4
+ [MgmtSrvr] ALERT    -- Node 2: Node 3 declared dead due to missed heartbeat
+ [MgmtSrvr] INFO     -- Node 2: Communication to Node 3 closed
+ [MgmtSrvr] ALERT    -- Node 2: Network partitioning - arbitration required
+ [MgmtSrvr] INFO     -- Node 2: President restarts arbitration thread [state=7]
+ [MgmtSrvr] ALERT    -- Node 2: Arbitration won - positive reply from node 1
+ [MgmtSrvr] ALERT    -- Node 2: Node 3 Disconnected
+ [MgmtSrvr] INFO     -- Node 2: Started arbitrator node 1 [ticket=019b00025cc8aad8]
+ [MgmtSrvr] ALERT    -- Node 3: Forced node shutdown completed.
+  Caused by error 2305:  'Node lost connection to other nodes and can not
+  form a unpartitioned cluster, please investigate if there are error(s)
+  on other node(s)(Arbitration error). Temporary error, restart node'.
+
+</code></pre>
+
+<h2 id="how-is-this-useful">How is this useful?</h2>
+
+<p>Well, for simulating a data node which is having problems while having load for example. Maybe you would like to see what happens if you tune the <em>WatchDog</em> or <em>Hearbeat</em> parameters. Or maybe you want to give a demonstration to your management without going through hassel of overloading a disk or CPU or pulling network cables (e.g. for prove of concept).</p>
+
+<p>In any case, I think it&rsquo;s a cool use of the <code>kill</code>-command. One I didn&rsquo;t know of.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Evert
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon May 3 2010, 08:27</time>
+      </div>
+    <div>
+      Smart trick, I&#39;ll be using this too =)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/waiting/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mobileme-is-still-useless/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

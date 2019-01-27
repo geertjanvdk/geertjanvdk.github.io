@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/mysql/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/mysql/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/mysql/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../../../css/font-awesome.min.css" />
+  <title>Mysql</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/mysql/page/25/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 26 of 37</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/mysql/page/27/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/mysql/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/mysql/page/37/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/error-1133-cant-find-any-matching-row-in-the-user-table/">ERROR 1133: Can&#39;t find any matching row in the user table</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Mar 27, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">I am a bit dwelling in the wonderful world of Microsoft Windows. And if you know me, you&rsquo;d say: &ldquo;WTF?!?&rdquo;. Anyway, checking out some trick (which I&rsquo;ll blog later) I tried a simple GRANT to see if the grant-tables were OK.
+mysql&gt; GRANT SELECT ON foo.* TO 'geert'@'localhost'; ERROR 1133 (42000): Can't find any matching row in the user table  Now that&rsquo;s cryptic, isn&rsquo;t it? Reason: SQL Modes!
+sql-mode=&quot;STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&quot;  The problem, or rather, the cool thing is the NO_AUTO_CREATE_USER.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/error-1133-cant-find-any-matching-row-in-the-user-table/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/making-cluster-backups-unique/">Making cluster backups &#39;unique&#39;</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Mar 25, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">MySQL Cluster supports online backups using the ndb_mgm client tool with the START BACKUP statement. If you omit the ID, it will take automatically the next value.
+Problem is that when you do a system restart, this ID is reset to 1. If you didn&rsquo;t move your backups from your data nodes to another machine (which is of course something you should do), you might get errors.
+A rather easy trick is to provide a timestamp as ID, for example using Unix time.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/making-cluster-backups-unique/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/mysql-5-1-mysqlhotcopy-and-log-tables-check-your-backup-scripts/">MySQL 5.1 mysqlhotcopy and log tables: check your backup scripts!</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Mar 12, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Using MySQL 5.1 you can log to tables when --log-output=TABLE is set. Both tables, mysql.general_log and mysql.slow_log, are created using the CSV engine. Problem here is that when you use mysqlhotcopy to backup the mysql database, you will get an error message saying the tables can&rsquo;t be locked.
+shell&gt; mysqlhotcopy mysqlDBD::mysql::db do failed: You can't use locks with log tables. at /usr/bin/mysqlhotcopy line 452.  Solution or workaround, use a regular expression to ignore all tables which end with the string &lsquo;_log&rsquo;:</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/mysql-5-1-mysqlhotcopy-and-log-tables-check-your-backup-scripts/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/selective-restoring-using-ndb_restore/">Selective restoring using ndb_restore</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Feb 16, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">We&rsquo;ve added some new options in MySQL Cluster 6.3.22 which makes it possible to selectively restore tables. The new options for ndb_restore are:
+ --include-databases=name Comma separated list of databases to restore. Example: db1,db3 --exclude-databases=name Comma separated list of databases to not restore. Example: db1,db3 --include-tables=name Comma separated list of tables to restore. Table name should include database name. Example: db1.t1,db3.t1 --exclude-tables=name Comma separated list of tables to not restore. Table name should include database name.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/selective-restoring-using-ndb_restore/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/opensolaris-bazaar-and-ssh/">OpenSolaris, Bazaar and SSH</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Feb 13, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/bazaar">bazaar</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/opensolaris">opensolaris</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Just a small tip for using Bazaar on OpenSolaris: set the BZR_SSH environment variable to openssh if you don&rsquo;t have the Python module Paramiko installed.
+For example, in your ~/.bashrc:
+export BZR_SSH=openssh  Could be useful if you&rsquo;re pulling MySQL stuff from Launchpad and use (Open)Solaris. Could also be useful on other Unix-like operating systems when the default is missing (Bazaar uses Paramiko as default).</p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/mysql/page/25/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 26 of 37</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/mysql/page/27/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/mysql/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/mysql/page/37/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../../../js/main.js"></script>
+</body>
+</html>
+

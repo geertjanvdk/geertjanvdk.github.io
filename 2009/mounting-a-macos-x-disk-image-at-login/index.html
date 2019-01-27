@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mounting-a-macos-x-disk-image-at-login/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Mounting a MacOS X Disk Image at login</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/a-simpler-startup-script-for-mysql-on-macos-x/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/want-to-compile-a-mysql-cluster-mgm-api-application/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Mounting a MacOS X Disk Image at login
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Nov 19, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Work says that we need to store sensitive data like email and customer files on some encrypted media. This is a good thing. My laptop has my home directory secured, but I don&rsquo;t want to encrypt everything on my desktop. The solution to this is to <strong>create an encrypted <a href="http://en.wikipedia.org/wiki/Apple_Disk_Image">Disk Image</a></strong> (using Disk Utility) and <a href="http://blog.some-abstract-type.com/2007/09/making-your-mailapp-cached-email-more.html">make Mail.app</a> store my email there. This all works great!</p>
+
+<p>The problem surfaced this week when I decided it would be good to shutdown my desktop to save energy (which I usually did, but I got sloppy).  **What happened?</p>
+
+<p>When <a href="http://en.wikipedia.org/wiki/Mac_OS_X">Mac OS X</a> shuts down, and there is still some application doing something with your opened Disk Image, it will not remove the mount-point, e.g. in my case <code>/Volumes/FileVaultBlack</code>. Later, if you open it again, Mac OS will create the directory <code>/Volumes/FileVaultBlack 1</code> and use that as mount-point. The issue here is that I configured the <code>AccountPath</code> in <em>Mail.app</em> to a location in <code>/Volumes/FileVaultBlock</code>.. In mortals speech: &ldquo;Email is broken&rdquo;.</p>
+
+<p><strong>The solution</strong> is to mount the Disk Image when logging in using a predefined mounting point. This involves making a directory and creating an <em><a href="http://developer.apple.com/applescript/">AppleScript</a> application</em>. So lets get busy!</p>
+
+<p>First, <em>eject</em> the Disk Image** using the <em>Finder</em> application. It will complain when applications still need it, so you have to make sure that nothing is accessing it.</p>
+
+<p><strong>Create the mountpoint</strong>. The idea is to create a directory in /Volumes/ (it doesn&rsquo;t really matter where you do it, but I like to keep them in one place). I suggest opening Terminal for this and do the following:</p>
+
+<pre><code class="language-shell">$ mkdir /Volumes/FileVaultBlack
+</code></pre>
+
+<p>You want to name it differently. I&rsquo;m using the name of the Disk Image, just like MacOS would do when you double click the <code>.dmg</code>-file.</p>
+
+<p><strong>Open AppleScript Editor</strong>* and save the following script into a file called, for example, <code>FileVaultBlack_mountatlogin</code>.</p>
+
+<pre><code>do shell script &quot;hdiutil attach /Users/geert/FileVaultBlack.dmg -mountpoint /Volumes/FileVaultBlack&quot;
+</code></pre>
+
+<p>The above script will execute the <code>hdiutil</code> command-line utility telling it to mount the given Disk Image (<code>.dmg</code>-file) on the give mount-point (the one we created earlier).</p>
+
+<p><strong>Test this script</strong> by pushing the <em>Run</em>-button in the AppleScript Editor and see whether your Disk Image is visible in <em>Finder</em>. If not, check the locations of both the Disk Image and the mount-point you gave in the script.</p>
+
+<p>When you saved it, <strong>save it again as an application</strong>. Still within the AppleScript Editor do the following:</p>
+
+<ol>
+<li>Choose <em>Save As</em> from the <em>File</em> menu</li>
+<li>Save As: save it using slighly different name, for example <code>MountFileVaultBlack</code></li>
+<li>File Format: Application</li>
+<li>You don&rsquo;t have to check <em>Run Only</em></li>
+</ol>
+
+<p>We save it 2 times, once as a script, once as an application. This way, you can easily edit the script later, and save it again as an application. (I&rsquo;m using different names because it&rsquo;s less confusing when writing this post.)</p>
+
+<p>Lets now <strong>add it to our Login Items</strong>:</p>
+
+<ol>
+<li>Open <em>System Preferences</em> and go to <em>Accounts</em></li>
+<li>Make sure you choose <em>My Account</em>, i.e. your account, and go to <em>Login Items</em></li>
+<li>Add an item to the list, clicking the +-sign</li>
+<li>Locate the application you created above, in our exampled named <code>MountFileVaultBlack</code>, and press <em>Add</em>.</li>
+<li>Check also the <em>Hide</em> option next to the new item.</li>
+</ol>
+
+<p>That should be it. <strong>Log out and in and check</strong> if the Disk Image is mounting. There should be an icon happily jumping in the <em>Dock</em> while the mounting is on-going. Open <em>Finder</em> and see if your files are accessible.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/a-simpler-startup-script-for-mysql-on-macos-x/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/want-to-compile-a-mysql-cluster-mgm-api-application/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

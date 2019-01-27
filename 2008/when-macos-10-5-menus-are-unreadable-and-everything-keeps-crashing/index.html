@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2008/when-macos-10-5-menus-are-unreadable-and-everything-keeps-crashing/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>When MacOS 10.5 menus are unreadable and everything keeps crashing</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/small-thing-about-restoring-backups-in-mysql-cluster/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/at-t-dose-2008-conference-monitoring-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      When MacOS 10.5 menus are unreadable and everything keeps crashing
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Oct 12, 2008</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>For more than two weeks I was having a problem on my MacBook Air. At one point I magically fixed it going in Safe Boot (holding shift between boot sound and Apple logo), but I couldn&rsquo;t pin-point the problem. Lucky I was again sleepless tonight, and I fixed it!</p>
+
+<p>What was the problem? I created a second account last month to separate work stuff on a FileVaulted home directory, worked great. But at one point my other &lsquo;normal&rsquo; account was behaving very weird. Everything kept crashing, and even worse.. look for yourself:</p>
+
+<p><img src="http://2.bp.blogspot.com/_ZTuqtlaMyB4/SPKN1h9XdXI/AAAAAAAAADE/VRLxYGp2vys/s320/Picture+1.png" alt="" /></p>
+
+<p>Menu&rsquo;s are not working, starting applications immediately crash; maybe remote login would have worked, but I didn&rsquo;t bother trying that really.</p>
+
+<p>Lucky I had my second account, and here comes my tip: <strong>Make sure you have at least 1 clean account which has Admin rights which you do not touch unless there is trouble.</strong>
+See it as the root account on UNIX which you shouldn&rsquo;t use (right).</p>
+
+<p>So, my newly created account worked fine. Looking further I found in the logs the ATSServer was continuously crashing:</p>
+
+<pre><code>Oct 13 00:39:52 air com.apple.
+
+ATSServer[109]: ATSServer(109,0xa0502fa0) malloc:*** error for object 0x843000: incorrect checksum for freed object -object was probably modified after being freed.
+</code></pre>
+
+<p>I cleaned up the databases using atsutils, checked the fonts and all was apparently OK. However, didn&rsquo;t fix it. Turned off TimeMachine, no go.. Well, I did most of the stuff I found online.
+Also the fresh security update for Mac OS 10.5 didn&rsquo;t help.</p>
+
+<p>In the end, I did something very simple to fix it, but not solve it, which is frustrating:</p>
+
+<pre><code> # sudo su - geert$ mv ~/Library/Cache ~/Library/Cache.bak
+</code></pre>
+
+<p>The next login was very fast! And it fixed the problems! So, something was corrupted in that cache. I&rsquo;m sure, if I put it back, it will again give issues.</p>
+
+<p>I&rsquo;m a Support Engineer, and I would probably do this when I was working for Apple. Mmm&hellip; Maybe I&rsquo;ll do it, and move every directory back that was in the Cache trying to pinpoint it.. But not now! Zzzz&hellip;</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/small-thing-about-restoring-backups-in-mysql-cluster/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/at-t-dose-2008-conference-monitoring-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/post/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/post/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/post/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../../css/font-awesome.min.css" />
+  <title>Posts</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../post/page/33/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 34 of 78</div>
+
+  <div class="page-next">
+  
+  <a href="../../../post/page/35/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../post/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../post/page/78/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/the-lost_events-incident-when-is-it-reported/">The LOST_EVENTS incident: When is it reported?</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Sep 17, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">This is a follow-up on my previous blog entry explaining when the LOST_EVENTS incident occurs.
+The LOST_EVENTS incident is reported in the MySQL binary log in two cases. Each time the Slave will try to tell you why. Here is an example output of the SHOW SLAVE STATUS done on the Slave MySQL Cluster (bit edited to fit):
+ mysql&gt; SHOW SLAVE STATUS\G Last_Errno: 1590 Last_Error: The incident LOST_EVENTS occured on the master.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/the-lost_events-incident-when-is-it-reported/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/the-lost_events-incident/">The LOST_EVENTS incident</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Sep 17, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">.. it could have been the title for the next James Bond movie, but no.. It&rsquo;s much more exciting!
+The LOST_EVENTS incident is reported each time you are starting a MySQL server which is binary logging and is participating as an SQL Node in MySQL Cluster setup. Slaves reading from these binary logs will stop their I/O Thread (the one getting information from the master) and report this incident as an error (see below for example).</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/the-lost_events-incident/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/you-have-to-use-utc-time-in-emails/">You have to use UTC time in emails!</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Sep 16, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/opinion">opinion</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">What does the following mean?
+ WHEN: 1:00 pm Pacific Time
+ To most folks in the US it would mean: after lunch in the west.
+To most in rest of the world: &ldquo;Bah! They forgot there is a world outside their own, again!&rdquo;.
+If you specify a time in your own time zone, also specify the corresponding UTC (aka GMT) time so people can easily calculate at what time the meeting is in theirs.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/you-have-to-use-utc-time-in-emails/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/java-6-v1-6-developer-documentation-and-source-for-mac-os-x-10-5/">Java 6 (v1.6) Developer Documentation and Source for Mac OS X 10.5</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Sep 4, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/java">java</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">EDIT: This is for those that haven&rsquo;t (yet) upgraded to Mac OS X 10.6 (Snow Leopard) where Java SE 6 is now default and comes with sources and documentation by default.
+Mac OS X 10.5 comes with Java 5 and 6 (v1.5 and v1.6 respectively). By default, however, only the documentation and source for Java 5 is provided. If you want to develop for Java 6 you&rsquo;ll need to download the Java for Mac OS X 10.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/java-6-v1-6-developer-documentation-and-source-for-mac-os-x-10-5/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/">Configuration change and rolling restart with MySQL Cluster 7.0</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Sep 1, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">In a previous post we discussed how to start MySQL Cluster 7.0 with two management nodes. A nice new feature is that the 2nd ndb_mgmd doesn&rsquo;t need the configuration file: it is fetching it from the other management node. In this article I will describe how we start this cluster after a shut down, changing configuration and do a rolling restart.
+The configuration The config.ini stored on the first management node:</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../post/page/33/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 34 of 78</div>
+
+  <div class="page-next">
+  
+  <a href="../../../post/page/35/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../post/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../post/page/78/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../../js/main.js"></script>
+</body>
+</html>
+

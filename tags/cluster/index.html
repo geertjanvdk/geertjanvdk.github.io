@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/cluster/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/cluster/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/cluster/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Cluster</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 5</div>
+
+  <div class="page-next">
+  
+  <a href="../../tags/cluster/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../tags/cluster/page/5/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2011/debugging-mysql-cluster-installed-using-rpms-using-gdb/">Debugging MySQL Cluster installed using RPMs using gdb</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Jul 19, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">This post explains how to debug MySQL Cluster 7.1, installed using the RPM packages, using gdb on a Linux box (Red Hat, Oracle Enterprise Linux, CentOS, ..).
+When a data node crashes lots of information goes into the error log, trace files and out log. However, it makes sometimes sense when you can repeat the crash, to run the data node in debug mode, or using gdb.
+First, using RPMs and a Linux distribution, make sure you have the &lsquo;debuginfo&rsquo; package installed.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2011/debugging-mysql-cluster-installed-using-rpms-using-gdb/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2011/mysql-cluster-rotating-the-log-file-of-the-data-nodes/">MySQL Cluster: Rotating the log file of the Data Nodes</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 2, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">There is a log file called ndb_&lt;NodeID&gt;_out.log created by the MySQL Cluster data nodes which can become quite big overtime. There is, unlike the cluster logs created by the management nodes, no rotation build in. So you have to revert to the basics and copy the file away, truncating the old one.
+For example, if you want to &lsquo;rotate&rsquo; the log file of data node with NodeID 3:
+$ mv ndb_3_out.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2011/mysql-cluster-rotating-the-log-file-of-the-data-nodes/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2011/custom-logger-for-your-mysql-cluster-data-nodes/">Custom logger for your MySQL Cluster data nodes</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Apr 3, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">The MySQL Cluster data node log files can become very big. The best solution is to actually fix the underlying problem. But if you know what you are doing, you can work around it and filter out these annoying log entries.
+An example of &lsquo;annoying&rsquo; entries is when you run MySQL Cluster on virtual machines (not good!) and disks and OS can&rsquo;t follow any more; a few lines from the ndb_X_out.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2011/custom-logger-for-your-mysql-cluster-data-nodes/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2010/running-mysql-cluster-without-arbitrator-dont-but-if-you-have-to/">Running MySQL Cluster without Arbitrator: don&#39;t, but if you have to..</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Jun 16, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">This post explains how to disable Arbitration when using MySQL Cluster. It gives a case where this could be useful.
+First, a piece of advice: you do not want to run MySQL Cluster with arbitration disabled. But if you must, e.g. because of an oversight in your implementation, you can. Arbitration is very important in MySQL Cluster. It makes sure you don&rsquo;t end up with a Split Brain situation: 2 halves working independently, continuing changing data, making it impossible for them to work together later on.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2010/running-mysql-cluster-without-arbitrator-dont-but-if-you-have-to/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2010/signals-to-freeze-a-data-node-simulating-trouble/">Signals to freeze a Data Node: simulating trouble</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 3, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Last week I was struggling to find an easy way to simulate a troubled *Data Node* (ndbd process) using MySQL Cluster. It&rsquo;s as simple as pancackes: using the kill command!
+To freeze a process you just need to kill the process using the SIGSTOP signal. To let the processes continue, use SIGCONT. Here&rsquo;s an example shell script showing how you would use these two signals on a data node:</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2010/signals-to-freeze-a-data-node-simulating-trouble/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 5</div>
+
+  <div class="page-next">
+  
+  <a href="../../tags/cluster/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../tags/cluster/page/5/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

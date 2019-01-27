@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/find-out-if-every-element-of-a-list-is-part-of-another-with-python/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Find out if every element of a list is part of another, with Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/on-mothers-shoulder/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/using-globals-in-pylons-everywhere/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Find out if every element of a list is part of another, with Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>I wanted to check if every element of one list or tuple is part of another one using Python. A <code>set</code> has the <code>issubset()</code>-method, but I couldn&rsquo;t find anything build-in for a tuple. It was, however, rather quickly done:</p>
+
+<pre><code>&gt;&gt;&gt; r = (1,2)
+&gt;&gt;&gt; l = (3,4,1,5,2)
+&gt;&gt;&gt; False not in [ e in l for e in r ]
+True
+&gt;&gt;&gt; r = (1,9)
+&gt;&gt;&gt; False not in [ e in l for e in r ]
+False
+
+</code></pre>
+
+<p>Why I&rsquo;m posting this? I just found it cute code, somehow.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          kaizer.se
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Aug 26 2010, 23:51</time>
+      </div>
+    <div>
+      Instead of <code>False not in ...</code> you should use  <code>all(e in l for e in r)</code>   the buddies all(..) and any(..) are pretty neat for this.
+    </div>
+    </dd>
+  
+    <dt>
+          Marius Gedminas
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 27 2010, 00:32</time>
+      </div>
+    <div>
+      Do you really find that clearer than set&reg; &lt;= set(l)?
+    </div>
+    </dd>
+  
+    <dt>
+          matt harrison
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 27 2010, 03:38</time>
+      </div>
+    <div>
+      This is probably implied in Marius&#39; response, but using a set brings the running time to O(m+n) rather than the O(m*n) found in your solution.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 27 2010, 06:46</time>
+      </div>
+    <div>
+      Ah, I just found it sexy, late-night code, and yes, there are much better, more performant solutions. :)<br />I did eventually use sets.
+    </div>
+    </dd>
+  
+    <dt>
+          Masklinn
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 27 2010, 11:12</time>
+      </div>
+    <div>
+      Geert, you don&#39;t have to set() the parameter to set.issubset, it can take any iterable (as opposed to the &ldquo;equivalent&rdquo; operator which mandates both operands to be sets):<br /><br />&gt;&gt;&gt; set(range(3, 6)).issubset(range(10))<br />True<br />&gt;&gt;&gt; set(range(3, 6)) &lt;= range(10)<br />Traceback (most recent call last):<br />  File &ldquo;&rdquo;, line 1, in <br />TypeError: can only compare to a set<br />&gt;&gt;&gt; set(range(3, 6)) &lt;= set(range(10))<br />True<br /><br />&gt; This is probably implied in Marius&#39; response, but using a set brings the running time to O(m+n) rather than the O(m*n) found in your solution.<br /><br />But building a Python set is rather more expensive than building a list (or even a bunch of lists). In the case this piece of code is in a tight loop and a hot spot, doing for the manual check can be less expensive.<br /><br />That&#39;s after measuring naturally, the default should be set operations (though I&#39;m not fond of using infix operators apart from &amp; and |, I generally find the method calls much clearer)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/on-mothers-shoulder/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/using-globals-in-pylons-everywhere/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

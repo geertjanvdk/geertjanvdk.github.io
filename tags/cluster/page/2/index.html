@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/cluster/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/cluster/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/cluster/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../../../css/font-awesome.min.css" />
+  <title>Cluster</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/cluster/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 2 of 5</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/cluster/page/3/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/cluster/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/cluster/page/5/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Insert data into a VARCHAR field using NDB API: a solution</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Apr 2, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">You are using MySQL Cluster and crazy enough to digest NDB API? Sick of SQL? Here&rsquo;s a treat: a function to make C/C++ strings ready for inserting into a VARCHAR field. The special thing about them is that the length is prefixed in the first 2 bytes.
+void make_ndb_varchar(char *buffer, char *str) { int len = strlen(str); int hlen = (len &gt; 255) ? 2 : 1; buffer[0] = len &amp; 0xff; if( len &gt; 255 ) buffer[1] = (len / 256); strcpy(buffer+hlen, str); }  Yes, you can use memcpy.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/my-sessions-at-the-mysql-conference-expo-2010/">My sessions at the MySQL Conference &amp;amp; Expo 2010</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Feb 10, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/community">community</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/conference">conference</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">A preliminary schedule is now available for the MySQL Conference &amp; Expo 2010 (in Santa Clara, California, USA). I have two talks and a tutorial, currently scheduled as follows:
+ MySQL Cluster Tutorial, Mon 08:30 on 12 Apr 2010, together with Andrew Hutchings and Andrew Morgan MySQL Cluster: An Introduction, Tue 11:55 on 13 Apr 2010 Connecting MySQL and Python, Tue 15:05 on 13 Apr 2010  Schedule might change a bit, so I suggest keeping an eye on the conference website.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/my-sessions-at-the-mysql-conference-expo-2010/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/mysql-cluster-listen-and-know-whats-going-on/">MySQL Cluster: Listen and know what&#39;s going on</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 16, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">You&rsquo;re not scared of writing clusterious code and eavesdropping is your favorite pastime at work? You want to know what&rsquo;s going on in your MySQL Cluster but were afraid asking? The MySQL Cluster Management API can help you!
+Below you&rsquo;ll find example C-code that will get you started with MGM API. It&rsquo;s rather dull at first, but imagine you, instead of printing the event information, taking action. Imagine you starting another thread where you run some procedure which tells a monitoring system: &ldquo;Hey!</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/mysql-cluster-listen-and-know-whats-going-on/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/clusterious-defined/">Clusterious defined</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Dec 10, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"> clus&middot;te&middot;ri&middot;ous |ˈkləstərēəs;| adjective highly pleasant to MySQL Support Engineers: *A clusterious issue a day, keeps the spouse away. &middot; clusterful : a hard day. DERIVATIVES clusteriously adverb clusteriousness noun
+ORIGIN MySQL Support Team: via Sun Microsystems. Clusterious noun a rare variety of MySQL Support Engineers originally cultivated in Sweden.
+ </p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/">Running MySQL Cluster on Mac: working around a ndb_mgmd bug</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Nov 25, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">A week ago we found a workaround for a bug in MySQL Cluster making it impossible to run a management node on MacOS X. Until the bug is fixed, you should use the --nodaemon option for the ndb_mgmd executable. Both MySQL Cluster v6.3 and v7.0 are affected.
+Currently, I&rsquo;m starting the management node like this:
+( cd /opt/mysql/mysql; ./libexec/ndb_mgmd -f /opt/mysql/config.ini \ --nodaemon 2&gt;/dev/null 1&gt;&amp;2 &lt;/dev/null &amp; )  Obviously, you&rsquo;ll want to change the paths.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/cluster/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 2 of 5</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/cluster/page/3/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/cluster/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/cluster/page/5/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../../../js/main.js"></script>
+</body>
+</html>
+

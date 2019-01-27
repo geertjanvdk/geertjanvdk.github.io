@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/mysql/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/mysql/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/mysql/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../../../css/font-awesome.min.css" />
+  <title>Mysql</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/mysql/page/18/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 19 of 37</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/mysql/page/20/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/mysql/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/mysql/page/37/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/">Running MySQL Cluster on Mac: working around a ndb_mgmd bug</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Nov 25, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">A week ago we found a workaround for a bug in MySQL Cluster making it impossible to run a management node on MacOS X. Until the bug is fixed, you should use the --nodaemon option for the ndb_mgmd executable. Both MySQL Cluster v6.3 and v7.0 are affected.
+Currently, I&rsquo;m starting the management node like this:
+( cd /opt/mysql/mysql; ./libexec/ndb_mgmd -f /opt/mysql/config.ini \ --nodaemon 2&gt;/dev/null 1&gt;&amp;2 &lt;/dev/null &amp; )  Obviously, you&rsquo;ll want to change the paths.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/a-simpler-startup-script-for-mysql-on-macos-x/">A simpler startup script for MySQL on MacOS X</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Nov 22, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">What you do when you&rsquo;re fed up with a script? Right, you write your own.
+You&rsquo;ll have to excuse me for the long shell script you&rsquo;ll find here below, but I&rsquo;m not going to bother putting it on some download website.
+It&rsquo;s a shell script which starts and stops the MySQL server. Indeed, a replacement for the init.d script found in the MySQL distributions. I&rsquo;m using it personally on my Macs and it&rsquo;s not supported in any way.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/a-simpler-startup-script-for-mysql-on-macos-x/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/want-to-compile-a-mysql-cluster-mgm-api-application/">Want to compile a MySQL Cluster MGM API application?</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Nov 12, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Here is a quick way to compile a simple MGM API application. The example will get the state of all nodes in MySQL Cluster and print whether they are connected or not.
+All this without a Makefile, we just want to have some simple example on Linux to see how it works. It&rsquo;s basic, maybe, but sometimes useful to just have a peek.
+Requirements We assume that:
+ you installed MySQL Cluster 6.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/want-to-compile-a-mysql-cluster-mgm-api-application/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/why-it-is-important-to-use-columns-or-aliases-in-mysql-views/">Why it is important to use columns or aliases in MySQL Views</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Nov 10, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">You can define a view in MySQL as follows:
+ CREATE VIEW v AS SELECT 'MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL';  The above long string might give trouble reading, but &lsquo;MySQLMy..
+&rsquo; is 70 characters long. It will work fine, but check out how MySQL stores it (output of SHOW CREATE VIEW):
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v` AS select 'MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL' AS `MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL`  This is where the trouble starts. If you backup your schema using mysqldump, it will get the above definition, but when you restore it, you&rsquo;ll get the following error:</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/why-it-is-important-to-use-columns-or-aliases-in-mysql-views/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2009/readying-first-alpha-release-but-where-to-install-mysql-connectorpython/">Readying first alpha release, but where to install MySQL Connector/Python?</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Nov 9, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">I&rsquo;m currently planning a first &lsquo;alpha&rsquo; release of MySQL Connector/Python, but I&rsquo;m now doubting whether the naming and installation of the module is actually good.
+Currently, the module lives, in site-packages/mysql/connector/, or import mysql.connector. Since this is an official MySQL, sorry, Sun Microsystems, project, I thought that the &lsquo;parent&rsquo; module mysql would be good enough.
+But is it? Would it break your modules with the same name?
+The idea was to make more tools for Python and have them all under the mysql module, but maybe we need a smarter name for this?</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2009/readying-first-alpha-release-but-where-to-install-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/mysql/page/18/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 19 of 37</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/mysql/page/20/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/mysql/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/mysql/page/37/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../../../js/main.js"></script>
+</body>
+</html>
+

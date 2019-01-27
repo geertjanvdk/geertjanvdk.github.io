@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/post/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/post/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/post/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../../css/font-awesome.min.css" />
+  <title>Posts</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../post/page/25/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 26 of 78</div>
+
+  <div class="page-next">
+  
+  <a href="../../../post/page/27/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../post/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../post/page/78/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/chessboard-in-mysql/">A chessboard in MySQL: make your moves</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 30, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Playing chess within MySQL? Over the network? In the .. cloud? Yes! This is a follow-up post of my &lsquo;A chessboard in MySQL&rsquo; where we create and populate a chessboard. But pieces need to move, and a few wondered how. Easy!
+As an example, white openes with 1.e4:
+BEGIN; UPDATE chessboard SET e='♙' WHERE x = 4; UPDATE chessboard SET e='' WHERE x = 2; COMMIT;  Pretty obvious. Now lets put it in a stored procedure (source included in post) so the next move is easier on the fingers and more fun to play.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/chessboard-in-mysql/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/a-chessboard-in-mysql/">A chessboard in MySQL</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 23, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Something to keep you warm during cold winter nights, or cool during hot summer days: a chessboard in MySQL!
+Note: You should see chess pieces here below. If not, you&rsquo;re not watching it using UTF-8, or get yourself a good browser!
+CREATE TABLE `chessboard` ( `x` tinyint unsigned NOT NULL, `a` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `b` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `c` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `d` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `e` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `f` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `g` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'), `h` enum('','♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟') ) DEFAULT CHARSET=utf8;  Populating it with Python using MySQL Connector/Python (only piece of script shown):</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/a-chessboard-in-mysql/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/using-character-sets-with-mysql-connectorpython/">Using character sets with MySQL Connector/Python</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 23, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Here is two small examples showing the wonderful world of character sets and unicode using MySQL Connector/Python (using 0.1.2-devel and up) in both Python v2.x and v3.1.
+The following table will be used with default character set latin7, i.e. [ISO-8859-13](http://en.wikipedia.org/wiki/ISO/IEC_8859-13). Just setting it to [UTF-8](http://en.wikipedia.org/wiki/UTF-8) would be bit boring!
+CREATE TABLE `latin7test` ( `c1` varchar(60) DEFAULT NULL ) DEFAULT CHARSET=latin7  Things to note for the code listed below are:</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/using-character-sets-with-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/mysql-connectorpython-0-1-2-devel-available/">MySQL Connector/Python 0.1.2-devel available!</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 23, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">MySQL Connector/Python 0.1.2-devel is a quick follow-up release for 0.1.1 fixing a few problems around character sets and unicode.
+You can download Connector/Python from LaunchPad.
+Release notes for MySQL Connector/Python 0.1.2-devel:
+o Fixing unicode usage for both Python 2.4+ and 3.1 * Setting 'use_unicode' at connection time is now working. * conversion.py: removing regular expression for quoting backslashes. * Adding test case for bug lp:499410 o Py3k specific: * Strings from MySQL are decoded to the given character when use_unicode is false * The statement is encoded just before sending it to the MySQL server.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/mysql-connectorpython-0-1-2-devel-available/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/">MySQL with Python v3.1 now also possible using MySQL Connector/Python</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Dec 21, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">The second development release of MySQL Connector/Python comes with support for Python v3.1!
+I thought of making two distributions of MySQL Connector/Python, but then it would have been messy with versions and packaging. So what you get now is 2-in-1 and the installation script should be smart enough to figure it out.
+Please, if you find any issues, bugs or have suggestions: report them here https://bugs.launchpad.net/myconnpy
+Download From LaunchPad!</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../post/page/25/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 26 of 78</div>
+
+  <div class="page-next">
+  
+  <a href="../../../post/page/27/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../post/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../post/page/78/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/building-mysql-universal-binaries-using-macos-x-10-6-snow-leopard/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Building MySQL universal binaries using MacOS X 10.6 (Snow Leopard)</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/we-got-a-bag-too-much-on-board/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/chessboard-in-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Building MySQL universal binaries using MacOS X 10.6 (Snow Leopard)
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Dec 31, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>On the eve of 2010.. and your boss wants to stick to these <a href="http://en.wikipedia.org/wiki/Mac_OS_X">MacOS X</a> 10.5 machines, too stubborn or chicken to upgrade. Some developers still have their old <a href="http://en.wikipedia.org/wiki/PowerBook">PowerBook</a> laptops and they need <a href="http://dev.mysql.com">MySQL</a> flying on <a href="http://en.wikipedia.org/wiki/PowerPC">PowerPC</a> machines. To top it all, one guy said he wanted to have 32 and 64-bit in one bite. <em>Sigh</em> .. But there is an easy way out! A universal binary!</p>
+
+<p>This post shows you a way to create MySQL <a href="http://en.wikipedia.org/wiki/Universal_binary">universal binaries</a> using MacOS X 10.6 so you can run them on MacOS X 10.<sup>5</sup>&frasl;<sub>10</sub>.6 whether it is PowerPC or Intel, or 32bit or 64bit.</p>
+
+<p>However, if you need <a href="http://dev.mysql.com/doc/refman/5.1/en/libmysqld.html"><code>libmysqld</code></a> (Embedded MySQL), this post <a href="http://bugs.mysql.com/bug.php?id=47360">will not work for you</a>.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+<li>You have MacOS X 10.6 with latest <a href="http://developer.apple.com/tools/xcode/">Xcode</a> (fully) installed.</li>
+<li>The MySQL source unpacked somewhere. Get it on the <a href="http://dev.mysql.com/downloads/mysql/5.1.html">MySQL download website</a> under <em>Source Downloads</em>, package named <code>Compressed GNU TAR archive (tar.gz)</code>.</li>
+<li>And some nerves for when the build process fails.</li>
+</ul>
+
+<h2 id="most-complete-universal-binary">Most complete Universal Binary</h2>
+
+<p>First, here is away to build MySQL so <strong>it runs on MacOS X 10.5 Intel/PowerPC and 10.6 32 or 64-bit.</strong></p>
+
+<p>Here is the source of the build script names <code>build.sh</code>. Executed it while located inside the source directory of MySQL.</p>
+
+<pre><code class="language-shell">#!/bin/bash
+
+SDK=&quot;-isysroot /Developer/SDKs/MacOSX10.5.sdk&quot;
+SDKLIB=&quot;-Wl,-syslibroot,/Developer/SDKs/MacOSX10.5.sdk&quot;
+export MACOSX_DEPLOYMENT_TARGET=&quot;10.5&quot;
+PREFIX=/opt/mysql/mysql-5.1.42-universal-macosx-10.5
+
+ARCH=&quot;-arch i386 -arch x86_64 -arch ppc&quot;
+
+export CFLAGS=&quot;-O2 -fPIC $ARCH $SDK&quot;
+export CXXFLAGS=&quot;-O2 -fPIC $ARCH $SDK&quot;
+export LDFLAGS=&quot;$ARCH $SDKLIB&quot;
+
+CC=&quot;/usr/bin/gcc-4.2&quot;
+CXX=&quot;/usr/bin/g++-4.2&quot;
+OBJC=&quot;/usr/bin/gcc-4.2&quot;
+
+INSTALL=&quot;/usr/bin/install -c&quot;
+
+./configure --prefix=$PREFIX \
+--disable-dependency-tracking \
+--mandir=$PREFIX/share/man --infodir=$PREFIX/share/info \
+--localstatedir=$PREFIX/var/ --libdir=$PREFIX/lib \
+--bindir=$PREFIX/bin --libexecdir=$PREFIX/bin \
+--includedir=$PREFIX/include \
+--datadir=$PREFIX/share/ --sysconfdir=$PREFIX/etc \
+--with-extra-charsets=complex \
+--with-mysqld-user=mysql \
+--without-docs \
+--with-plugins=all \
+--enable-thread-safe-client --without-embedded-server \
+--with-pic --with-libedit
+
+if [ $? -eq 0 ]; then
+    make clean
+    time make -j 2
+fi
+</code></pre>
+
+<p>Here is what <code>file</code> shows for the <code>mysqld</code> binary:</p>
+
+<pre><code class="language-shell">$ file sql/mysqld
+sql/mysqld: Mach-O universal binary with 3 architectures
+sql/mysqld (for architecture i386): Mach-O executable i386
+sql/mysqld (for architecture x86_64): Mach-O 64-bit executable x86_64
+sql/mysqld (for architecture ppc7400): Mach-O executable ppc
+</code></pre>
+
+<p>These binaries were tested and work on MacOS X 10.6 Intel and MacOS X 10.5 PowerPC.</p>
+
+<h2 id="32-64-bit-universal-binaries-for-macos-x-10-6"><sup>32</sup>&frasl;<sub>64</sub>-bit Universal binaries for MacOS X 10.6</h2>
+
+<p>Same as above, but with the following changes:</p>
+
+<pre><code class="language-shell">SDK=&quot;-isysroot /Developer/SDKs/MacOSX10.6.sdk&quot;
+SDKLIB=&quot;-Wl,-syslibroot,/Developer/SDKs/MacOSX10.6.sdk&quot;
+export MACOSX_DEPLOYMENT_TARGET=&quot;10.6&quot;
+PREFIX=/opt/mysql/mysql-5.1.42-universal-macosx-10.6
+</code></pre>
+
+<p>Setting the above is probably not needed when you are already on a Mac running 10.6, but it doesn&rsquo;t hurt to be explicit.</p>
+
+<h2 id="need-it-for-macos-x-10-4">Need it for MacOS X 10.4?</h2>
+
+<p>I gave this a spin:</p>
+
+<pre><code class="language-shell">SDK=&quot;-isysroot /Developer/SDKs/MacOSX10.4u.sdk&quot;
+SDKLIB=&quot;-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk&quot;
+export MACOSX_DEPLOYMENT_TARGET=&quot;10.4&quot;
+ARCH=&quot;-arch i386 -arch ppc&quot;
+</code></pre>
+
+<p>But it failed with</p>
+
+<pre><code>/Developer/SDKs/MacOSX10.4u.sdk/usr/include/stdarg.h:4:25:
+  error: stdarg.h: No such file or directory
+</code></pre>
+
+<p>.. but I lack intrest making stuff for MacOS X 10.4 (Tiger). Consider this your homework!</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          mordred
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Dec 31 2009, 16:49</time>
+      </div>
+    <div>
+      AWESOME. Thanks for posting this. I just tried applying this to libdrizzle and it worked like a charm. I didn&#39;t need to reference the -isysroot or -Wl,-syslibroot options though. (Actually, they broke things for me) But just specifying multiple -arch options worked like a charm!<br /><br />I think I&#39;m going to go add support for this into pandora-build. Thanks again!
+    </div>
+    </dd>
+  
+    <dt>
+          Michael H Buselli
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jan 5 2010, 23:21</time>
+      </div>
+    <div>
+      I read somewhere you can get the 10.4 build to work by using gcc-4.0 instead of gcc-4.2.  If someone tries this by changing CC, CXX, and OBJC to the appropriage gcc-4.0 values then please let me know if it works!
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/we-got-a-bag-too-much-on-board/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/chessboard-in-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

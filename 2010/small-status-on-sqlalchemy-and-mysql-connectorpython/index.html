@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/small-status-on-sqlalchemy-and-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Small status on SQLAlchemy and MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mysql-connectorpython-0-1-3-devel-available/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/fosdem-2010-python-sneaks-into-the-mysql-devroom/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Small status on SQLAlchemy and MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Jan 22, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Using <a href="http://www.sqlalchemy.org/">SQLAlchemy</a> unit test cases to further develop <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a>. It&rsquo;s probably debatable whether that&rsquo;s a good method or just lame. But it sure helps lots!</p>
+
+<p>We&rsquo;ve been <a href="https://code.launchpad.net/~mysql/myconnpy/main">pushing some code</a> past days that makes Connector/Python almost pass all tests. Well, 4% is still failing, but I&rsquo;m confident that in a few most problems will be dealt with. I had to make some changes to the SQLAlchemy v0.6 dialect as well, and some test cases had to be corrected. Hopefully those corrections will also go in the SQLAlchemy trunk later on.</p>
+
+<pre><code>$ nosetests --dburi=mysql+mysqlconnector://root:@localhost/sqlalchemy
+..
+
+Ran 2092 tests in 314.656s
+
+FAILED (errors=72, failures=11)
+</code></pre>
+
+<p>If you run the same tests against MySQLdb, you&rsquo;ll see (of course) less failures (9 to be exact).</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Aigars Mahinovs
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Jan 24 2010, 16:54</time>
+      </div>
+    <div>
+      Any support for server-side results yet?
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Jan 24 2010, 20:27</time>
+      </div>
+    <div>
+      @Aigars: Prepared Statements? No I haven&#39;t done stuff around that.. But it&#39;s on the list!
+    </div>
+    </dd>
+  
+    <dt>
+          Aigars Mahinovs
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jan 26 2010, 10:51</time>
+      </div>
+    <div>
+      Not preparred statements, but having the cursor that will only fetch results from the server to the client on a per-line basis as they are needed. The current Mysql-python has SSCursor for that. The idea that if you are doing a huge select that will return 5 Gb of data in total, you do not want to download the whole result set to the client side at one, instead the results are stored on the server and are transfered to the client one-by-one while the client software iterates over the result cursor.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jan 26 2010, 11:10</time>
+      </div>
+    <div>
+      @Aigars: Sorry, I miss understood your first question.<br /><br />However, MySQLdb SSCursor is doing what MySQL Connector/Python is doing by default. We are not fetching the result right away, the programmer needs to fetch it. We call this &#39;unbuffered&#39;.<br />Do mimic what MySQLdb is doing by default: mysql.connector.connect(buffered=True)<br /><br />I hope this helps.<br />Don&#39;t hesitate to take the question to <a href="https://launchpad.net/myconnpy">https://launchpad.net/myconnpy</a>
+    </div>
+    </dd>
+  
+    <dt>
+          Mark Huang
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jan 7 2011, 21:08</time>
+      </div>
+    <div>
+      <p>Hi,</p>
+
+<p>I&rsquo;m wondering what&rsquo;s the status of this?  Can Connector/Python work with SQLAlchemy?</p>
+
+<p>I&rsquo;m having trouble using/installing python-mysql so I was hoping using this would work. I am working on Pylons.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jan 7 2011, 23:25</time>
+      </div>
+    <div>
+      <a href="#comment-596" rel="nofollow">@Mark Huang </a>
+MySQL Connector/Python changed a bit, and the dialect coming with SQLAlchemy 0.6 (!) is probably going to need some updating.
+As far as I know, Pylons is using SQLAlchemy 0.5, which doesn&rsquo;t work with MySQL Connector/Python.
+I hope you get that MySQLdb going meanwhile.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mysql-connectorpython-0-1-3-devel-available/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/fosdem-2010-python-sneaks-into-the-mysql-devroom/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

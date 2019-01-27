@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/running-python-scripts-within-mysql-workbench/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Running Python scripts within MySQL Workbench</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/please-update-outdated-and-maybe-false-info-about-mysql/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-workbench-enabling-python-in-the-grt-shell/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Running Python scripts within MySQL Workbench
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Oct 8, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>In my <a href="{% post_url 2009-10-08-mysql-workbench-enabling-python-in-the-grt-shell %}">previous blog post</a> I explained how to enable <a href="http://python.org">Python</a> in the <a href="http://www.mysql.com/products/workbench/">MySQL Workbench</a> GRT Shell. This blog explains how to run a simple Python script using Workbench. You don&rsquo;t need to change any preferences to make this work.</p>
+
+<p>Save the following little script to a file called <code>wbscript.py</code>. It will print the tables in the first schema of the first model opened.</p>
+
+<pre><code class="language-python">import grtmodel = grt.root.wb.doc.physicalModels[0]
+for tab in model.catalog.schemata[0].tables:
+	print &quot;Table: `%s`&quot; % (tab.name)
+</code></pre>
+
+<p>To see the output of the script make sure that:</p>
+
+<ol>
+<li>you have a model open (with at least 1 table)</li>
+<li>the Output Window is visible: <em>View &gt; Advanced &gt; Output Window</em></li>
+<li>make the <em>Output</em> option active in the Output Window (defaults to <em>Messages</em>)</li>
+</ol>
+
+<p>In Workbench, chose <em>Tools &gt; Run Workbench Script</em> and locate the script. Open it and it will run immediately (successfully, hopefully!). The output should be something like this (name of table could be something else):</p>
+
+<pre><code>Executing script /Users/geert/Projects/mysql/wbscript.py...
+
+Table: `t1`Script finished.
+</code></pre>
+
+<p>Running Workbench scripts is easy, but more awesome would be to make your own plug-in! This is however a different beast that I&rsquo;ll hopefully cover in next posts.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/please-update-outdated-and-maybe-false-info-about-mysql/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-workbench-enabling-python-in-the-grt-shell/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

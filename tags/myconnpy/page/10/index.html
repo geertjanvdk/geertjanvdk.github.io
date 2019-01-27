@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/myconnpy/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/myconnpy/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/myconnpy/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../../../css/font-awesome.min.css" />
+  <title>Myconnpy</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/myconnpy/page/9/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 10 of 13</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/myconnpy/page/11/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/myconnpy/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/myconnpy/page/13/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/mysql-connectorpython-and-database-pooling/">MySQL Connector/Python and database pooling</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">MySQL Connector/Python is (or should be) compliant with the Python DB-API 2.0 specification. This means that you can use DBUtils&rsquo; PooledDB module to implement database connection pooling.
+Here below you&rsquo;ll find an example which will output the connection ID of each connection requested through the pooling mechanism.
+from DBUtils.PooledDB import PooledDB import mysql.connector def main(): pool_size = 3 pool = PooledDB(mysql.connector, pool_size, database='test', user='root', host='127.0.0.1') cnx = [None,] * pool_size for i in xrange(0,pool_size): cnx[i] = pool.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/mysql-connectorpython-and-database-pooling/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/mysql-connectorpython-0-1-5-release-critical-bug-fix/">MySQL Connector/Python 0.1.5 release: critical bug fix</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu May 27, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">We just released MySQL Connector/Python 0.1.5 which includes a critical bug fix. It was impossible to read big result sets. The files for 0.1.4-release have been removed.
+You can download MySQL Connector/Python from Launchpad.
+Highlights:
+ It was impossible to retrieve big result sets. (bug lp:551533 and lp:586003) Changing copyright from Sun to Oracle (also fixing silly typo)  A very Big Thanks goes to the reporters of bug lp:551533 and lp:586003.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/mysql-connectorpython-0-1-5-release-critical-bug-fix/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/mysql-connectorpython-0-1-4-devel-available/">MySQL Connector/Python 0.1.4-devel available</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri May 21, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Next development release 0.1.4 of MySQL Connector/Python is now available for download. This will be the last in the 0.1-series as we move on to 0.2. The aim is to release more often to get to v1.0. Hurray!
+Highlights  Reading from network was broken for bigger packages. Reimplementing protocol. MySQLProtocol marking simpler and easier to maintain. It is now possible to send multiple statements to MySQL using MySQLCursor.execute(). The results are accessible by calling the method next_resultset().</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/mysql-connectorpython-0-1-4-devel-available/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/simulating-server-side-cursors-with-mysql-connectorpython/">Simulating server-side cursors with MySQL Connector/Python</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Apr 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/pyhon">pyhon</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p>Last week, my colleague Massimo and I discussed <strong>how to handle big result sets</strong> coming from <a href="http://dev.mysql.com">MySQL</a> in <a href="http://www.python.org">Python</a>. The problem is that MySQL doesn&rsquo;t support server-side cursors, so you need to select everything and then read it. You can do it either buffered or not. <a href="http://launchpad.net/myconnpy">MySQL Connector/Python</a> defaults to non-buffered, meaning that you need to fetch all rows after issuing a <code>SELECT</code> statement. You can also turn on the buffering, mimicking what <a href="http://sourceforge.net/projects/mysql-python/files/">MySQL for Python</a> (MySQLdb) does.</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/simulating-server-side-cursors-with-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../../../2010/multiple-result-sets-in-mysql-connectorpython/">Multiple result sets in MySQL Connector/Python</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sat Apr 24, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/pyhon">pyhon</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Latest code of MySQL Connector/Python on launchpad has support for multiple result sets when you execute a stored procedure. We also changed the way the actual result of the routine is returned to conform to PEP249.
+Here is some example code: it creates a stored procedure which generates 2 result sets. You can get the result by calling next_resultset(), which is returning a MySQLCursorBuffered.
+cur = cnx.cursor() cur.execute(&quot;DROP PROCEDURE IF EXISTS multi&quot;) proc = &quot;&quot;&quot; CREATE PROCEDURE multi(IN pFac1 INT, IN pFac2 INT, OUT pProd INT) BEGIN SELECT 1,'a' as FooBar; SELECT 2; SET pProd := pFac1 * pFac2; END&quot;&quot;&quot; cur.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../../../2010/multiple-result-sets-in-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../../../tags/myconnpy/page/9/" title="Previous page"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-number "> Page 10 of 13</div>
+
+  <div class="page-next">
+  
+  <a href="../../../../tags/myconnpy/page/11/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <a href="../../../../tags/myconnpy/" title="First page"><i class="fa fa-chevron-up arrow-nav"></i></a>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../../../tags/myconnpy/page/13/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../../../js/main.js"></script>
+</body>
+</html>
+

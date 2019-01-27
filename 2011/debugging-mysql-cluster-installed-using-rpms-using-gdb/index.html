@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2011/debugging-mysql-cluster-installed-using-rpms-using-gdb/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Debugging MySQL Cluster installed using RPMs using gdb</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/my-new-job-at-oracle-working-on-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/mysql-cluster-rotating-the-log-file-of-the-data-nodes/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Debugging MySQL Cluster installed using RPMs using gdb
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Jul 19, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This post explains how to debug <a href="http://dev.mysql.com/downloads/cluster/">MySQL Cluster 7.1</a>, installed using the <a href="http://rpm5.org/">RPM</a> packages, using gdb on a Linux box (Red Hat, Oracle Enterprise Linux, CentOS, ..).</p>
+
+<p>When a data node crashes lots of information goes into the error log, trace files and out log. However, it makes sometimes sense when you can repeat the crash, to run the data node in debug mode, or using gdb.</p>
+
+<p>First, using RPMs and a Linux distribution, <strong>make sure you have the &lsquo;debuginfo&rsquo; package installed</strong>. For example, for Red Hat or Oracle Enterprise Linux on a 64-bit machine, this package would be called: <code>MySQL-Cluster-gpl-debuginfo-7.1.15-1.rhel5.x86_64.rpm</code>.</p>
+
+<p><strong>Create a file with the following commands</strong>, we will name it <code>ndbd.gdb</code>:</p>
+
+<pre><code>set pagination off
+set logging overwrite on
+set logging file ndbd_gdb_backtrace.txt
+set logging on
+run --foreground -c &lt;YourMGM:1186&gt; --ndb-nodeid=&lt;YourID&gt;
+thread apply all bt
+set logging off
+</code></pre>
+
+<p><strong>Note line 5</strong>: pass the options to &lsquo;run&rsquo; which you usually pass when starting ndbd, but leave the <code>--foreground</code> option.
+Note line 3: you can save of course the logging file wherever you want to.</p>
+
+<p>Then all you need to do is <strong>run gdb with the commands file and the ndbd binary</strong> you just created:</p>
+
+<pre><code class="language-shell">$ gdb /usr/sbin/ndbd -x ndbd.gdb
+</code></pre>
+
+<p>A full backtrace of threads will be available in the logging file when ndbd crashes. This you can then upload when reporting <a href="http://bugs.mysql.com">bugs</a>.</p>
+
+<p>There are probably more options and things you can do, please post them in the comments!</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://naijapalava.com">kenny g</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 5 2011, 01:16</time>
+      </div>
+    <div>
+      This is what is sending me away from learning Mysql there are too many bugs to deal with
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 5 2011, 06:28</time>
+      </div>
+    <div>
+      <a href="#comment-1200" rel="nofollow">@kenny g </a>
+Anyway, irrelevant comment, but allowed it anyway :)
+There are of course bugs in MySQL, but that doesn&rsquo;t keep startups to be successful and make jobs using MySQL. The blog posts explains how to debug when it&rsquo;s not clear at first. Maybe you can use it for other applications, or even yours.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/my-new-job-at-oracle-working-on-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/mysql-cluster-rotating-the-log-file-of-the-data-nodes/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

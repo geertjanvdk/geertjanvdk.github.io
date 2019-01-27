@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/how-to-install-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>How to install MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/fixing-iphotos-albumdata-xml-for-importing-into-googles-picasa/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      How to install MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Sep 24, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Currently, <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a> is only available through <a href="https://launchpad.net/">Launchpad</a>. Here&rsquo;s a small how-to for installing it using the <a href="http://bazaar-vcs.org/">Bazaar</a> <code>bzr</code> client tool. All you need is a machine with Python installed (v2.3 or higher, but not v3.x), and.. well, that&rsquo;s it!</p>
+
+<pre><code class="language-shell">$ bzr checkout lp:~mysql/myconnpy/main myconnpy
+$ cd myconnpy
+$ sudo python setup.py install
+</code></pre>
+
+<p>Please check it out. It&rsquo;s not feature complete yet, and probably can use some code optimizations here and there. I&rsquo;m looking forward to bug reports! Also, only works with MySQL 4.1 and above.</p>
+
+<p>Here is a little script that shows how it works, save it in file <code>test_myconn.py</code>:</p>
+
+<pre><code class="language-python">import mysql.connector
+
+if __name__ == &quot;__main__&quot;:
+  db = mysql.connector.
+
+Connect(host=&quot;localhost&quot;,
+    user=&quot;root&quot;,password=&quot;&quot;,database=&quot;test&quot;)
+  cursor = db.cursor()
+  cursor.execute(&quot;SHOW ENGINES&quot;)
+
+  for row in cursor.fetchall():
+    print row
+
+  cursor.close()
+  db.close()
+</code></pre>
+
+<p>Execute it like this and you should see the available storage engines:</p>
+
+<pre><code>$ python test_myconn.py
+[u'InnoDB', u'YES', u'Supports transactions, row-level locking, and foreign keys', u'YES', u'YES', u'YES']
+[u'MRG_MYISAM', u'YES', u'Collection of identical MyISAM tables', u'NO', u'NO', u'NO']
+[u'BLACKHOLE', u'YES', u'/dev/null storage engine (anything you write to it disappears)', u'NO', u'NO', u'NO']
+[u'CSV', u'YES', u'CSV storage engine', u'NO', u'NO', u'NO']
+[u'MEMORY', u'YES', u'Hash based, stored in memory, useful for temporary tables', u'NO', u'NO', u'NO']
+[u'FEDERATED', u'NO', u'Federated MySQL storage engine', None, None, None]
+[u'ARCHIVE', u'YES', u'Archive storage engine', u'NO', u'NO', u'NO']
+[u'MyISAM', u'DEFAULT', u'Default engine as of MySQL 3.23 with great performance', u'NO', u'NO', u'NO']
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          rgz
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Sep 25 2009, 22:15</time>
+      </div>
+    <div>
+      What makes it better to the standard MySQLdb
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Sep 26 2009, 11:55</time>
+      </div>
+    <div>
+      I&#39;m not going to call it better than MySQLdb, because Connector/Python is not yet complete.<br />However, you don&#39;t have to compile anything, but it might make it slower again.<br /><br />Give it a spin :-)
+    </div>
+    </dd>
+  
+    <dt>
+          rgz
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Sep 28 2009, 16:52</time>
+      </div>
+    <div>
+      So it&#39;s a pure python implementation of the mysql (partial) API?<br /><br />Sorry for the late reply.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Sep 28 2009, 20:19</time>
+      </div>
+    <div>
+      Yup, MySQL Connector/Python is currently all written in Python. I&#39;m planning linking against libmysqlclient as well, but the default would be to install a Python module which doesn&#39;t need compiling or anything else MySQL related installed.<br /><br />I hope it will be fully compatible with libmysqlclient, it should work already for general stuff.
+    </div>
+    </dd>
+  
+    <dt>
+          Iken
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jan 19 2010, 16:08</time>
+      </div>
+    <div>
+      May just be my system acting insane but:<br />I get an error (Unknown MySQL server host) when executing your example code.<br />It appears the &#39;import mysql.connector&#39; statement might have some kind of overlap with MySQLdb?<br /><br />The error is the same one i&#39;ve been receiving when trying to use MySQLdb across the network.<br /><br /><br />Traceback:<br />Traceback (most recent call last):<br />  File &ldquo;connector.py&rdquo;, line 1, in <br />    import mysql.connector<br />  File &ldquo;/home/joes/python/mysql.py&rdquo;, line 9, in <br />    db = MySQLdb.connect(host=&ldquo;mailscan.wilson.local&rdquo;, user=&ldquo;mailadd&rdquo;, passwd=&ldquo;mailadd#1&rdquo;, db=&ldquo;mailscanner&rdquo;)<br />  File &ldquo;build/bdist.linux-i686/egg/MySQLdb/<strong>init</strong>.py&rdquo;, line 81, in Connect<br />    <br />  File &ldquo;build/bdist.linux-i686/egg/MySQLdb/connections.py&rdquo;, line 188, in <strong>init</strong>
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 20 2010, 08:22</time>
+      </div>
+    <div>
+      @Iken: you best go to Launchpad and ask a question there (Blogs ain&#39;t for support): <a href="https://launchpad.net/myconnpy">https://launchpad.net/myconnpy</a><br />BTW, MySQLdb.connect != mysql.connector.connect
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/fixing-iphotos-albumdata-xml-for-importing-into-googles-picasa/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

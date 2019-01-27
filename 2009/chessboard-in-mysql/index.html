@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/chessboard-in-mysql/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>A chessboard in MySQL: make your moves</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/building-mysql-universal-binaries-using-macos-x-10-6-snow-leopard/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/a-chessboard-in-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      A chessboard in MySQL: make your moves
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 30, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/fun">fun</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Playing chess within MySQL? Over the network? In the .. cloud? Yes!
+This is a follow-up post of my &lsquo;A chessboard in MySQL&rsquo; where we create and populate a chessboard. But pieces need to move, and a few wondered how. Easy!</p>
+
+<p>As an example, white openes with <a href="http://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4">1.e4</a>:</p>
+
+<pre><code class="language-sql">BEGIN;
+UPDATE chessboard SET e='♙' WHERE x = 4;
+UPDATE chessboard SET e='' WHERE x = 2;
+COMMIT;
+</code></pre>
+
+<p>Pretty obvious. Now lets put it in a stored procedure (source included in post) so the next move is easier on the fingers and more fun to play. Lets do a <a href="http://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e5">1&hellip;e5</a>:</p>
+
+<pre><code class="language-sql">CALL move_piece('e','7','e',5);
+</code></pre>
+
+<p>The result is the following:</p>
+
+<pre><code class="language-shell">mysql&gt; SELECT * FROM chessboard;
++---+------+------+------+------+------+------+------+------+
+| x | a    | b    | c    | d    | e    | f    | g    | h    |
++---+------+------+------+------+------+------+------+------+
+| 8 | ♜    | ♞    | ♝    | ♛    | ♚    | ♝    | ♞    | ♜    |
+| 7 | ♟    | ♟    | ♟    | ♟    |      | ♟    | ♟    | ♟    |
+| 6 |      |      |      |      |      |      |      |      |
+| 5 |      |      |      |      | ♟    |      |      |      |
+| 4 |      |      |      |      | ♙    |      |      |      |
+| 3 |      |      |      |      |      |      |      |      |
+| 2 | ♙    | ♙    | ♙    | ♙    |      | ♙    | ♙    | ♙    |
+| 1 | ♖    | ♘    | ♗    | ♕    | ♔    | ♗    | ♘    | ♖    |
++---+------+------+------+------+------+------+------+------+
+</code></pre>
+
+<p>Here is the stored procedure. It&rsquo;s very, very basic, and of course, one can add much more!</p>
+
+<pre><code class="language-sql">DROP PROCEDURE IF EXISTS move_piece;
+delimiter //
+CREATE PROCEDURE move_piece(
+    psrcCol CHAR(1),
+    psrcRow TINYINT,
+    pdstCol CHAR(1),
+    pdstRow TINYINT)
+BEGIN
+    SET @srcCol = psrcCol;
+    SET @srcRow = psrcRow;
+    SET @dstCol = pdstCol;
+    SET @dstRow = pdstRow;
+    SET @piece = 0;
+    SET @blank = '';
+
+    -- Get the piece we are moving
+    SET @stmt = CONCAT('SELECT ',@srcCol,
+        '+0 INTO @piece FROM chessboard WHERE x = ?');
+    PREPARE preStmt FROM @stmt;
+    EXECUTE preStmt USING @srcRow;
+    DEALLOCATE PREPARE preStmt;
+
+    IF ((@piece &gt; 1 AND @piece &lt;= 14) AND @piece is not NULL)
+    THEN
+        -- Move the piece
+        SET @stmt = CONCAT('UPDATE chessboard SET ',
+            @dstCol,'=? WHERE x = ?');
+        PREPARE preStmt FROM @stmt;
+        EXECUTE preStmt USING @piece,@dstRow;
+        DEALLOCATE PREPARE preStmt;
+        SET @stmt = CONCAT('UPDATE chessboard SET ',
+            @srcCol,'=? WHERE x = ?');
+        PREPARE preStmt FROM @stmt;
+        EXECUTE preStmt USING @blank,@srcRow;
+        DEALLOCATE PREPARE preStmt;
+    ELSE
+        SELECT &quot;No piece found at given position.&quot; AS Error;
+    END IF;
+END;
+//
+</code></pre>
+
+<p>Some thoughts for future expansion:</p>
+
+<ul>
+<li>You could save the moves in a separate table to record time it took.</li>
+<li>Implement some other movement notation.</li>
+<li>Lock a player after a move.</li>
+<li>Build some other stored routines to populate and reset the chessboard.</li>
+<li>Have multiple chessboard tables.</li>
+<li>Event scheduler can be used to implement the non-human player!</li>
+</ul>
+
+<p>Anyway, this was all about fun and Unicode testing. There will be probably no follow-up on this post. If somebody is crazy enough to actually implement a chess game in MySQL: awesome!</p>
+
+<p>(Disclaimer: I am not a chess player.)</p>
+
+<p>UPDATE 2009-12-31: Here is the insert statement for populating the chessboard:</p>
+
+<pre><code class="language-sql">INSERT INTO `chessboard` VALUES
+  (8,'♜','♞','♝','♛','♚','♝','♞','♜'),
+  (7,'♟','♟','♟','♟','♟','♟','♟','♟'),
+  (6,'','','','','','','',''),(5,'','','','','','','',''),
+  (4,'','','','','','','',''),  (3,'','','','','','','',''),
+  (2,'♙','♙','♙','♙','♙','♙','♙','♙'),
+  (1,'♖','♘','♗','♕','♔','♗','♘','♖');
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Gerry Narvaja
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Dec 30 2009, 20:23</time>
+      </div>
+    <div>
+      Wow! When I read the 1st article I didn&#39;t give too much thought, but now that you showed how simple it is to implement a move a ton of ideas started flooding my mind:<br /><br />1. What about a trigger to record the moves including the timestamp?<br />2. What about a &#39;game&#39; table where you can store moves for each game to have an AI engine analyze them?<br />3. What about an AI engine as stored procedure?<br />4. What about hosting a massive DB on Amazon RDS against which people could store their games and make it available to the world to implement different chess playing systems using it?<br /><br />I propose creating an <b>OpenChess</b> community to build on your proposal &hellip; and I haven&#39;t even started with the EOY drinking yet.<br /><br />Happy New Year!
+    </div>
+    </dd>
+  
+    <dt>
+          Roland Bouman
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Dec 31 2009, 08:35</time>
+      </div>
+    <div>
+      Hi!<br /><br />nice. But why not do:<br /><br />UPDATE chessboard <br />SET    e = CASE x <br />               WHEN 2 THEN &#39;&#39; <br />               WHEN 4 THEN &#39;♙&#39;<br />           END<br />WHERE  x IN (4, 2)<br /><br />YMMV, but I think this is simpler
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/building-mysql-universal-binaries-using-macos-x-10-6-snow-leopard/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/a-chessboard-in-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

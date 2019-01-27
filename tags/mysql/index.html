@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/mysql/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/mysql/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/mysql/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Mysql</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 37</div>
+
+  <div class="page-next">
+  
+  <a href="../../tags/mysql/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../tags/mysql/page/37/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2018/go-mysql80-compat/">Go MySQL driver working with new default authentication</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Jun 3, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><a href="https://github.com/go-sql-driver/mysql"><img src="../../images/go_mysql.jpg" class="summary"/></a>
+After the official release of <a href="https://dev.mysql.com/doc/refman/8.0/en/introduction.html">MySQL 8.0</a>, a few were complaining that the Go driver for MySQL did not have support for new default authentication method. It did indeed miss support, but this was <a href="https://github.com/go-sql-driver/mysql/issues/625">already noticed and bug reported</a> when moving to MySQL 8.0.4-rc. But, there was a valid workaround: you could (re-)create the users with a different authentication plugin, or set it globally in the configuration file using <a href="https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_authentication_plugin"><code>default_authenication_plugin</code></a>.</p>
+
+<p>A few days a ago, 1 June 2018, the good folks working on Go MySQL driver pushed a new <a href="https://github.com/go-sql-driver/mysql/commit/d743639f9cefbadabe171d5fe22c9008b06dd2f5">feature to support the <code>caching_sha2_password</code> plugin</a>  (1 June 2018), pushed to <code>master</code> (so not yet released). Result: users with native passwords can login, as well as users using the new default. Nice work!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2018/go-mysql80-compat/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2018/mysql8-unattended-dpkg/">Unattended Install of MySQL 8.0 on Debian</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 28, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/debian">debian</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><img src="../../images/mysql-deb-authconfig.png" class="summary"/>
+At <a href="https://www.dcso.de">work</a> we are doing quite a bit with Debian. To make things easier and automated, we can use the non-interactive feature of the Debian packaging system to deploy services. One of the stacks we are enrolling is <a href="https://dev.mysql.com/doc/refman/8.0/en/group-replication.html">MySQL Group Replication</a>, which requires at least 3 servers.</p>
+
+<p>Although the <a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#repo-qg-apt-repo-non-insteractive">MySQL Documentation</a> show how to install MySQL non-interactively, it is not entirely complete. The missing part is the extra question during the installation of the server whether you want to keep using the new default authentention method, or use the (now) legacy native method.</p>
+
+<p>If you are using a MySQL driver which has no support yet for strong password encryption (for example the <a href="https://github.com/go-sql-driver/mysql/issues/625"><code>go-sql-driver/mysql</code> package</a> driver), or you &ldquo;need&rdquo; to switch to MySQL 8.0 and keep previous user accounts intact, you will want to set the default back to the <code>mysql_native_plugin</code> for authentication. If you start new, and you can, stick to the new method.</p>
+
+<p>This post will show how to install MySQL 8.0 on a Debian 9 using the official MSQL APT repositories. It also shows the extra step to keep using the legacy MySQL authentencation method.</p>
+
+<p>Bonus: Ansible playbook included!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2018/mysql8-unattended-dpkg/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2018/mysql-join-docs/">Joining tables with JSON docs using MySQL 8.0</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 21, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><img src="../../images/join_json.png" class="summary"/>
+<a href="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-11.html">MySQL 8.0</a> got GA last month (April 2018) and that means it is time to get serious about getting back the relational in schema-less storage using the <a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">JSON datatype</a> and JSON functions.</p>
+
+<p>I have been very sceptic about <a href="https://en.wikipedia.org/wiki/SQL:2016">JSON support in a RDBMS</a>. The way XML was used in the past to store information, using functions to &lsquo;query&rsquo; unindexable data.. a bit messy. This same mess exists with JSON, but it&rsquo;s much easier to parse (=faster), easier to read, and still easy to mess it up (for nostalgics).</p>
+
+<p>This post is about getting back relational with JSON document storage, joining tables using schema-less stuff. Yes, I used a buzz word!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2018/mysql-join-docs/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2016/cpy-and-pypi/">MySQL Connector/Python currently not available from PyPI</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Feb 5, 2016</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">With PEP 470 now requiring files to be hosted on PyPI, you may have noticed that MySQL Connector/Python is now no longer available using the pip-tool.
+The MySQL Engineering team at Oracle really would like to have the connector available through PyPI and have been talking with the Python Foundation towards that. We know users and developers of OpenStack, for example, have requested this as well as lots of other Python users.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2016/cpy-and-pypi/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2015/mysql577-json-python/">MySQL 5.7 with JSON and Connector/Python</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Jun 18, 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/labs">labs</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p>In this post we will use the <a href="http://http://labs.mysql.com">MySQL 5.7.7</a> labs release which has support for <a href="http://www.json.org">JSON</a> documents stored in a special data type. We will be using <a href="http://dev.mysql.com/doc/connector-python/en/index.html">Connector/Python</a> and show how to get going with updating documents and getting data out.</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2015/mysql577-json-python/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 37</div>
+
+  <div class="page-next">
+  
+  <a href="../../tags/mysql/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../../tags/mysql/page/37/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

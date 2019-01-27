@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/what-are-the-timings-shown-in-mysql-query-browser/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>What are the timings shown in MySQL Query Browser?</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/status-on-mysql-connectorpython-and-python-v3-1/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-cluster-replication-failover-some-python/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      What are the timings shown in MySQL Query Browser?
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Oct 12, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Past weekend we got a customer request asking what the execution numbers shown in the <em>statusbar</em> of <a href="http://dev.mysql.com/downloads/gui-tools/5.0.html">MySQL Query Browser</a> really mean. Digging in the source and checking with developers, we got it explained and now hopefully documented for future generations.</p>
+
+<p>Lets execute a SELECT-statement using MySQL Query Browser (in Windows):</p>
+
+<pre><code> SELECT * FROM django_admin_log d; 2664 rows fetched in 0,0659s (0,0016s)
+</code></pre>
+
+<p><strong><code>N rows fetched in F sec (Q sec)</code></strong>, where</p>
+
+<ul>
+<li><code>N</code> = number of rows fetched</li>
+<li><code>F</code> = number of seconds it took for the GUI tool to fetch andprocess the query result (<em>fetch_time</em>)</li>
+<li><code>Q</code> = the number of seconds it took the MySQL server to executethe query (<em>query_time</em>)</li>
+</ul>
+
+<p><code>F</code> will be mostly bigger than <code>Q</code>. However if the query is complex and resultset is for example only 1 row, then <code>Q</code> might be bigger than <code>F</code>.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Tech
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 14 2009, 12:50</time>
+      </div>
+    <div>
+      Hello,<br /><br /><br />For leveraging traffic from the internet, I have manually collected a list of quality blogs and sites with whom I am interested in getting associated. <br /><br />I liked your Site/blog and i&#39;m interested in having my blog&#39;s text link in     your blog roll or Friends Section.<br /><br />To process this link exchange please place my blog on your home page using the<br />below  info <br /><br />Title: PHP Developer<br /><br />Url:   <a href="http://www.adamsinfo.com/php-mysql-developer/">http://www.adamsinfo.com/php-mysql-developer/</a><br /><br />And send me your link info with confirmation of my link so that I could place<br />you link on my blog. We will make link back to you on our home page (PR 5).<br /><br />I hope I will hear from you as soon as possible.<br />Sincerely,<br />Webmaster<br />Adamsinfo.com<br />seo@apnicsolutions.com
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/status-on-mysql-connectorpython-and-python-v3-1/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-cluster-replication-failover-some-python/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/fixing-pythons-deprecationwarning-sha/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Fixing Python&#39;s DeprecationWarning sha</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/one-month-bye-bye-dsl-and-mobile-phone-contracts/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/getting-illegal-dates-from-mysql-with-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Fixing Python&#39;s DeprecationWarning sha
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Sep 30, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>I thought I fixed this few days ago, but apparently I totally forgot to run the tests.</p>
+
+<p>First time I have to go around a DeprecationWarning, and I thought it was cool to share. Maybe I&rsquo;m totally doing it incorrectly, but at least I used a <code>lambda</code>! Whee!..</p>
+
+<pre><code>/mysql/connector/protocol.py:21: DeprecationWarning: the sha module is deprecated; use the hashlib module instead
+</code></pre>
+
+<pre><code class="language-python">try:
+    from hashlib import sha1
+except:
+    import sha
+    sha1 = lambda s: sha.new(s)
+
+print sha1('geert').digest()
+</code></pre>
+
+<p>Update 2009-10-01: I&rsquo;ve changed the above code yet again to make it simpler and more conform to <a href="http://www.python.org/dev/peps/pep-0008/">PEP 8</a> which says to use ImportError exception (thanks to Marius for this tip!):</p>
+
+<pre><code>try:
+    from hashlib import sha1
+except ImportError:
+    from sha import new as sha1
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Marius Gedminas
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Sep 30 2009, 15:18</time>
+      </div>
+    <div>
+      I suggest &#39;except ImportError&#39; -- you wouldn&#39;t want to trap and ignore things like KeyboardInterrupt, if the user happens to press ^C exactly at the wrong moment, now would you?<br /><br />I have, in fact, triggered funny errors from Ubuntu&#39;s command-not-found by pressing ^C very quickly after realizing I misspelt the command name.<br /><br />If you don&#39;t feel very attached to the lambda, you can shorten the fallback part to &#39;from sha import new as sha1&#39;.  Just a stylistic suggestion; what you have will work fine too.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Oct 1 2009, 06:04</time>
+      </div>
+    <div>
+      @Marius<br /><br />The ImportError-exception tip, I&#39;m adding that. I see it&#39;s also in PEP8 (which I have to follow more..).<br /><br />I&#39;ll also revert to the import you suggest. I didn&#39;t think of &#39;renaming&#39; the new() method.<br /><br />Thanks!
+    </div>
+    </dd>
+  
+    <dt>
+          Marius Gedminas
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Oct 1 2009, 14:13</time>
+      </div>
+    <div>
+      Actually, the sha module has two names for the same class: &#39;sha&#39; and &#39;new&#39;:<br /><br />    &gt;&gt;&gt; import sha<br />    &gt;&gt;&gt; sha.new is sha.sha<br />    True<br /><br />So perhaps<br /><br />   from sha import sha as sha1<br /><br />would look prettier, and more similar to &#39;from hashlib import sha1&#39;.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/one-month-bye-bye-dsl-and-mobile-phone-contracts/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/getting-illegal-dates-from-mysql-with-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

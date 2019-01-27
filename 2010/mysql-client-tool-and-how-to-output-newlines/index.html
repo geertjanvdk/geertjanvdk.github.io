@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/mysql-client-tool-and-how-to-output-newlines/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL client tool and how to output newlines</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/make-your-hostname-stick-in-macosx/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/if-you-could-send-1-sms-to-everyone-on-earth-whatd-it-say/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL client tool and how to output newlines
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu May 13, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>This blog posts explains how to add a new line in strings in <a href="http://dev.mysql.com">MySQL</a> <a href="http://dev.mysql.com/doc/refman/5.1/en/stored-programs-views.html">Stored Procedures</a> and how to output the result using the MySQL client tool.</p>
+
+<p>Today I was fooling around with <a href="http://geert.vanderkelen.org/2010/02/stuffing-gaps-in-collations-table-using.html">some stored procedure</a> making it more fancy and stuff. What I wanted was the <code>OUT</code> variable to contain a newline. Easy of course, using <a href="http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#function_concat"><code>CONCAT</code></a>:</p>
+
+<pre><code>mysql&gt; SELECT CONCAT('foo','\n','bar');
++--------------------------+
+| CONCAT('foo','\n','bar') |
++--------------------------+
+| foo
+bar                  |
++--------------------------+
+</code></pre>
+
+<p>Now, if you <strong>concat strings in a stored procedure</strong>, it doesn&rsquo;t work as expected when you run it through the MySQL client tool <code>mysql</code>:</p>
+
+<pre><code class="language-sql">DELIMITER //
+CREATE PROCEDURE sp1(OUT pres VARCHAR(6000))
+BEGIN
+  SET pres = CONCAT('foo','\n','bar');
+END;
+//
+DELIMITER ;
+
+SET @res = 'foo ';
+CALL sp1(@res);
+SELECT @res;
+</code></pre>
+
+<p>When we execute it, we get this:</p>
+
+<pre><code>$ mysql -N test &lt; foo.sql
+foo\nbar
+</code></pre>
+
+<h2 id="what-on-earth-is-wrong">What on earth is wrong?</h2>
+
+<p>After some looking, we found a not so often used option called <code>--raw</code>. This produces the the desired effect:</p>
+
+<pre><code>$ mysql -Nr test &lt; foo.sql
+foo
+bar
+
+</code></pre>
+
+<p>But that&rsquo;s not all! Use <code>\G</code> when selecting the <code>OUT</code>-variable and it is also working. The output is not so useful though.</p>
+
+<p>Ah.. The things you find out while having the day off..</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/make-your-hostname-stick-in-macosx/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/if-you-could-send-1-sms-to-everyone-on-earth-whatd-it-say/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

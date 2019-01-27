@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mysql-cluster-7-0-careful-with-ndb_mgmd-and-configdir/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Cluster 7.0: careful with ndb_mgmd and --configdir</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/macports-and-mac-os-x-10-6-snow-leopard/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/the-lost_events-incident-when-is-it-reported/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Cluster 7.0: careful with ndb_mgmd and --configdir
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Sep 18, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Using <a href="http://www.mysql.com/products/database/cluster/">MySQL Cluster</a> 7.0, if you start the <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster-programs-ndb-mgmd.html">management node</a> it will write a binary, cached version of the configuration. The default location is (currently) a bit tricky, if you compile yourself, you&rsquo;ll find it in: <code>&lt;BASEDIR&gt;/mysql-cluster</code>.</p>
+
+<p>Make sure to specify everytime the <code>--configdir</code> option when starting the <code>ndb_mgmd</code>.</p>
+
+<pre><code class="language-shell">$ ndb_mgmd -f config.ini --configdir=/path/to/cachedir
+</code></pre>
+
+<p>I&rsquo;m using the same value as <code>Datadir</code> for the <code>--configdir</code> option.</p>
+
+<p>An elegant solution it is not, IMHO. Maybe it&rsquo;s good to make your own <code>ndb_mgmd_safe</code>?</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Matthew Montgomery
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Sep 18 2009, 18:29</time>
+      </div>
+    <div>
+      Geert,<br /><br />ndb_mgmd will read the defaults file /etc/my.cnf or ~/.my.cnf for a [ndb_mgmd] block.  Simply add a block like this: <br /><br />[ndb_mgmd]<br />configdir=/path/to/cachedir<br />config-file=/path/to/config.ini <br />nbd-connectstring=host1:port,host2:port<br /><br />Then you can just call ndb_mgmd from the command line without passing any options.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Sep 19 2009, 05:51</time>
+      </div>
+    <div>
+      Matthew,<br /><br />True, but you still got to set the option, whether it is in the option file or on the command line.<br />And I can&#39;t, since I&#39;m juggling to much between versions :)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/macports-and-mac-os-x-10-6-snow-leopard/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/the-lost_events-incident-when-is-it-reported/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

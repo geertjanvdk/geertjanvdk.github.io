@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/how-to-start-mysql-cluster-7-0-with-2-management-nodes/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Start MySQL Cluster 7.0 with 2 management nodes</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/traveling-by-train-to-krakow-poland-from-germany/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Start MySQL Cluster 7.0 with 2 management nodes
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Aug 31, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>We&rsquo;ve seen a few people in the community struggling with the new management node features in <a href="http://www.mysql.com/products/database/cluster/">MySQL Cluster</a> 7.0. To be honnest, we sometimes in MySQL Support, are scratching our heads as well. This simple how-to will explain how to start a MySQL Cluster from scratch with 2 management nodes (and 2 data nodes).</p>
+
+<p>Note that this post is not about a rolling upgrade from MySQL Cluster 6.3.</p>
+
+<p>Here is the basic config.ini we are going to use. Note the <code>Hostname</code> parameters as we are going to use them often:</p>
+
+<pre><code>[NDBD DEFAULT]
+Datadir=/data2/users/geert/cluster/master
+NoOfReplicas=2
+DataMemory=80M
+IndexMemory=10M
+
+[NDB_MGMD DEFAULT]
+Datadir=/data2/users/geert/cluster/master
+
+[NDB_MGMD]
+Id=1
+Hostname = machine-1
+
+[NDB_MGMD]
+Id=2
+Hostname = machine-2
+
+[NDBD]
+Id=3
+Hostname = machine-3
+
+[NDBD]
+Id=4
+Hostname = machine-4
+
+[API]
+[API]
+[API]
+[API]
+</code></pre>
+
+<p>We start with an empty MySQL Cluster: no data, no logs. The <code>config.ini</code> is only on <code>machine-1</code> (however, it&rsquo;s good to have it on both anyway, making it HA!).</p>
+
+<p>Start the first <code>ndb_mgmd</code> process on host <code>machine-1</code>:</p>
+
+<pre><code>$ ndb_mgmd -f config.ini --configdir=/path/to/empty/dir --initial
+..NDB Cluster Management Server. mysql-5.1.35 ndb-7.0.7
+..Reading cluster configuration from 'config.ini'
+</code></pre>
+
+<p>On <code>machine-2</code> you start the 2nd management as follows:</p>
+
+<pre><code class="language-bash">$ ndb_mgmd -c machine-1 --ndb-nodeid=2 --configdir=/path/to/empty/dir
+..NDB Cluster Management Server. mysql-5.1.35 ndb-7.0.7
+..Trying to get configuration from other mgmd(s) using
+    'nodeid=2,machine-1'...
+..Connected to 'machine-1'...
+</code></pre>
+
+<p>Note that starting the second <code>ndb_mgmd</code> is quite different:</p>
+
+<ul>
+<li>It does not read <code>config.ini</code>, but gets configuration from <code>machine-1</code>.</li>
+<li>It needs to know what node ID it has, because it doesn&rsquo;t read a configuration file.</li>
+<li>There is no <code>--initial</code> option.</li>
+</ul>
+
+<p>At this point, you should have a cluster that looks like this (doing <code>SHOW</code> connected to the first management node on <code>machine-1</code>):</p>
+
+<pre><code>ndb_mgm&gt; SHOW
+..
+[ndbd(NDB)]     2 node(s)
+id=3 (not connected, accepting connect from machine-3)
+id=4 (not connected, accepting connect from machine-4)
+
+[ndb_mgmd(MGM)] 2 node(s)
+id=1    @machine-1  (mysql-5.1.35 ndb-7.0.7)
+id=2 (not connected, accepting connect from machine-2)
+..
+</code></pre>
+
+<p><strong>Important:</strong> The fact that you don&rsquo;t see the second management node connect is because you did not start data nodes. Management nodes &lsquo;see&rsquo; each other through connected data nodes!</p>
+
+<p>Now start the data nodes, but for fun, point the 2nd one to the 2nd management node.</p>
+
+<p>On <code>machine-3</code> you do:</p>
+
+<pre><code class="language-sh">$ ndbd -c machine-1
+..Configuration fetched from 'machine-1', generation: 1
+</code></pre>
+
+<p>Same on <code>machine-4</code> but connect to the 2nd management node:</p>
+
+<pre><code class="language-sh">$ ndbd -c machine-2
+..Configuration fetched from 'machine-2', generation: 1
+</code></pre>
+
+<p>Your MySQL Cluster is now up and running with 2 management and 2 data nodes.</p>
+
+<pre><code>ndb_mgm&gt; SHOW
+..
+[ndbd(NDB)]     2 node(s)
+id=3    @machine-3  (mysql-5.1.35 ndb-7.0.7, Nodegroup: 0, Master)
+id=4    @machine-4  (mysql-5.1.35 ndb-7.0.7, Nodegroup: 0)
+
+[ndb_mgmd(MGM)] 2 node(s)
+id=1    @machine-1  (mysql-5.1.35 ndb-7.0.7)
+id=2    @machine-2  (mysql-5.1.35 ndb-7.0.7)
+..
+</code></pre>
+
+<p><a href="{% post_url 2009-09-01-configuration-change-and-rolling-restart-with-mysql-cluster-7-0 %}">Next</a> we&rsquo;ll do some experimenting changing some parameters and doing a rolling restart, but that&rsquo;s for another article/blog post.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Johan Andersson
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Aug 31 2009, 13:56</time>
+      </div>
+    <div>
+      Hi,I submitted a bug report a while back:<a href="http://bugs.mysql.com/bug.php?id=45495">http://bugs.mysql.com/bug.php?id=45495</a>
+    </div>
+    </dd>
+  
+    <dt>
+          iCafeMinds
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri May 14 2010, 16:17</time>
+      </div>
+    <div>
+      Is this config or procedure applicable for 7.1?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.teknoglobal.co.id">Arif Rahman Hakim</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jul 22 2011, 02:31</time>
+      </div>
+    <div>
+      <p>Hi,
+Could you please show me about MY.CNF configuration for each data node..?</p>
+
+<p>Thank you for your kindness.</p>
+
+<p>Best regards</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 5 2011, 06:37</time>
+      </div>
+    <div>
+      <a href="#comment-178" rel="nofollow">@iCafeMinds </a>
+It should be the same for MySQL Cluster 7.1 yes.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 5 2011, 06:38</time>
+      </div>
+    <div>
+      <a href="#comment-1181" rel="nofollow">@Arif Rahman Hakim </a>
+There was no my.cnf-file for the data nodes.
+    </div>
+    </dd>
+  
+    <dt>
+          eL
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 10 2013, 05:44</time>
+      </div>
+    <div>
+      what if machine-1 die? the machine-2 still live to clustering the data to node 3 and 4??
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 10 2013, 05:52</time>
+      </div>
+    <div>
+      <a href="#comment-3225" rel="nofollow">@eL </a>
+machine-2 is a Management Node, which is only needed to start cluster and manage it. It is not needed to store data. Data Nodes should be up.
+    </div>
+    </dd>
+  
+    <dt>
+          Emilio Scalise
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Apr 8 2014, 13:25</time>
+      </div>
+    <div>
+      <p>I&rsquo;ve filled a bug against mysql cluster doc, since -c option is bad described.
+<a href="http://bugs.mysql.com/bug.php?id=72275">http://bugs.mysql.com/bug.php?id=72275</a></p>
+
+<p>I hope that they fix it.</p>
+
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/traveling-by-train-to-krakow-poland-from-germany/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

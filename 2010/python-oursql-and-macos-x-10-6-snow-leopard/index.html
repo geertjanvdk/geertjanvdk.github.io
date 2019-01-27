@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/python-oursql-and-macos-x-10-6-snow-leopard/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Python, oursql and MacOS X 10.6 (Snow Leopard)</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/dont-forget-the-commit-in-mysql/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/fosdem-connecting-mysql-and-python-handout-wrap-up/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Python, oursql and MacOS X 10.6 (Snow Leopard)
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Feb 8, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/community">community</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This post explains how to compile <strong><a href="https://launchpad.net/oursql">oursql</a></strong> and install it on MacOS 10.6. oursql is a Python database interface for MySQL, an alternative to <a href="http://sourceforge.net/projects/mysql-python/files/">MySQL for Python</a> (i.e. <a href="http://blog.some-abstract-type.com/2009/09/mysql-python-and-mac-os-x-106-snow.html">MySQLdb</a>) and <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a>.</p>
+
+<p>First, <strong>find out which MySQL you installed</strong>. This can be either the 32-bit or the 64-bit version. To make sure, find the mysqld (e.g. in /usr/local/mysql/bin) and do the following in a Terminal window:</p>
+
+<pre><code>shell&gt; file /usr/local/mysql/bin/mysqld
+.../mysqld: Mach-O 64-bit executable **x86_64**
+
+</code></pre>
+
+<p>If you see x86_64, you got 64-bit, otherwise 32-bit. If you see both, then you have a universal build. This is important for specifying the <code>ARGSFLAG</code> when building.</p>
+
+<p><a href="https://launchpad.net/oursql/+download"><strong>Download oursql</strong> from Launchpad</a> and unpack it into some directory. Using the information from above, you&rsquo;ll have to do following for 64-bit platform (or universal build) in a Terminal window:</p>
+
+<pre><code>shell&gt; ARCHFLAGS=&quot;-arch x86_64&quot; python setup.py build
+shell&gt; sudo python setup.py install
+
+</code></pre>
+
+<p>For 32-bit, you&rsquo;ll have to do:</p>
+
+<pre><code>shell&gt; ARCHFLAGS=&quot;-arch i386&quot; python setup.py build
+shell&gt; sudo python setup.py install
+
+</code></pre>
+
+<p>Following error will be reported when you don&rsquo;t specify the correct <code>ARCHFLAGS</code>:</p>
+
+<pre><code>ld: warning: in .../lib/libmysqlclient.dylib,
+file is not of required architecture
+
+</code></pre>
+
+<p><strong>Tips</strong>:</p>
+
+<ul>
+<li><p>When building failed, it is good to remove oursql, unpack it and try again.</p></li>
+
+<li><p>If you don&rsquo;t want to compile anything, or run into more troubles, give <a href="https://launchpad.net/myconnpy/+download">MySQL Connector/Python a try</a> (alpha releases). It&rsquo;s a pure Python implementation of the MySQL Client/Server protocol and doesn&rsquo;t need compiling or a MySQL installation.</p></li>
+
+<li><p>You can download MySQL from either <a href="http://www.mysql.com">www.mysql.com</a> or <a href="http://dev.mysql.com">dev.mysql.com</a>.</p></li>
+</ul>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/dont-forget-the-commit-in-mysql/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/fosdem-connecting-mysql-and-python-handout-wrap-up/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

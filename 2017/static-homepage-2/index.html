@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2017/static-homepage-2/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Deploying Static Homepage, Part 2</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2018/go-year/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2016/cpy-and-pypi/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Deploying Static Homepage, Part 2
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Jun 13, 2017</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/jekyll">jekyll</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hugo">hugo</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>About 2 years ago, summer of 2015, I converted my Wordpress to a static website using <a href="http://jekyllrb.com">Jekyll</a>.
+Today, June 2017, I&rsquo;m yet again refactoring my blog and homepage, but now using <a href="http://gohugo.io">Hugo</a>. In the end,
+the outcome is pretty much the same. The user experience with Hugo, however, is better.</p>
+
+<h2 id="why-going-static">Why going static?</h2>
+
+<p>I planned to write lots in this paragraph, but I&rsquo;ll say it just quoting myself:</p>
+
+<blockquote>
+<p>Less to hack; less to crack.</p>
+</blockquote>
+
+<h2 id="no-comments-where-is-analytics-search">No comments? Where is Analytics? Search?</h2>
+
+<p>Lots of websites use clever tricks so they can track you even when you are not logged in or better, not even
+registered. I found that for whatever reason, <a href="https://disqus.com/">Disqus</a> for example would result in a cookie being set for Facebook (probably because user was using Facebook authentication).</p>
+
+<p>Therefor, I removed the 3rd party embedded commenting tool Disqus although I liked it. If you want to comment,
+head over <a href="https://twitter.com/intent/tweet?screen_name=geertjanvdk">Twitter</a>, or send me an email (see <a href="../../about">About</a>).</p>
+
+<p>Search, which was using Google, is also gone.</p>
+
+<h2 id="framework-less">Framework-less</h2>
+
+<p>Except for <a href="http://fontawesome.io/">Font Awesome</a>, my homepage is not using any external framework or libraries
+such as <a href="https://jquery.com">jQuery</a> or <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
+
+<p>The responsiveness, or my attempt to master CSS, is pure my own. It will not work with older browsers, and I&rsquo;m not
+like extensively testing on all platforms (I actually check it), but for my simple homepage, no need for anything
+huge. It&rsquo;s again a few headaches less, by having a small headache doing pure Javascript.</p>
+
+<h2 id="is-static-something-for-you">Is static something for you?</h2>
+
+<p>Depends. If you can scale down and don&rsquo;t need it all to fancy, sure. I could, and I can easily deploy to anywhere. I
+have my own root-server, but creating a container and deploying like that is something I could do as well. And maybe
+I will.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2018/go-year/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2016/cpy-and-pypi/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

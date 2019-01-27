@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/using-raw-host-disks-in-virtualbox-on-mac-os-10-5/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Using RAW host disks in VirtualBox on Mac OS 10.5</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/importing-itunes-library-into-last-fm-on-mac/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/importing-ken-ishii/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Using RAW host disks in VirtualBox on Mac OS 10.5
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Feb 17, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/opensolaris">opensolaris</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/sun">sun</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/virtualbox">virtualbox</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>The manual of <a href="http://www.virtualbox.org/">VirtualBox</a> has a section called <em>Using a raw host hard disk from a guest</em> which explains in detail how to use raw disks from the guest host. However, it&rsquo;s a bit tricky on Mac OS as you have the disks automatically mounting. Here is a small HOWTO showing how to mount a USB stick (using Mac OS 10.5) so it can be used as the <em>IDE Primary Master</em> in VirtualBox.</p>
+
+<p>Warning: this is probably for more advanced users. Careful what you do with mounting and umounting manually!</p>
+
+<p>Start by inserting the USB stick and see if gets mounted in <em>Finder</em>. If you would <em>Eject</em> the device, it gets u(n)mounted, but you can&rsquo;t use it anymore in VirtualBox. The trick here is to use <code>diskutil</code> (which replaces disktool) in a <em>Terminal</em> session. I assume the volume (e.g. USB stick) is empty.</p>
+
+<p>Preparing the volume:</p>
+
+<ol>
+<li>Launch the Terminal application</li>
+<li>At the prompt do: <code>diskutil list</code>
+
+<ul>
+<li>Look for your device in the list, probably at the end. In my case it was <code>/dev/disk4</code></li>
+<li>Now lets u(n)mount it (not eject!): <code>diskutil umountDisk /dev/disk4</code></li>
+</ul></li>
+<li>At this point, your Finder window might disappear. But that&rsquo;s not a problem.</li>
+</ol>
+
+<p>To make the volume available to VirtualBox we need to create a <em>VMDK file</em>. This is described fully in the manual, but here it is in a few steps:</p>
+
+<ol>
+<li>Launch the Terminal application</li>
+<li>Go to the location where you store your <em>Hard Disk images</em>, e.g. <code>cd ~/Virtual</code></li>
+<li>Execute (on one line, changing filename and the actual rawdisk): <code>VBoxManage internalcommands createrawvmdk -filename ./USBStick.vmdk -rawdisk /dev/disk4</code></li>
+<li>Open the VirtualBox application, and from the File Menu launch the <em>Virtual Media Manager</em></li>
+<li>Click Add, and locate the file you created, e.g. <em>USBStick</em>, and click &lsquo;Open&rsquo;.
+At this point, you should have the new <em>Virtual Hard Disk</em> available which you can use to make a new virtual machine. Use the disk you created as the primary hard disk just like you would do with hard disk images.</li>
+</ol>
+
+<p>Some errors you might run into:</p>
+
+<ul>
+<li>VBoxManage reports VERR_DEV_IO_ERROR: this means the volume is still in use by Mac OS. You should first unmount it using <code>diskutil</code> (see earlier in this post)</li>
+<li>Mac OS keeps mount the volume: I didn&rsquo;t find a good solution for this (i.g. using <code>/etc/fstab</code> is no good, and scripting was to much work). I just kept unmounting it using <code>diskutil</code> until VirtualBox locked it.</li>
+<li>VBoxManage reports VBOX_E_IPRT_ERROR, and lots more: This is when storage format could not be read. I&rsquo;m not sure why this is reported, but the RAW host disk VMDK was created successfully in my case, and can be used.</li>
+</ul>
+
+<p>A caveat doing the above: you&rsquo;ll need to remake the VMDK file if the disk is on a different device. This can for example happen when you first insert a DVD, and then the USB Stick. Maybe there is a solution for this using <code>/etc/fstab</code> or similar in Mac OS.</p>
+
+<p>I had to do the above to make an installation on a USB stick. Ubuntu somehow failed during the installation (not sure why..); now I&rsquo;m trying OpenSolaris.</p>
+
+<p>Whatever you do, make sure your USB Stick is fast: I got a slow, cheap one now and it takes forever to format..</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          ionas
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Sep 16 2009, 15:39</time>
+      </div>
+    <div>
+      Thanks for sharing.<br />Another way that worked for me:<br />- Connect USB Stick Hardware to your Mac.<br />- Eject it from the Finder. Make sure its still in as hardware in your System Profiler under USB.<br />- Start Virtual Box. It should be there then.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/importing-itunes-library-into-last-fm-on-mac/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/importing-ken-ishii/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

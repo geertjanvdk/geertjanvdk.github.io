@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2012/mysql-connectorpython-1-0-8-available-for-download/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python 1.0.8 available for download</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/find-in-rpm-specs/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/connector-python-1-0-ga/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python 1.0.8 available for download
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Dec 25, 2012</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Last week we made a maintenance release for MySQL Connector v1.0 available. The announcement can be read in the <a href="http://forums.mysql.com/read.php?3,576447,576447#msg-576447">MySQL forums</a> and the <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/cpython-news-1-0-8.html">history log is available online</a>.</p>
+
+<p>Connector/Python v1.0.8 does not introduce anything new, it only comes with bug fixes. Some are quite important and it&rsquo;s probably good to upgrade.</p>
+
+<p>Please use the <a href="http://bugs.mysql.com">MySQL Bugs website</a> to report any problem.</p>
+
+<p>Some useful links:</p>
+
+<ul>
+<li>Documentation: <a href="http://dev.mysql.com/doc/connector-python/en/index.html">http://dev.mysql.com/doc/connector-python/en/index.html</a></li>
+<li>Release Notes: <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/index.html">http://dev.mysql.com/doc/relnotes/connector-python/en/index.html</a></li>
+<li>Downloads: <a href="http://dev.mysql.com/downloads/connector/python/#downloads">http://dev.mysql.com/downloads/connector/python/#downloads</a></li>
+<li>Feedback: <a href="http://bugs.mysql.com">http://bugs.mysql.com</a></li>
+<li>Forum: <a href="http://forums.mysql.com/list.php?50">http://forums.mysql.com/list.php?50</a></li>
+</ul>
+
+<p>Happy holidays! Hope you don&rsquo;t get a bad cold like we did at home..</p>
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          PBLN RAO
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Feb 18 2013, 08:21</time>
+      </div>
+    <div>
+      <p>I am getting  below error on win XP but its working in WIN 7</p>
+
+<p><code>File &quot;\\ps\show_time\Showtime_Package\showtime\Modules\mysql\connector\cursor.py&quot;, line 619, in fetchall
+    (rows, eof) = self._connection.get_rows()
+  File &quot;\\ps\show_time\Showtime_Package\showtime\Modules\mysql\connector\connection.py&quot;, line 451, in get_rows
+    rows = self._protocol.read_text_result(self._socket, count)
+  File &quot;\\ps\show_time\Showtime_Package\showtime\Modules\mysql\connector\protocol.py&quot;, line 234, in read_text_result
+    packet = sock.recv()
+  File &quot;\\ps\show_time\Showtime_Package\showtime\Modules\mysql\connector\network.py&quot;, line 169, in recv_plain
+    raise errors.InterfaceError(errno=2013)
+mysql.connector.errors.InterfaceError: 2013: Lost connection to MySQL server during query
+Traceback (most recent call last):
+  File &quot;\\ps\SHOW_TIME\Showtime_Package\showtime\Launch_Showtime.pyw&quot;, line 20, in 
+    ShowTimeLaunch()</code></p>
+
+<p>I was using 1.0.5 on python 2.6</p>
+
+<p>Thought of updating to 1.0.8,
+But In Official release of 1.0.8 i did not find for python 2.6</p>
+
+<p>Can you give me a solution</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Feb 19 2013, 08:44</time>
+      </div>
+    <div>
+      Mmm.. Any way you can try to use Python 2.7 on Windows?
+    </div>
+    </dd>
+  
+    <dt>
+          PBLN RAO
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Feb 22 2013, 02:16</time>
+      </div>
+    <div>
+      <p>Greet a typo in my replay</p>
+
+<p>Greet i cannot use python 2.7 because we developed app which works external and as well as internal to Maya 2011 which intern uses Python 2.6.4. So i am bound to use Python 2.6.4.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Mar 4 2013, 06:34</time>
+      </div>
+    <div>
+      <a href="#comment-2345" rel="nofollow">@PBLN RAO </a>
+Please try the platform independent source of v1.0.9 on Windows. It should fix the problem the inet_pton on older systems. Python 2.6 is still supported by Connector/Python, there is just no MSI for it.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/find-in-rpm-specs/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/connector-python-1-0-ga/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

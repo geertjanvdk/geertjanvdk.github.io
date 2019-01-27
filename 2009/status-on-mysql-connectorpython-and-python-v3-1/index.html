@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/status-on-mysql-connectorpython-and-python-v3-1/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Status on MySQL Connector/Python and Python v3.1</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-synonym-of-the-day-long-is-mediumtext/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/what-are-the-timings-shown-in-mysql-query-browser/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Status on MySQL Connector/Python and Python v3.1
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Oct 18, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This weekend I&rsquo;ve been busy porting <a href="http://dev.mysql.com">MySQL</a> <a href="https://code.launchpad.net/myconnpy">Connector/Python</a> to <a href="http://python.org">Python</a> <a href="http://docs.python.org/3.1/whatsnew/3.0.html">3.1</a> in a new <a href="https://code.launchpad.net/~geertjmvdk/myconnpy/myconnpy-Py3K">experimental branch</a>. It is quite a challenge and I was advised to actually rewrite the whole thing for Py3K. However, after crawling through the TypeErrors and other exceptions I figured I did good with porting the code. It helps to re-factor some ancient, weird lines of code and learns me the new goodies coming with Python v3.1.</p>
+
+<p>Status: examples are somehow working, but not all unittests. So we are like 60% away from having MySQL under Python 3.1.</p>
+
+<p>I must say that <strong>I love Python 3.1</strong>! Especially the <em>Text and Data</em> concept! The major caveat is that we&rsquo;ll have to maintain 2 branches since it&rsquo;s totally incompatible with previous Python versions.</p>
+
+<p>So how we are going to name Python 2K and 3K branches? Shall we pack both Python v2.x and v3.x in the same package and let the setup tools decide what to install? I&rsquo;m favoring this, so there is no &ldquo;What shall I download?&rdquo; confusion.</p>
+
+<p>Universal Python Eggs anyone?</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Damien Lebrun
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Oct 18 2009, 13:43</time>
+      </div>
+    <div>
+      I think you should use the same name for both branches but post one distribution for each python version you support and let easy_install (or your users) pick the right distribution. You could post a generic distribution for py 2.x and a specific one for py 3.1.
+    </div>
+    </dd>
+  
+    <dt>
+          Tarek
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Oct 18 2009, 16:01</time>
+      </div>
+    <div>
+      You could also have a single branch and let 2to3 do the work automatically by using distribute, a drop in replacement for setuptools. See <a href="http://packages.python.org/distribute">http://packages.python.org/distribute</a> and come at #distutils on freenode for help
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Oct 19 2009, 05:46</time>
+      </div>
+    <div>
+      Thanks for the comments!<br /><br />I&#39;m really thinking of indeed making one package, size should be OK. But I&#39;m not sure I would like to count on &#39;2to3&#39; since there are features like &#39;abs&#39; I would like to use eventually.<br /><br />But lets first work on get it working :-)
+    </div>
+    </dd>
+  
+    <dt>
+          dbr
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Oct 23 2009, 04:11</time>
+      </div>
+    <div>
+      Can you point me to some directions on how to get and install your experimental 3.1 branch (I&#39;m not familiar with bzr at all, and it won&#39;t emerge for me in Gentoo, but I&#39;ll get around that eventually even if I have to skip the package system)?<br /><br />I don&#39;t care if it&#39;s still very rough around the edges. Thanks.
+    </div>
+    </dd>
+  
+    <dt>
+          Rackeer
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Nov 6 2009, 17:10</time>
+      </div>
+    <div>
+      Hey<br /><br />have a question, I&#39;m trying rebuilt an excel <sup>2003</sup>&frasl;<sub>7</sub> app. Looking at mysql/p(j)ython solution, any advice or tutorials. Excel does alot of calculations.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Nov 6 2009, 17:40</time>
+      </div>
+    <div>
+      @dbr:<br />Sorry, missed your question, but it&#39;s so rough it&#39;s ugly still. I hope to get a package ready before End of Year.<br /><br />@Rackeer:<br />Excel? No.. lol?
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-synonym-of-the-day-long-is-mediumtext/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/what-are-the-timings-shown-in-mysql-query-browser/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/renaming-a-file-using-applescript/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Renaming a file using AppleScript</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/splitting-as-string-and-joining-a-list-using-applescript/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mysql-connectorpython-and-database-pooling/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Renaming a file using AppleScript
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/applescript">applescript</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/aperture">aperture</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>The following <a href="http://en.wikipedia.org/wiki/Applescript">AppleScript</a> function renames a file. If you thought this to be a simple thing, try to write it without looking here below. I spend a lot time on this, I might not even use it, but here it is for other mortals wishing to lose weight exercising AppleScript:</p>
+
+<pre><code class="language-applescript">to renameFile(oldAlias, newFileName)
+ tell application &quot;Finder&quot;
+  set f to item (oldAlias as text)
+  tell f
+   set ext to its name extension
+   set nFn to (newFileName &amp; &quot;.&quot; &amp; ext)
+   set its name to nFn
+  end tell
+ end tell
+ set tmp to my splitString(oldAlias as text, &quot;:&quot;)
+ set the last item of tmp to nFn
+ return my joinList(tmp, &quot;:&quot;)
+end renameFile
+</code></pre>
+
+<p>No comments in code, I do not want to spoil your fun!</p>
+
+<p>I needed while writing an export script for Aperture. Here is how I used it after a photo was exported from Aperture:</p>
+
+<pre><code class="language-applescript">tell application &quot;Aperture&quot;
+ set dstFile to (export imageSel using export setting defExportSetting to fldAlbum)
+end tell
+set dstFile to my renameFile(dstFile, imgId)
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://www.vwin.be">Van Deputte Eric</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Dec 14 2014, 12:56</time>
+      </div>
+    <div>
+      <p>Hi, sorry for bothering you &hellip;</p>
+
+<p>I&rsquo;m very ignorant about applescript .. but as I use Filemaker Pro (fop) I need
+the possibility to rename - by starting a applescript- some little incoming file, which has always a different name to  the same name &ldquo;medini.txt&rdquo;
+By doing that I can then automate a importscript (in fmp) ( = to import and delete afterwards the little file)</p>
+
+<p>Would you mind helping me for this simple(?) script &hellip;?</p>
+
+<p>I&rsquo;m trying the following:
+- given a file with a random name p.e.: &ldquo;11077_80523812.txt&rdquo; ( downloaded from a website)
+- in a folder let&rsquo;s say Macintosh HD: Medini
+- By starting the script I would like to be invited to freely select/choose this kind of file
+-  AND so that after my selection the filename of the chosen file changes automatically to (always the same) name: &ldquo;medini.txt&rdquo;&hellip;
+So I would be possible to import it in my fop-database and (after the import) delete the little file (that I can already do in .. applescript ;-))</p>
+
+<p>Eric Van Deputte
+Lennik Belgium
+www.vwin.be
+evdp@vwin.be</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Cagy
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Dec 19 2014, 14:19</time>
+      </div>
+    <div>
+      WTF? That many lines of &lsquo;code&rsquo; to rename a file?
+Is there no &lsquo;native&rsquo; method to do this?
+I&rsquo;m new (and skeptic) to applescript but have to use it for a project&hellip;
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/splitting-as-string-and-joining-a-list-using-applescript/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mysql-connectorpython-and-database-pooling/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

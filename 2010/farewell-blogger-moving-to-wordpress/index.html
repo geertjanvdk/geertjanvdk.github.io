@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/farewell-blogger-moving-to-wordpress/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Farewell Blogger.. Hello WordPress</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mysql-connectorpython-0-2-devel-available/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mysql-5-5-6-rc-innodb-is-default-storage-engine/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Farewell Blogger.. Hello WordPress
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Sep 24, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/personal">personal</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/opinion">opinion</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>My blog (and website) is now running on self-hosted <a href="http://wordpress.org">WordPress</a> installation. Yeah, it&rsquo;s a <a href="http://php.net">PHP</a>-thing, but I couldn&rsquo;t bother making my own with <a href="http://www.djangoproject.org">Django</a> or similar using <a href="http://python.org">Python</a>. No time for that and I&rsquo;m not a programming-language-radical-idiot.</p>
+
+<p>RSS feeds have changed: you&rsquo;ll find the link on <a href="http://geert.vanderkelen.org">my new website</a>.</p>
+
+<p>Why I moved away from <a href="http://www.blogger.com">Blogger</a>? It just plain sucked, and I have had my fill of it..</p>
+
+<p>I needed to create some plugin for WordPress. Existing plugins redirecting old Blogger URLs were not good enough. The code you&rsquo;ll find below will redirect links from Blogger to the new links in WordPress. Hopefully it helps somebody!</p>
+
+<pre><code class="language-php">/*
+Plugin Name: Redirect Blogger links
+Version: 1.0
+Plugin URI: http://geert.vanderkelen.org/post/301/
+Description: Redirect requests using Blogger links to Wordpress link.
+Author: Geert Vanderkelen
+Author URI: http://geert.vanderkelen.org/
+*/
+
+add_action('init', 'redirect_blogger_links');
+
+function redirect_blogger_links()
+{
+  global $wpdb;
+  $uri = $_SERVER['REQUEST_URI'];
+
+  $matches = array();
+  if( preg_match('#(/[0-9]{4}/[0-9]{2}/.*\.html)$#', $uri, $m) ) {
+    $query = &quot;SELECT post_id FROM $wpdb-&gt;postmeta &quot;.
+      &quot;WHERE meta_key='blogger_permalink' AND meta_value='&quot;.$m[1].&quot;'&quot;;
+    $post = $wpdb-&gt;get_var($query);
+    if( $post ) {
+      $wp-&gt;query_vars = array('p'=&gt;$post);
+      $url = get_permalink($post);
+    }
+    if( isset($url) ) {
+      header(&quot;Location: $url&quot;, true, 301);
+      header(&quot;Connection: close&quot;);
+      exit();
+    }
+  }
+}
+</code></pre>
+
+<p>Note: if somebody can optimize it so the plugin only kicks in on links from Blogger, that would be great. It&rsquo;s now executed on each request, which is a bit overkill.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mysql-connectorpython-0-2-devel-available/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mysql-5-5-6-rc-innodb-is-default-storage-engine/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

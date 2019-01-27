@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2013/mysql-connector-python-1-1-4/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python v1.1.4 GA</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/install-mysqlcpy-using-pip/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-1-3b/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python v1.1.4 GA
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Dec 20, 2013</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>It has been a busy week for the Pythonic MySQL Team at Oracle: <a href="http://forums.mysql.com/read.php?3,602334,602334#msg-602334">MySQL Utilities 1.3.6</a> and a brand new <a href="http://forums.mysql.com/read.php?3,602307,602307#msg-602307">Utilities 1.4.1 Alpha</a> has been release which includes Fabric. Yes, and of course, the one binding them all: <a href="http://forums.mysql.com/read.php?3,600145,600145#msg-600145">Connector/Python v1.1.4</a> has been released as GA (General Available). Check out the <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/news-1-1.html">Change History</a> if you want to keep up with what is being added and changed.</p>
+
+<p>New features found in v1.1:</p>
+
+<ul>
+<li>Important: Connector/Python <strong>will not work with Python v2.4 or v2.5</strong>. Yes, I consider this a feature.</li>
+<li>Connector/Python comes with it&rsquo;s own database <a href="http://dev.mysql.com/doc/connector-python/en/connector-python-django-backend.html"><strong>backend for Django v1.4 and v1.5</strong></a>. It supports Python v3 and also support microsecond precision when using MySQL 5.6 and later.</li>
+<li><strong><a href="http://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursorprepared.html">MySQL Prepared Statements</a></strong> are now supported.</li>
+<li><strong><a href="http://dev.mysql.com/doc/connector-python/connector-python-connection-pooling.html">Connection Pooling</a></strong> is now available baked into Connector/Python.</li>
+<li>Start transactions using the <strong>MySQLConnection start_transaction()</strong> method and find out whether the session has a transaction on going using the <strong>in_transaction property</strong>.</li>
+</ul>
+
+<p>Some useful links:</p>
+
+<ul>
+<li>Documentation: <a href="http://dev.mysql.com/doc/connector-python/en/index.html">http://dev.mysql.com/doc/connector-python/en/index.html</a></li>
+<li>Release Notes: <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/index.html">http://dev.mysql.com/doc/relnotes/connector-python/en/index.html</a></li>
+<li>Downloads: <a href="http://dev.mysql.com/downloads/connector/python/#downloads">http://dev.mysql.com/downloads/connector/python/#downloads</a></li>
+<li>Feedback: <a href="http://bugs.mysql.com">http://bugs.mysql.com</a></li>
+<li>Forum: <a href="http://forums.mysql.com/list.php?50">http://forums.mysql.com/list.php?50</a></li>
+</ul>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://chrisstreeter.com">Chris Streeter</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Dec 20 2013, 22:12</time>
+      </div>
+    <div>
+      I was wondering if you guys are going to update the version that can be installed through PyPI? That is pretty much the standard way to install packages these days for Python, and not having an up-to-date installable version seems like an oversight?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Dec 21 2013, 08:18</time>
+      </div>
+    <div>
+      <p>@Chris: Yes, of course. There was somehow a problem logging in yesterday, but seems to somehow work now. I added Connector/Python v1.1.4 while keeping v1.0.12 also available for the folks still on Python v2.4/v2.5.</p>
+
+<p>Note that I&rsquo;m very concerned about a very weird message when running pip:</p>
+
+<p>&ldquo;You are installing an externally hosted file. Future versions of pip will default to disallowing externally hosted files.
+ You are installing a potentially insecure and unverifiable file. Future versions of pip will default to disallowing insecure files.&rdquo;</p>
+
+<p>The fact that files are more secure when hosted at pypi is to me False (yes, with a big F :)),</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Joan Viladrosa
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Feb 9 2014, 13:48</time>
+      </div>
+    <div>
+      What about django 1.6 support? Is there any way to make it work?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Feb 13 2014, 08:37</time>
+      </div>
+    <div>
+      Yes, we&rsquo;re working on a fix for Django v1.6. Stay tuned.
+    </div>
+    </dd>
+  
+    <dt>
+          Mo Mo
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Sep 4 2014, 15:17</time>
+      </div>
+    <div>
+      Can you tell me what&rsquo;s the best version of MySQL Connector/Python that supporting Django 1.5 for now(2014.09)?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 1 2014, 05:55</time>
+      </div>
+    <div>
+      I replied privately, but best is to always use the latest Connector/Python. Not sure how long we can keep supporting older Django versions.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/install-mysqlcpy-using-pip/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-1-3b/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mysql-cluster-listen-and-know-whats-going-on/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Cluster: Listen and know what&#39;s going on</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/clusterious-defined/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Cluster: Listen and know what&#39;s going on
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 16, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>You&rsquo;re not scared of writing <a href="{% post_url 2009-12-10-clusterious-defined %}">clusterious</a> code and eavesdropping is your favorite pastime at work? You want to know what&rsquo;s going on in your MySQL Cluster but were afraid asking? The <a href="http://dev.mysql.com/doc/ndbapi/en/mgm-api.html">MySQL Cluster Management API</a> can help you!</p>
+
+<p>Below you&rsquo;ll find example C-code that will get you started with MGM API. It&rsquo;s rather dull at first, but <strong>imagine</strong> you, instead of printing the event information, taking action. Imagine you starting another thread where you run some procedure which tells a monitoring system: &ldquo;Hey! Some error happend!&rdquo;. Imagine you spending countless hours of clusterious fun with this API!</p>
+
+<p><strong>The example listens for events</strong> in 4 categories (Statistic, Info, Error and Checkpoint) with the greatest level of 15. The code only prints out what event was received, and it also shows how to interprete the <code>event.category</code>, which proves to be a bit tricky.</p>
+
+<pre><code class="language-cpp">#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;mgmapi/mgmapi.h&gt;
+
+int main()
+{
+  NdbMgmHandle handle = ndb_mgm_create_handle();
+
+  NdbLogEventHandle logevent;
+  struct ndb_logevent event;
+
+  int res, category;
+  int timeout = 1000; // in ms
+  int filter[] = {
+    15, NDB_MGM_EVENT_CATEGORY_STATISTIC,
+    15, NDB_MGM_EVENT_CATEGORY_INFO,
+    15, NDB_MGM_EVENT_CATEGORY_ERROR,
+    15, NDB_MGM_EVENT_CATEGORY_CHECKPOINT,
+    0
+  };
+
+  ndb_mgm_set_connectstring(handle,&quot;localhost&quot;);
+  ndb_mgm_connect(handle,0,0,0);
+
+  logevent = ndb_mgm_create_logevent_handle(handle, filter);
+  while(true) {
+    res = ndb_logevent_get_next(logevent,&amp;amp;event,timeout);
+    category = event.category + CFG_MIN_LOGLEVEL;
+    if (category == NDB_MGM_EVENT_CATEGORY_CHECKPOINT) {
+      printf(&quot;We got a checkpoint event!\n&quot;);
+    }
+    printf(&quot;Event type %d category %d\n&quot;,
+       event.type, event.category);
+    usleep(500); // temporize!
+  }
+
+  ndb_mgm_destroy_handle(&amp;amp;handle);
+}
+</code></pre>
+
+<p>Note that the above is very <em>bare bone</em> without error handling, but it works. Also, run it on the machine which runs your Management Node (<code>ndb_mgmd</code>), or change the connection string in the code.</p>
+
+<p>Compiling can be a bit of a chore, unless you read <a href="{% post_url 2009-11-12-want-to-compile-a-mysql-cluster-mgm-api-application %}">&ldquo;Want to compile a MySQL Cluster MGM API application?&rdquo;</a>.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          LenZ
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Dec 16 2009, 13:23</time>
+      </div>
+    <div>
+      Hi Geert! Nice writeup, thanks for that! So when will we see a Python wrapper for this? ;)
+    </div>
+    </dd>
+  
+    <dt>
+          Matthew Boehm
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Dec 16 2009, 16:49</time>
+      </div>
+    <div>
+      Excellent!
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/clusterious-defined/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

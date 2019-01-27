@@ -1,0 +1,12 @@
+{{ partial "post/head" . }}
+
+{{ if .Summary }}
+<div class="post-summary">
+{{ .Summary }}
+</div>
+{{ else }}
+<div class="post-content">
+{{ .Content }}
+</div>
+{{ end }}
+{{ partial "post/foot" . }}

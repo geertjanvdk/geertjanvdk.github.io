@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2013/column-info-using-connector-python/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Snippet: Show column information using MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/mysql-connector-python-1-1-3b/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-fabric-support-in-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Snippet: Show column information using MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Oct 8, 2013</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/snippet">snippet</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<h2 id="problem">Problem</h2>
+
+<p>You have a query executed by <a href="http://dev.mysql.com/downloads/connector/python/">MySQL Connector/Python</a> and would like to show column information nicely on the console.</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>Every cursor object has a <a href="http://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-description.html">description property</a>. This can be used to show information about the columns in a result set.</p>
+
+<pre><code class="language-python">columns = []
+maxnamesize = 0
+for coldesc in cur.description:
+    coldesc = list(coldesc)
+    coldesc[2:6] = []
+    columns.append(coldesc)
+    namesize = len(coldesc[0])
+    if namesize &gt; maxnamesize:
+        maxnamesize = namesize
+
+fmt = &quot;{{nr:3}} {{name:{0}}} {{type:12}} {{null}}&quot;.format(maxnamesize+1)
+colnr = 1
+for column in columns:
+    (colname, fieldtype, nullok, colflags) = column
+    print(fmt.format(
+        nr=colnr,
+        name=colname,
+        null='NOT NULL' if nullok else 'NULL',
+        type=FieldType.get_info(fieldtype)
+    ))
+    colnr += 1
+</code></pre>
+
+<h2 id="discussion">Discussion</h2>
+
+<p>There are two parts in the code snippet. The for-loop goes over the columns and saves the information we need. We also figure out the longest column name. (Yes, we could put the column name at the end but then it would not be much fun.)</p>
+
+<p>On line 4 we use the cursor description property. It returns a list of tuples which contains information about the column in the result set. The information is <a href="http://www.python.org/dev/peps/pep-0249/#description">defined by PEP-249</a>, though only the first 2 items, name and column type, are mandatory. The last field is kind of a MySQL extension returning the flags of the column. On line 20 we fetch the name of the column data type using the FieldType class.</p>
+
+<p>If you&rsquo;d like to get information about the column flags, import and use FieldFlag:</p>
+
+<pre><code class="language-python">FieldFlag.get_info(colflags)
+</code></pre>
+
+<p>Below is example of output, for a table created using <code>CREATE TABLE t1 (name VARCHAR(20), day_of_birth DATE)</code>.</p>
+
+<pre><code>  1 name          VAR_STRING   NOT NULL
+  2 day_of_birth  DATE         NOT NULL
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Craig
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Oct 8 2013, 15:01</time>
+      </div>
+    <div>
+      <p>Is there a way to get the column length?</p>
+
+<p>For example to get the 20 from &ldquo;CREATE TABLE t1 (name VARCHAR(20), day_of_birth DATE)&rdquo;</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Oct 8 2013, 15:56</time>
+      </div>
+    <div>
+      <p>Craig,</p>
+
+<p>No, you can not get this information from the result of a SELECT statement. You&rsquo;ll need to query the INFORMATION_SCHEMA.COLUMNS table to get what you want.</p>
+
+<p>Note that the actual length might differ. If you would do &lsquo;SELECT CONCAT(c1, &lsquo;more data&rsquo;) AS c1 FROM t1&rsquo;, then the column &lsquo;c1&rsquo; might have more than 20 characters.</p>
+
+<p>Cheers,
+Geert</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://databaseblog.myname.nl/">Dani&amp;euml;l van Eeden</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Oct 8 2013, 16:38</time>
+      </div>
+    <div>
+      The text says PEP-8, but the link points to PEP-249&hellip;?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Oct 8 2013, 19:51</time>
+      </div>
+    <div>
+      Thanks Dani&euml;l, I have corrected the post saying PEP-249 instead of PEP-8.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.hotwirepe.com">Mark Janos</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jan 10 2014, 02:25</time>
+      </div>
+    <div>
+      <p>Hi Geert,</p>
+
+<p>I&rsquo;m executing a Stored Procedure using the cursor.callproc method, then getting the results using the cursor.stored_results method.</p>
+
+<p>When I call either cursor.description or cursor.column_names I just get None or and empty_set as a result.</p>
+
+<p>Is there any way to get the column names of the result set returned from a Stored Procedure?</p>
+
+<p>Thanks!</p>
+
+<p>Mark</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 29 2014, 09:35</time>
+      </div>
+    <div>
+      This might be a bug, which could be reported through bugs.mysql.com.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/mysql-connector-python-1-1-3b/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-fabric-support-in-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

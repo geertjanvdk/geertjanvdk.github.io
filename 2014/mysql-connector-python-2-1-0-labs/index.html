@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2014/mysql-connector-python-2-1-0-labs/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Connector/Python 2.1 with C Extension using Connector/C</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/back-on-the-blog/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2014/cpy-on-pypi-201-123/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Connector/Python 2.1 with C Extension using Connector/C
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Oct 1, 2014</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/oracle">oracle</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>In time for <a href="https://www.oracle.com/openworld/">Oracle OpenWorld</a> 2014, we released <a href="http://geert.vanderkelen.org/mysql-connector-python-2-0-1/">Connector/Python 2.0</a>. We also released a <a href="http://labs.mysql.com">labs release</a> Connector/Python 2.1 and we have a new feature: a <strong>C Extension which uses Connector/C</strong>.</p>
+
+<p>This C Extension is an optional, an alternative to the pure Python MySQL Client protocol implementation. One of the reasons to implement it was to improve performance in some situations, for example, when huge result sets are returned. Pure Python is still default, if C Extension is not available.</p>
+
+<p>The following post will get your through downloading and installing the MySQL Connector/Python 2.1.0 labs release.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+<li>Windows users out of luck; the labs release only compiles on Linux, OSX and other Unices.</li>
+<li>Python development packages.</li>
+<li>You will need MySQL Connector/C 6.1.5 or later installed. Where it is installed and how is up to you. A good location if you want to experiment is in /opt/mysql-connector-c (which we will use in examples)</li>
+<li>Nerves? Yes, we tried to make it easy to compile, and try to make it easier.</li>
+</ul>
+
+<h2 id="download">Download</h2>
+
+<p>Download MySQL Connector/Python 2.1.0 from the following URL and make sure you read the disclaimer:</p>
+
+<p><a href="http://labs.mysql.com">http://labs.mysql.com</a></p>
+
+<p>Use MySQL Connector/C 6.1.5. Download binaries for your platform and make sure it matches the 32 or 64-bit architecture:</p>
+
+<p><a href="http://dev.mysql.com/downloads/connector/c/">http://dev.mysql.com/downloads/connector/c/</a></p>
+
+<h2 id="compile">Compile</h2>
+
+<p>First, for this blog post, we install Connector/C under <code>/opt</code>:</p>
+
+<pre><code class="language-shell">$ cd /opt
+$ tar xzf mysql-connector-c-6.1.5-osx10.7-x86.tar.gz
+$ ln -s mysql-connector-c-6.1.5-osx10.7 mysql-connector-c
+</code></pre>
+
+<p>Unpack the Connector/Python 2.1.0 release anywhere you want and compile the C Extension in-place:</p>
+
+<pre><code class="language-shell">$ cd /path/to/mysql-connector-python-2.1.0-labs
+$ python setup.py build_ext --inplace \
+    --with-mysql-config=/opt/mysql-connector-c/bin/mysql_config
+</code></pre>
+
+<p>After that last line you might either be happy or see errors. (Then you&rsquo;ll understand why I did start a pure Python database driver 6 years ago.) If you have problems, you might want to check the command output and, if needed, open a bug report through <a href="http://bugs.mysql.com">bugs.mysql.com</a>.</p>
+
+<p>Note that we compiled the C Extension and installed it in the lib/ folder. You should see lib/_mysql_connector.so.</p>
+
+<h2 id="testing">Testing</h2>
+
+<pre><code class="language-shell">$ PYTHONPATH=&quot;./lib&quot; python
+&gt;&gt;&gt; import mysql.connector
+&gt;&gt;&gt; mysql.connector.HAVE_CEXT
+True
+&gt;&gt;&gt; cnx = mysql.connector.connect()
+&gt;&gt;&gt; type(cnx)
+&lt;mysql.connector.connection_cext.CMySQLConnection object at 0x10759a710&gt;
+&gt;&gt;&gt; import _mysql_connector
+&gt;&gt;&gt; myc = _mysql_connector.MySQL()
+&gt;&gt;&gt; myc.get_client_info()
+'6.1.5'
+</code></pre>
+
+<h2 id="missing">Missing</h2>
+
+<ul>
+<li>The 2.1.0 labs release does not have prepared statement support.</li>
+<li>Compiling on Windows will not yet be easy; we still need to work on that.</li>
+</ul>
+
+<h2 id="tell-us">Tell us!</h2>
+
+<p>This C Extension is pure CPython. It doesn&rsquo;t use anything like SWIG or Cython. There should not be to much trouble compiling it, but if you see a problem, please open a bug report using <a href="http://bugs.mysql.com">bugs.mysql.com</a> or tell us first on <a href="http://forums.mysql.com">forums.mysql.com</a>.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://linuxjedi.co.uk/">Andrew Hutchings</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Oct 2 2014, 14:19</time>
+      </div>
+    <div>
+      Surely that is a step backwards?  One of the main reasons I know for people using the pure Python connector was so that it would work with event driven libraries such as eventlet. Whereas the C library can block the cooperative yielding
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Oct 2 2014, 18:45</time>
+      </div>
+    <div>
+      Andrew,
+In my post I say the C Extension is &ldquo;optional&rdquo;, it is an &ldquo;alternative to the pure Python implementation&rdquo; and I state that pure Python is default. You will not be confronted with dependencies when you don&rsquo;t specify you want the C Extension.
+It&rsquo;s not a step backwards at all.
+    </div>
+    </dd>
+  
+    <dt>
+          Mattia
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Nov 7 2014, 10:01</time>
+      </div>
+    <div>
+      I would be glad to use this extension in my software since I have performance issues with the current implementation but, if I understand correctly, this is not advised to use it for production.
+Do you have an estimation about when this extension will be safe to be used for production purposes?
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/back-on-the-blog/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2014/cpy-on-pypi-201-123/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

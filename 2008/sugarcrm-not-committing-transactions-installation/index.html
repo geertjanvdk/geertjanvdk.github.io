@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2008/sugarcrm-not-committing-transactions-installation/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>SugarCRM not committing transactions? (installation)</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/talking-at-the-mysql-confexpo-2009/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/damn-websites-switching-to-german/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      SugarCRM not committing transactions? (installation)
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Dec 15, 2008</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/community">community</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>What does a MySQL Support Engineer do during his first hours of vacation? Yes, napping. After that, he goes on the web and tries out something new. Today: <a href="http://www.sugarcrm.com">SugarCRM</a> .. and struggeling a little with the installation.</p>
+
+<p>The problem? The installation (on MacOS 10.5) was successful, no errors, but:</p>
+
+<pre><code>Sugar CRM 5.1.0c Files May Only Be Used With A Sugar CRM 5.1.0 Database
+</code></pre>
+
+<p>Logging didn&rsquo;t reveal anything, but the general query log did! All DML statements were send to MySQL, but apparently not .. committed? After looking in the code I noticed a lack of commit statements.. Putting an explicit commit it worked, for the <code>config</code> table.</p>
+
+<p>What was the real problem?</p>
+
+<pre><code>[mysqld]
+init_connect='SET AUTOCOMMIT=0'
+</code></pre>
+
+<p>Don&rsquo;t ask me why that was there, sometimes I do crazy stuff testing things, but this setup should work! Each transaction in applications should be committed. Disabling the AUTOCOMMIT shows that SugarCRM is not doing that.</p>
+
+<p>Actually, I filed a bug for it at <a href="http://bugs.sugarcrm.com">bugs</a> on the sweet.. euh, SugarCRM website.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          arjen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Dec 15 2008, 23:00</time>
+      </div>
+    <div>
+      So what &ldquo;bug&rdquo; did you actually report?<br />That SugarCRM is presuming AUTOCOMMIT=1 ?<br /><br />Where they&#39;re not using multi-statement transactions, they won&#39;t want to issue COMMIT all the time&hellip;.<br />I&#39;m sure that when they do have a multi-statement transaction, they wrap it in START TRANSACTION &hellip; COMMIT (as that&#39;s the only thing that makes that work, so it&#39;s not really a gamble to presume that ;-)<br /><br />What the system could do is issue an AUTOCOMMIT=1 when first connecting to make sure, but being a web app that would have to be done on every page and slow things down. Plus, this is no different from many other settings that can mess with the behaviour. You can&#39;t start overriding them all, it&#39;s best to simply note the correct/appropriate server config in the docs/setup.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Dec 16 2008, 10:58</time>
+      </div>
+    <div>
+      You say you are sure they wrap it in START TRANSACTION .. COMMIT, but obviously it is not like that. If you force MySQL to not autocommit, then you see the (installation) code does not commit transactions.<br /><br />I guess it boils down to &ldquo;explicit is better then implicit&rdquo;.<br /><br />Anyway, I guess the bug is pretty obvious, and workarounds exists..
+    </div>
+    </dd>
+  
+    <dt>
+          arjen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Dec 16 2008, 12:21</time>
+      </div>
+    <div>
+      Hmm, what I said was a longer sentence, and it was longer for a reason - you can&#39;t just leave words out and just presume it still means the same ;-)<br />So no, what you&#39;re referring to is not what I said.<br /><br />Yes, the symptom you saw is as you describe, but calling it a bug is unpractical to the extreme. As I mentioned, there are many other settings that you can change in MySQL server that would make most if not all apps break, you can&#39;t make all that explicit in the app, as it becomes unmaintainable (particularly with community/enterprise split having non-linear versioning!) and most importantly SLOW. You&#39;d have to run many more queries on connect, and before/after most queries.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Dec 16 2008, 18:06</time>
+      </div>
+    <div>
+      Djee&hellip;.
+    </div>
+    </dd>
+  
+    <dt>
+          Roland Bouman
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Dec 16 2008, 18:50</time>
+      </div>
+    <div>
+      Hi Geert!<br /><br />yes - I have seen problems like this many times - virtually every MySQL based application (yeah PHP crowd, looking at you especially) simply rely on a default MySQL configuration. <br /><br />I have written about these and other problems in relation to Wordpress:<br /><br /><a href="http://rpbouman.blogspot.com/search?q=wordpress">http://rpbouman.blogspot.com/search?q=wordpress</a><br /><br />But I have had similar findings for other popular PHP apps. <br /><br />Personally, I think the server admin should be free to configure the server to their liking. It should be the app&#39;s responsibility to establish the right environment upon connect. So if an app really needs autocommit because they didn&#39;t bother writing explicit transactions, fine - they should simply issue <br /><br />SET autocommit := 1<br /><br />when connecting. Same for sql mode - the app should ensure the right mode is set, not the admin.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Dec 16 2008, 19:10</time>
+      </div>
+    <div>
+      Right on Roland! Exactly!<br /><br />It&#39;s a small thingy really, but big projects like SugarCRM should really indeed allow transactional engines and honor MySQL configuration. I think this should be addressed.<br /><br />I commented today on my bug report at SugarCRM. Maybe it&#39;s an Enterprise feature! :-)
+    </div>
+    </dd>
+  
+    <dt>
+          Roland Bouman
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Dec 17 2008, 00:30</time>
+      </div>
+    <div>
+      I filed a bug for dotproject and Adam fixed it with almost no persuasion on my part ;-)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/talking-at-the-mysql-confexpo-2009/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/damn-websites-switching-to-german/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

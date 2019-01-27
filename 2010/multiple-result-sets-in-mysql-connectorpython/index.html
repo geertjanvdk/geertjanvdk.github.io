@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/multiple-result-sets-in-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Multiple result sets in MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/simulating-server-side-cursors-with-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/the-wrapped-jumbo-prawns/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Multiple result sets in MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sat Apr 24, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/pyhon">pyhon</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Latest code of <a href="http://dev.mysql.com">MySQL</a> C<a href="http://launchpad.net/myconnpy">onnector/Python</a> on launchpad has support for <a href="http://dev.mysql.com/doc/refman/5.1/en/stored-routines-syntax.html">multiple result sets</a> when you execute a stored procedure. We also changed the way the actual result of the routine is returned to conform to <a href="http://www.python.org/dev/peps/pep-0249/">PEP249</a>.</p>
+
+<p>Here is some example code: it creates a stored procedure which generates 2 result sets. You can get the result by calling <code>next_resultset()</code>, which is returning a <code>MySQLCursorBuffered</code>.</p>
+
+<pre><code class="language-python">cur = cnx.cursor()
+
+cur.execute(&quot;DROP PROCEDURE IF EXISTS multi&quot;)
+proc = &quot;&quot;&quot;
+  CREATE PROCEDURE multi(IN pFac1 INT, IN pFac2 INT, OUT pProd INT)
+  BEGIN
+    SELECT 1,'a' as FooBar;
+    SELECT 2;
+    SET pProd := pFac1 * pFac2;
+  END&quot;&quot;&quot;
+
+cur.execute(proc)
+result = cur.callproc(&quot;multi&quot;, (5, 6, 0))
+print &quot;Result:&quot;, result
+
+extcur = cur.next_resultset()
+i = 1
+while extcur:
+    rows = extcur.fetchall()
+    print &quot;Result set #%d:&quot; % i
+    print rows
+    extcur = cur.next_resultset()
+    i += 1
+
+cur.close()
+</code></pre>
+
+<p>The output:</p>
+
+<pre><code class="language-python">Result: ('5', '6', 30)
+Result set #1:
+[(1, u'a')]
+Result set #2:
+[(2,)]
+
+</code></pre>
+
+<p>As mentioned above: this will be part of 0.1.4-devel release due next week. Comments are welcome through the <a href="https://bugs.launchpad.net/myconnpy/+bug/569254">associated bug report</a>.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/simulating-server-side-cursors-with-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/the-wrapped-jumbo-prawns/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

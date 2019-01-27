@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/getting-illegal-dates-from-mysql-with-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Getting illegal dates from MySQL with Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/fixing-pythons-deprecationwarning-sha/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Getting illegal dates from MySQL with Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Sep 30, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Today we received <a href="https://bugs.launchpad.net/myconnpy/+bug/438857">a bug report</a> saying that we shouldn&rsquo;t throw an exception but instead return what <a href="http://sourceforge.net/projects/mysql-python/">MySQLdb</a> is returning. Bit research and MySQLdb is actually returning <code>None</code> for illegal dates: good!</p>
+
+<p>There is now a fix (showing up soon) on <a href="https://bugs.launchpad.net/myconnpy/">Launchpad</a> which will return dates as <code>None</code> where they are inserted as <code>'0000-00-00'</code>.</p>
+
+<p>A few lines of Python:</p>
+
+<pre><code>..
+data = [
+    (datetime.now().date(),datetime.now()),
+    ('0000-00-00','0000-00-00 00:00:00'),
+    ('1000-00-00','9999-00-00 00:00:00'),
+]
+for d in data:
+    stmt_insert = &quot;INSERT INTO %s (c1,c2) VALUES (%%s,%%s)&quot; % (tbl)
+    try:
+        cursor.execute(stmt_insert, d)
+    except (mysql.connector.errors.InterfaceError, TypeError) as e:
+    	print &quot;Failed inserting %s\nError: %s\n&quot; % (d,e)
+
+    if cursor.warnings:
+    	print cursor.warnings
+..
+</code></pre>
+
+<p>The script outputs the following data, and notice also the warnings (<a href="http://dev.mysql.com/doc/refman/5.0/en/server-sql-mode.html">SQL Mode</a> set to <code>NO_ZERO_IN_DATE,NO_ZERO_DATE</code>):</p>
+
+<pre><code class="language-python">[(u'Warning', 1265L, u&quot;Data truncated for column 'c1' at row 1&quot;),
+ (u'Warning', 1264L, u&quot;Out of range value for column 'c2' at row 1&quot;)]
+[(u'Warning', 1265L, u&quot;Data truncated for column 'c1' at row 1&quot;),
+ (u'Warning', 1264L, u&quot;Out of range value for column 'c2' at row 1&quot;)]
+(datetime.date(2009, 9, 30), datetime.datetime(2009, 9, 30, 15, 12, 23))
+(None, None)
+(None, None)
+</code></pre>
+
+<p><a href="https://bugs.launchpad.net/myconnpy/+bug/439298">Another change</a> we did today was returning a row as tuple, and rows as list of tuples.</p>
+
+<p>Tip: use <code>STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE</code> <a href="http://dev.mysql.com/doc/refman/5.0/en/server-sql-mode.html">SQL modes in MySQL 5.0</a> and later for new projects to make sure no illegal dates are inserted, or fix your application.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Eric
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Oct 1 2009, 03:31</time>
+      </div>
+    <div>
+      I happen to use zero dates, for cases where I need a &ldquo;no date&rdquo; marker but NULL would fail to trigger unique keys.  Fortunately, I can generally set such fields NOT NULL and use a zero default, so None should still work for me.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/fixing-pythons-deprecationwarning-sha/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

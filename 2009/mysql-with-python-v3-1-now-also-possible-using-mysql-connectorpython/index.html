@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL with Python v3.1 now also possible using MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-connectorpython-0-1-2-devel-available/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-cluster-listen-and-know-whats-going-on/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL with Python v3.1 now also possible using MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Dec 21, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>The second development release of <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a> comes with <strong>support for Python v3.1</strong>!</p>
+
+<p>I thought of making two distributions of MySQL Connector/Python, but then it would have been messy with versions and packaging. So what you get now is 2-in-1 and the installation script should be smart enough to figure it out.</p>
+
+<p>Please, if you find any issues, bugs or have suggestions: report them here <a href="https://bugs.launchpad.net/myconnpy">https://bugs.launchpad.net/myconnpy</a></p>
+
+<h2 id="download">Download</h2>
+
+<p>From <a href="https://launchpad.net/myconnpy/+download">LaunchPad</a>!</p>
+
+<h2 id="release-notes">Release notes</h2>
+
+<pre><code>Added Python v3.1 support* The subdirectory/module py3k/ contains Connector/Python compatible  with Python v3.1.1.
+
+* setup.py will install the correct Connector/Python distribution
+  depending on the Python version.
+* Test cases which were running against Python v2.4+ are also working
+  under Python v3.1
+* Examples found in py3k/examples should work with Python v3.1
+* The code will not check whether the Python version is supported.
+
+Misc.
+
+* Using divmod() in MySQLConverter._timedelta_to_mysql()
+* Avoiding imports and the use of isinstance() by putting code in
+  exceptions.
+* Stop using types module.
+</code></pre>
+
+<h2 id="installation">Installation</h2>
+
+<p>Installation is just like before:</p>
+
+<pre><code class="language-shell">$ tar xzf mysql-connector-python-0.1.1-devel.tar.gz
+$ cd mysql-connector-python-0.1.1-devel
+$ sudo python setup.py install
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Aigars Mahinovs
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Dec 24 2009, 17:20</time>
+      </div>
+    <div>
+      Does this connector work with PyPy and Unladen Swallow? If so, you are my hero! I was looking to test some things on PyPy and the Google python branch for work, but could not get the MySQLdb module compiled the right way. I hope this one will help me here.<br /><br />P.S. There is a simple way to use server-side results, right?
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-connectorpython-0-1-2-devel-available/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-cluster-listen-and-know-whats-going-on/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2011/connector-python-auto-reconnect/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Automatic reconnect in MySQL Connector/Python?</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/connector-python-using-bugs-mysql-com/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/mysql-connectorpython-available-through-the-python-package-index/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Automatic reconnect in MySQL Connector/Python?
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Dec 16, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>There have been some request to have some reconnect possibilities in <a href="http://launchpad.net/myconnpy">Connector/Python</a>. I&rsquo;m wondering now whether there should be some automatic reconnect on certain errors within the database driver.</p>
+
+<p>My personal feeling is to have no automatic reconnect within Connector/Python and the programmer has to come up with retrying transactions herself.</p>
+
+<p>For example:</p>
+
+<pre><code class="language-python">cnx.disconnect() # For testing..
+tries = 2
+while tries &gt; 0:
+	tries -= 1
+	try:
+		cursor.execute(&quot;INSERT INTO t1 (c1) VALUES ('ham')&quot;)
+		cnx.commit()
+	except mysql.connector.InterfaceError:
+		if tries == 0:
+			print &quot;Failed inserting data after retrying&quot;
+			break
+		else:
+			print &quot;Reconnecting..&quot;
+			cnx.reconnect()
+	else:
+		break
+</code></pre>
+
+<p>The above mimics how you would handle transactions and trying them reconnecting. I have ideas how to get this into Connector/Python, but it would not really fit <a href="http://www.python.org/dev/peps/pep-0249/">PEP-249</a>.</p>
+
+<p>Would the above use case of reconnecting be enough?</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Ulf Wendel
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Dec 16 2011, 17:34</time>
+      </div>
+    <div>
+      There aint no safe and water-proof way to detect transaction boundaries. Do not do automatic reconnect by default. Put, big, big warning into the manual for those who want it.
+    </div>
+    </dd>
+  
+    <dt>
+          Volans
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Dec 17 2011, 00:14</time>
+      </div>
+    <div>
+      <p>The auto-reconnection should be useful only if it where able to redo a failed query, reopening the connection and doing the same query/transaction failed.</p>
+
+<p>But in addition to transaction boundaries, there are many other circumstances to keep in mind like the connection encoding, various timeouts, and potentially any other MySQL session o global parameter that can be changed at runtime after the connection was established.
+In which state would you reopen the connection in those cases?</p>
+
+<p>Another particular case should be if the server parameters are changed from the first connection&hellip; the code maybe check those settings while connecting, the auto-reconnection can&rsquo;t do it with the same logic the application does.</p>
+
+<p>For those reasons for me too the aut.oreconnection should not be implemented.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.seunosewa.com/">Seun Osewa</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Dec 19 2011, 05:32</time>
+      </div>
+    <div>
+      It&rsquo;s probably best to provide a separate API to handle reconnection and transactions.
+    </div>
+    </dd>
+  
+    <dt>
+          Rudy
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri May 4 2012, 11:56</time>
+      </div>
+    <div>
+      The Ping() command of the native C API would be wounderful
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://mysqlha.blogspot.com">Mark Callaghan</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Dec 12 2012, 21:00</time>
+      </div>
+    <div>
+      Connections go away in the real world. One common reason is idle timeouts. I have now wasted 15+ minutes reading too many responses on the web from people standing on a soapbox telling me how evil auto-reconnect is. I just want to use it for a stupid monitoring script. Add it, make it off by default.
+    </div>
+    </dd>
+  
+    <dt>
+          Joe
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon May 13 2013, 05:50</time>
+      </div>
+    <div>
+      <p>&ldquo;Would the above use case of reconnecting be enough?&rdquo;</p>
+
+<p>So, let me get this straight&hellip; your proposed solution is for me to back and wrap every one of my cursor.execute() statments with the 14 extra lines you&rsquo;ve suggested?</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon May 13 2013, 07:36</time>
+      </div>
+    <div>
+      <a href="#comment-2851" rel="nofollow">@Joe </a>
+The example in this blog post is not a &lsquo;solution&rsquo;. It shows a possible way of using the reconnect()-method. How you use it is totally up to you.
+    </div>
+    </dd>
+  
+    <dt>
+          Keith
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jun 24 2014, 16:33</time>
+      </div>
+    <div>
+      A lack of auto-reconnect I can understand given the issues mentioned, but why doesn&rsquo;t mysql connector/python allow django to reconnect to the database on each request as it should if CONN_MAX_AGE is 0? After bouncing the mysql server with django 1.6.5, mysql connector/python 1.2.2, mysql server 5.5.37, apache worker 2.2.22, and python 3.3.5 on an otherwise stock and up-to-date ubuntu 12.04 setup, database access fails with File &ldquo;/usr/local/lib/python3.3/dist-packages/mysql/connector/connection.py&rdquo; in cursor 1328 raise errors.OperationalError(&ldquo;MySQL Connection not available.&rdquo;) and a web server restart is requred. After that access work just fine again.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/connector-python-using-bugs-mysql-com/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/mysql-connectorpython-available-through-the-python-package-index/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

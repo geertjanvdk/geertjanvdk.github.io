@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/make-mysql-refuse-connections-until-data-nodes-are-started/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Make MySQL refuse connections until data nodes are started</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/reducing-paper-mail/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/resize-and-set-default-column-size-in-mac-os-x-finder/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Make MySQL refuse connections until data nodes are started
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Nov 3, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><a href="http://www.mysql.com/products/database/cluster/">MySQL Cluster</a> <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster-news-6-3.html#mysql-cluster-news-5-1-39-ndb-6-3-28">6.3.28</a> and <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster-news-7-0.html#mysql-cluster-news-5-1-39-ndb-7-0-9">7.0.9</a> introduce the MySQL server option <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster-program-options-mysqld.html#option_mysqld_ndb-wait-setup"><code>--ndb-wait-setup</code></a>. This makes sure that clients can not connect the SQL Node when no Data Nodes are available within, by default, 15 seconds. When the timeout is reached, and no Data Nodes are available, the NDB storage engine will be marked as unavailable.</p>
+
+<p>The following will appear in the MySQL server error log when <code>--ndb-wait-setup=30</code> has been set:</p>
+
+<pre><code> [Note] NDB: NodeID is 10, management server 'ndbsup-priv-1:1406'
+ [Note] NDB[0]: NodeID: 10, **no storage nodes connected (timed out)**
+ [Note] Starting Cluster Binlog Thread
+ [Note] Event Scheduler: Loaded 0 events
+ [Note] NDB Binlog: Ndb tables initially read only.
+
+ .. 30 seconds later..
+
+ [Warning] NDB : Tables not available after 30 seconds.
+    Consider increasing --ndb-wait-setup value
+ [Note] /data1/mysql/5.1.39_6.3.28/libexec/mysqld: ready for connections.
+</code></pre>
+
+<p>Use case: when doing an installation and you start Data and SQL Nodes quickly after each other. Normally, services which connect to a MySQL server (which is connect to a MySQL Cluster) will have failures because NDB tables are not yet available. With <code>--ndb-wait-setup</code> option set, they will not even be able to connect. It could help in some automated install scenarios where you want <em>to make sure</em> clients can&rsquo;t do anything until Data Nodes are available.</p>
+
+<p>Stay tuned for the binaries due first half of November (2009). Source is already available for MySQL Cluster <a href="ftp://ftp.mysql.com/pub/mysql/download/cluster_telco/mysql-5.1.39-ndb-7.0.9/">7.0.9</a> and <a href="ftp://ftp.mysql.com/pub/mysql/download/cluster_telco/mysql-5.1.39-ndb-6.3.28/">6.3.28</a>.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Eli McGowan
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Dec 23 2010, 21:52</time>
+      </div>
+    <div>
+      <p>The --ndb-wait-setup link results in a page that does not contain any information about --ndb-wait-setup&hellip; If one exists, I recommend changing the link. If one doesn&rsquo;t exist, I recommend eliminating the link since it is misleading and not helpful.</p>
+
+<p>Browser Compatibility: The paragraph starting with &ldquo;[Note] NDB: NodeID&rdquo; is cut short in Firefox and Chrome.</p>
+
+<p>Thanks</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Dec 23 2010, 22:51</time>
+      </div>
+    <div>
+      <a href="#comment-513" rel="nofollow">@Eli McGowan </a>
+Thanks! I&rsquo;ve update the post (still lots of them needs updating after the move from Blogger). The link was indeed broken, and is now pointing correctly to the MySQL manual.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/reducing-paper-mail/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/resize-and-set-default-column-size-in-mac-os-x-finder/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

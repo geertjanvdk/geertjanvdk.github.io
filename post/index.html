@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/post/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/post/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/post/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" />
+  <title>Posts</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 78</div>
+
+  <div class="page-next">
+  
+  <a href="../post/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../post/page/78/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../2018/go-mysql80-compat/">Go MySQL driver working with new default authentication</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Jun 3, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><a href="https://github.com/go-sql-driver/mysql"><img src="../images/go_mysql.jpg" class="summary"/></a>
+After the official release of <a href="https://dev.mysql.com/doc/refman/8.0/en/introduction.html">MySQL 8.0</a>, a few were complaining that the Go driver for MySQL did not have support for new default authentication method. It did indeed miss support, but this was <a href="https://github.com/go-sql-driver/mysql/issues/625">already noticed and bug reported</a> when moving to MySQL 8.0.4-rc. But, there was a valid workaround: you could (re-)create the users with a different authentication plugin, or set it globally in the configuration file using <a href="https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_authentication_plugin"><code>default_authenication_plugin</code></a>.</p>
+
+<p>A few days a ago, 1 June 2018, the good folks working on Go MySQL driver pushed a new <a href="https://github.com/go-sql-driver/mysql/commit/d743639f9cefbadabe171d5fe22c9008b06dd2f5">feature to support the <code>caching_sha2_password</code> plugin</a>  (1 June 2018), pushed to <code>master</code> (so not yet released). Result: users with native passwords can login, as well as users using the new default. Nice work!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../2018/go-mysql80-compat/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../2018/mysql8-unattended-dpkg/">Unattended Install of MySQL 8.0 on Debian</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 28, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/debian">debian</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><img src="../images/mysql-deb-authconfig.png" class="summary"/>
+At <a href="https://www.dcso.de">work</a> we are doing quite a bit with Debian. To make things easier and automated, we can use the non-interactive feature of the Debian packaging system to deploy services. One of the stacks we are enrolling is <a href="https://dev.mysql.com/doc/refman/8.0/en/group-replication.html">MySQL Group Replication</a>, which requires at least 3 servers.</p>
+
+<p>Although the <a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#repo-qg-apt-repo-non-insteractive">MySQL Documentation</a> show how to install MySQL non-interactively, it is not entirely complete. The missing part is the extra question during the installation of the server whether you want to keep using the new default authentention method, or use the (now) legacy native method.</p>
+
+<p>If you are using a MySQL driver which has no support yet for strong password encryption (for example the <a href="https://github.com/go-sql-driver/mysql/issues/625"><code>go-sql-driver/mysql</code> package</a> driver), or you &ldquo;need&rdquo; to switch to MySQL 8.0 and keep previous user accounts intact, you will want to set the default back to the <code>mysql_native_plugin</code> for authentication. If you start new, and you can, stick to the new method.</p>
+
+<p>This post will show how to install MySQL 8.0 on a Debian 9 using the official MSQL APT repositories. It also shows the extra step to keep using the legacy MySQL authentencation method.</p>
+
+<p>Bonus: Ansible playbook included!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../2018/mysql8-unattended-dpkg/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../2018/mysql-join-docs/">Joining tables with JSON docs using MySQL 8.0</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 21, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><img src="../images/join_json.png" class="summary"/>
+<a href="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-11.html">MySQL 8.0</a> got GA last month (April 2018) and that means it is time to get serious about getting back the relational in schema-less storage using the <a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">JSON datatype</a> and JSON functions.</p>
+
+<p>I have been very sceptic about <a href="https://en.wikipedia.org/wiki/SQL:2016">JSON support in a RDBMS</a>. The way XML was used in the past to store information, using functions to &lsquo;query&rsquo; unindexable data.. a bit messy. This same mess exists with JSON, but it&rsquo;s much easier to parse (=faster), easier to read, and still easy to mess it up (for nostalgics).</p>
+
+<p>This post is about getting back relational with JSON document storage, joining tables using schema-less stuff. Yes, I used a buzz word!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../2018/mysql-join-docs/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../2018/go-year/">The Go Year</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu May 3, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><img src="../images/go_logo.svg" class="summary"/>
+Leaving the <a href="https://www.mysql.com">MySQL</a> Team mid 2016 was personally quite something. I needed a change, but I didn&rsquo;t realise it would change that much.</p>
+
+<p>I started my new job at <a href="https://dcso.de">DCSO</a> working on project written in Python. With my experience creating <a href="https://dev.mysql.com/downloads/connector/python/8.0.html">MySQL Connector/Python</a> I felt right where I should be. Good colleague, nice office, no more alone at home.. Soon, however, my scepticism of <a href="https://golang.org">Go</a>, the other programming language used at work, moved to acceptance. And here I am, more than a year later, writing pretty much everything using in Go.</p>
+
+<p><a href="https://graphql.org">GraphQL</a> servers and clients, single-binary web server applications, new ways using MySQL, .. those are a few things I&rsquo;ve been doing. I am still discovering the possibilities, and also the pains. Yes, there are things that annoy me, but I consider that more a good thing; nothing is perfect.</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../2017/static-homepage-2/">Deploying Static Homepage, Part 2</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Jun 13, 2017</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/jekyll">jekyll</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hugo">hugo</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p>About 2 years ago, summer of 2015, I converted my Wordpress to a static website using <a href="http://jekyllrb.com">Jekyll</a>.
+Today, June 2017, I&rsquo;m yet again refactoring my blog and homepage, but now using <a href="http://gohugo.io">Hugo</a>. In the end,
+the outcome is pretty much the same. The user experience with Hugo, however, is better.</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../2017/static-homepage-2/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <i class="fa fa-chevron-left blend-out arrow-nav"></i>
+  
+  </div>
+
+  <div class="page-number "> Page 1 of 78</div>
+
+  <div class="page-next">
+  
+  <a href="../post/page/2/" title="Next page"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-first">
+    
+    <i class="fa fa-chevron-up blend-out arrow-nav"></i>
+    
+  </div>
+
+  <div class="page-last">
+    
+    <a href="../post/page/78/" title="Last page"><i class="fa fa-chevron-down arrow-nav"></i></a>
+    
+  </div>
+
+</div>
+
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../js/main.js"></script>
+</body>
+</html>
+

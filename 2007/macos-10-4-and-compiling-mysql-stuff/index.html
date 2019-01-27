@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2007/macos-10-4-and-compiling-mysql-stuff/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MacOS 10.4 and compiling MySQL stuff</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2007/dont-forget-the-european-user-conferences/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2007/rochester-i5os-and-lots-new-stuff/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MacOS 10.4 and compiling MySQL stuff
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Aug 22, 2007</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>I just re-installed my MacOS 10.4 (Tiger) from scratch. However, it&rsquo;s more than just putting in the DVD and doing an upgrade.. This post is more a reminder for myself when I&rsquo;ll have to do it again!</p>
+
+<p>For MySQL you&rsquo;ll need newer versions installed on MacOS 10.4 of the popular GNU tools: automake, autoconf, bison and libtool. Otherwise you&rsquo;ll notice it doesn&rsquo;t really compile. You&rsquo;ll find URLs here below and download the latest versions.</p>
+
+<p>Additionally I needed to install pkgconfig because <code>/usr/local/bin/autoreconf</code> just failed for the ndb-connectors! Don&rsquo;t ask me why, I just found while googling for it..</p>
+
+<p>I did install everything under <code>/usr/local</code> and changed my <code>$PATH</code> in <code>~/.bash_profile</code> to</p>
+
+<pre><code>PATH=&quot;/usr/local/bin:$PATH&quot;
+</code></pre>
+
+<p>Quick &ldquo;one liner&rdquo; for shell to check on the version of the build tools:</p>
+
+<pre><code>shell&gt; for p in automake autoconf bison pkg-config;\
+ do echo -n &quot;$p: &quot; ; $p --version | head -n1; done;\
+ glibtool --version | head -n1
+</code></pre>
+
+<ul>
+<li><a href="http://ftp.gnu.org/gnu/automake/">http://ftp.gnu.org/gnu/automake/</a></li>
+<li><a href="http://ftp.gnu.org/gnu/autoconf/">http://ftp.gnu.org/gnu/autoconf/</a></li>
+<li><a href="http://ftp.gnu.org/gnu/bison/">http://ftp.gnu.org/gnu/bison/</a></li>
+<li><a href="http://ftp.gnu.org/gnu/libtool/">http://ftp.gnu.org/gnu/libtool/</a></li>
+<li><a href="http://pkgconfig.freedesktop.org/releases/">http://pkgconfig.freedesktop.org/releases/</a></li>
+</ul>
+
+<p>Of course you can use Fink or Darwin ports to install those tools.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2007/dont-forget-the-european-user-conferences/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2007/rochester-i5os-and-lots-new-stuff/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

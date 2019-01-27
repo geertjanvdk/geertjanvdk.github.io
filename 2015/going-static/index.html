@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2015/going-static/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Turning 38 today; Going Static</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/mysql577-json-python/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/mysqlcpy-2-1-1/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Turning 38 today; Going Static
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Jun 14, 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/personal">personal</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacks">hacks</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/jekyll">jekyll</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>I am turning 38 years old today. I am on my way to Belgium for the funeral of my grandmother. My family, Marta and Tomas, are at home.</p>
+
+<p>I am in <a href="https://en.wikipedia.org/?title=Bielefeld">Bielefeld</a>, on top of the hill. This is our usual stop from Berlin to Belgium: it&rsquo;s practically in the middle.</p>
+
+<p>I am sitting at the bar, and I have just finished a great project I have been working for a few months: revamp my homepage and blog, once again.</p>
+
+<p>I tried a few things getting away from (the great) Wordpress. I was trying to make my own again, doing it with Django or Flask, I am a Python guy after all. I tried to do something with my OwnCloud setup, with files, but that was so 1990s, writing HTML.</p>
+
+<p>Giving up, I did a search for &ldquo;generate static website&rdquo; and I pretty much hit the first link: &ldquo;<a href="http://jekyllrb.com">Jekyll</a>&rdquo;. It is written in Ruby, so I am naturally disliking it, but that doesn&rsquo;t mean I have to ignore it. I tried it more.. and behold!</p>
+
+<p>It went pretty fast, setting up Jekyll and getting it going. There were, whoever, some additional things I had todo:</p>
+
+<ul>
+<li>I wrote a few Python scripts to clean up my old LiveJournal/Blogger/Wordpress posts. It is now all YAML/Markdown.</li>
+<li>Page IDs are added and checked for uniqueness, for example, to make sure Disqus works OK.</li>
+<li>There was the issue that my old links wouldn&rsquo;t work, so I made a Jekyll plug-in to generate redirect rules from a special YAML tag. I learned YAML.. oh dear..</li>
+<li>Old comments are showing. I did not move them to Disqus since they were entered on my Wordpress installation, not on Disqus.</li>
+<li>Jekyll&rsquo;s default theme is quite good, but I changed a few things to look more &lsquo;mine&rsquo;.</li>
+</ul>
+
+<p>To put my homepage live, I do:</p>
+
+<pre><code class="language-shell">$ git push deploy master
+</code></pre>
+
+<p>Site is generated, Nginx restarted, et voila. No more databases, no more PHP, no more web security issues. Plain HTML (and Javascript).</p>
+
+<p>Still few issues, but it&rsquo;s workable. RSS feed will be not working probably, and I need a tag cloud. Old links should redirect though, and I think that&rsquo;s important.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/mysql577-json-python/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/mysqlcpy-2-1-1/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

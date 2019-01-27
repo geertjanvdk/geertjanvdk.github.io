@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/ndb-connection-pooling-in-mysql-and-single-user-mode/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>NDB connection pooling in MySQL and Single User Mode</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/feedback-on-mysql-cluster-talk-at-fosdem/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/pain-in-the-back/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      NDB connection pooling in MySQL and Single User Mode
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Jan 28, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Since MySQL Cluster 6.2 it is possible to setup a pool inside the mysqld process opening multiple connections to a MySQL Cluster. This is pretty cool, but it might give troubles when you have to use Single User Mode.
+Take for example the following configuration for your SQL Nodes:</p>
+
+<pre><code>[SQL]
+Id=10
+Hostname= 10.100.9.6
+[SQL]
+Id=11
+Hostname= 10.100.9.6
+[SQL]
+Id=12
+Hostname= 10.100.9.7
+[SQL]
+Id=13
+Hostname= 10.100.9.7
+</code></pre>
+
+<p>No further slots are defined, and you setup your two MySQL Servers to use connection pooling:</p>
+
+<pre><code>[mysqld]
+ndb-cluster-connection-pool = 2
+</code></pre>
+
+<p>This will result in the following output of SHOW in the ndb_mgm client tool:</p>
+
+<pre><code>[mysqld(API)]   4 node(s)
+id=10   @10.100.9.6  (mysql-5.1.30 ndb-6.3.20)
+id=11   @10.100.9.6  (mysql-5.1.30 ndb-6.3.20)
+id=12   @10.100.9.7  (mysql-5.1.30 ndb-6.3.20)
+id=13   @10.100.9.7  (mysql-5.1.30 ndb-6.3.20)
+</code></pre>
+
+<p>Two problems:</p>
+
+<ul>
+<li>You don&rsquo;t have a free slot for restoring backups using ndb_restore, or for using other ndb command line tools.</li>
+<li>If you go single user mode, e.g. doing ALTER TABLE, you can&rsquo;t choose 10 or 11 because those will be used by other MySQL connections.</li>
+</ul>
+
+<p>Solution: leave a free [API] slot available to do administrative tasks. Best is to asign it a dedicated NodeID and Hostname so nobody else can use it but the DBA. It&rsquo;s quite simple, and each MySQL Cluster setup should have this already, even before connection pooling was available.
+Connection pooling makes it just harder because when you say &lsquo;ENTER SINGLE USER MODE 12&rsquo;, you connect to the host &lsquo;10.100.9.6&rsquo;, you are not sure you&rsquo;ll get this Node ID at all! Eventually you will, but mind that other MySQL connections can use it too.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/feedback-on-mysql-cluster-talk-at-fosdem/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/pain-in-the-back/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

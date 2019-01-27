@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mysql-cluster-replication-failover-some-python/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Cluster: replication failover (&#43; some Python)</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/what-are-the-timings-shown-in-mysql-query-browser/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/please-update-outdated-and-maybe-false-info-about-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Cluster: replication failover (&#43; some Python)
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Oct 9, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><a href="http://dev.mysql.com/doc/mysql-cluster-excerpt/5.1/en/mysql-cluster-replication-failover.html">Replication channel failover</a> is discussed in the <a href="http://dev.mysql.com/doc/">MySQL manual</a> and it is quite easy to implement. When the primary replication channel fails, all you need to do is some SQL queries, do a <code>CHANGE MASTER TO</code>, issue a <code>START SLAVE</code> and it should be replicating again.</p>
+
+<p>This fail-over procedure is also very useful if you are upgrading the Master MySQL Cluster <code>mysqld</code> processes doing binary logging. For this you do not need a (controlled) fail-over to the Slave Cluster. You simply point the SQL Node reading events from the Master to another <code>mysqld</code> and switch back when the upgrade is done.</p>
+
+<p>The MySQL manual describes what to do, here is a summary in a few point:</p>
+
+<ol>
+<li>Stop the Slave SQL Node</li>
+<li>Get the last epoch on this Slave SQL Node</li>
+<li>Using this epoch, get the binary log file and position on the new Master SQL Node</li>
+<li>On the Slave SQL Node, use <code>CHANGE MASTER TO</code> with the file and log position from previous point</li>
+<li>Start the Slave SQL Node, and it should work</li>
+</ol>
+
+<p>Few notes:</p>
+
+<ul>
+<li>You need to have 2 SQL nodes on the Master MySQL Cluster which are configured to do binary logging. If you haven&rsquo;t, <a href="{% post_url 2009-09-17-the-lost_events-incident-when-is-it-reported %}">please do ASAP</a>.</li>
+<li>It&rsquo;s good to temporize between steps 2 and 3, like 10 seconds.</li>
+<li>Yes, SQL Node is in this case a <code>mysqld</code> process.</li>
+</ul>
+
+<p>The following <a href="http://www.python.org">Python</a> functions are just examples, but hopefully they useful for somebody (full script not provided but it is using <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a>!):</p>
+
+<pre><code class="language-python">def _get_last_epoch(slave):
+  c = slave.cursor()
+  stmt = &quot;SELECT MAX(epoch) AS lastepoch FROM mysql.ndb_apply_status&quot;
+  c.execute(stmt)
+  row = c.fetchone()
+  c.close()
+  return row[0]
+
+def _get_binary_log_info(master, lastEpoch):
+  c = master.cursor()
+  stmt = (&quot;SELECT SUBSTRING_INDEX(File, '/', -1),&quot;
+    &quot;Position &quot;
+    &quot;FROM mysql.ndb_binlog_index &quot;
+    &quot;WHERE epoch &gt; %s &quot;
+    &quot;ORDER BY epoch ASC LIMIT 1&quot;)
+  c.execute(stmt, (lastEpoch,))
+  row = c.fetchone()
+  c.close()
+  return row
+
+def _change_master(slave,masterHost=None,
+                   masterPort=None,
+                   logFile=None,logPos=None):
+  stmtArgs = []
+  params = []
+  if masterHost:
+    stmtArgs.append('MASTER_HOST=%s')
+    params.append(masterHost)
+  if masterPort:
+    stmtArgs.append('MASTER_PORT=%s')
+    params.append(masterPort)
+  if logFile:
+    stmtArgs.append('MASTER_LOG_FILE=%s')
+    params.append(logFile)
+  if logPos:
+    stmtArgs.append('MASTER_LOG_POS=%s')
+    params.append(logPos)
+
+  c = slave.cursor()
+  stmt = &quot;CHANGE MASTER TO %s&quot; % ', '.join(stmtArgs)
+  c.execute(stmt, tuple(params))
+  c.close()
+</code></pre>
+
+<p><strong>Update 2010-02-26</strong>: Updating the text a bit; correcting Python code.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/what-are-the-timings-shown-in-mysql-query-browser/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/please-update-outdated-and-maybe-false-info-about-mysql/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

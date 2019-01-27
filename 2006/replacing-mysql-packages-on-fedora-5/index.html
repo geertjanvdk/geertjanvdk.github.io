@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2006/replacing-mysql-packages-on-fedora-5/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Replacing MySQL packages on Fedora 5</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2006/the-belgian-mysql-ug-2nd-meetup/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2006/lost-my-clean-underwear/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Replacing MySQL packages on Fedora 5
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Oct 26, 2006</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><strong>Author&rsquo;s Note: Originally published October 2006, the following blog post is still relevant, but it is adviced to use the <a href="https://dev.mysql.com/downloads/repo/yum/">MySQL Yum Repositories</a> for the latest Fedora Linux distirbutions.</strong></p>
+
+<p>Maybe this is common knowledge by now, but I&rsquo;ve seen this problem popping up at work and I&rsquo;ve run into it today. I upgraded Fedora 4 to 5 and wanted to get MySQL 5.1.11 on it instead of the MySQL 5.0 delivered with Fedora 5. This also goes mostly for Red Hat EL btw.</p>
+
+<p>These were the things I had to do, on a system without any production databases. Do not do this on production without backups and lots of coffee!</p>
+
+<ul>
+<li>Download the generic RPMs from <a href="http://dev.mysql.com/downloads/">http://dev.mysql.com/downloads/</a>: Server, Client, libraries and headers and the shared libraries. Put them all in one directory.</li>
+<li>run in that directory:</li>
+</ul>
+
+<pre><code class="language-shell">$ sudo rpm -Uvh MySQL*
+</code></pre>
+
+<ul>
+<li>If point 2 didn&rsquo;t give errors, you going to have problems starting MySQL.</li>
+<li>mysql system user is missing. To recreate it:</li>
+</ul>
+
+<pre><code class="language-shell">$ sudo adduser -d /var/lib/mysql -s /bin/bash -r  -M -l mysql
+</code></pre>
+
+<ul>
+<li>I didn&rsquo;t keep the uid/gid, so I had to make sure permissions were set OK on the existing datadir:</li>
+</ul>
+
+<pre><code class="language-shell">$ sudo chown -R mysql:mysql /var/lib/mysql
+</code></pre>
+
+<ul>
+<li>Next, remove the <code>--basedir</code> option from the my.cnf under [mysql]</li>
+</ul>
+
+<p>As a general tip: keep an eye on the error log, <code>/var/log/mysqld.log</code>.</p>
+
+<p>That&rsquo;s it basicly. Run mysql_upgrade if you like, I just removed the <code>mysql/</code> and grant tables and recreated them new with mysql_install_db. I was removing Plesk which basically messes up your Linux distro.</p>
+
+<p>Hope this helps someone!</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2006/the-belgian-mysql-ug-2nd-meetup/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2006/lost-my-clean-underwear/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

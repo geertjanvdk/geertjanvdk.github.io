@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Configuration change and rolling restart with MySQL Cluster 7.0</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/java-6-v1-6-developer-documentation-and-source-for-mac-os-x-10-5/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/how-to-start-mysql-cluster-7-0-with-2-management-nodes/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Configuration change and rolling restart with MySQL Cluster 7.0
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Sep 1, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>In a <a href="../../2009/how-to-start-mysql-cluster-7-0-with-2-management-nodes">previous post</a> we discussed how to start <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster.html">MySQL Cluster 7.0</a> with two management nodes. A nice new feature is that the 2nd <code>ndb_mgmd</code> doesn&rsquo;t need the configuration file: it is fetching it from the other management node. In this article I will describe how we start this cluster after a shut down, changing configuration and do a rolling restart.</p>
+
+<h2 id="the-configuration">The configuration</h2>
+
+<p>The <code>config.ini</code> stored on the first management node:</p>
+
+<pre><code>[NDBD DEFAULT]
+Datadir=/data2/users/geert/cluster/master
+NoOfReplicas=2
+DataMemory=80M
+IndexMemory=10M
+
+[NDB_MGMD DEFAULT]
+Datadir=/data2/users/geert/cluster/master
+
+[NDB_MGMD]
+Id=1
+Hostname = machine-1
+
+[NDB_MGMD]
+Id=2
+Hostname = machine-2
+
+[NDBD]
+Id=3
+Hostname = machine-3
+
+[NDBD]
+Id=4
+Hostname = machine-4
+
+[API]
+[API]
+[API]
+[API]
+</code></pre>
+
+<h2 id="starting-mysql-cluster-with-2-management-nodes">Starting MySQL Cluster with 2 management nodes</h2>
+
+<p>We assume that the cluster from previous post was shut down and we need to restart it. Here are the instructions  to do so.
+We start both management node process the same way, without the options <code>--initial</code> or <code>--reload</code>!</p>
+
+<pre><code class="language-bash"># On machine-1
+$ ndb_mgmd --configdir=/path/to/configcache/dir
+ ..NDB Cluster Management Server. mysql-5.1.35 ndb-7.0.7
+ ..Loaded config from '/path/to/configcache/dir/ndb_1_config.bin.1'
+
+# On machine-2
+$ ndb_mgmd --configdir=/path/to/configcache/dir
+..NDB Cluster Management Server. mysql-5.1.35 ndb-7.0.7
+..Loaded config from '/path/to/configcache/dir/ndb_2_config.bin.1'
+</code></pre>
+
+<p>Data nodes are started on <code>machine-3</code> and <code>machine-4</code>:</p>
+
+<pre><code class="language-bash"># On machine-3
+$ ndbd -c machine-1
+..Configuration fetched from 'machine-1', generation: 1
+
+# On machine-4
+$ ndbd -c machine-2
+..Configuration fetched from 'machine-2', generation: 1
+</code></pre>
+
+<p>That should bring your cluster back up, ready for some experiments!</p>
+
+<h2 id="rolling-restart-after-configuration-change">Rolling restart after configuration change</h2>
+
+<p>Lets assume we want more memory to store data and index information. We change the following in the configuration file <code>config.ini</code>, which you find on the first management node, <code>machine-1</code>:</p>
+
+<pre><code>[NDBD DEFAULT]
+DataMemory=160M
+IndexMemory=20M
+</code></pre>
+
+<p>Save your new <code>config.ini</code> and kill the <code>ndb_mgmd</code> process on <code>machine-1</code>, followed by starting it again with the <code>--reload</code> option:</p>
+
+<pre><code class="language-bash"># On machine-1
+$ killall ndb_mgmd
+$ ndb_mgmd -f config.ini --reload --configdir=/path/to/configcache/dir
+ ..NDB Cluster Management Server. mysql-5.1.35 ndb-7.0.7
+ ..Loaded config from '/path/to/configcache/dir/ndb_1_config.bin.1'
+</code></pre>
+
+<p>The above output might be a bit confusing: we started with a changed <code>config.ini</code> but it said it loaded config from the previous cached version. This is normal. It needs to first read the old to know the changes from the new. The real magic is shown in the cluster log <code>ndb_1_cluster.log</code> on <code>machine-1</code> (simplified for this blog post):</p>
+
+<pre><code>.. Detected change of config.ini on disk, will try to set it
+when all ndb_mgmd(s) started. This is the actual diff:
+[ndbd(DB)]
+NodeId=3
+-IndexMemory=10485760
++IndexMemory=20971520
+
+[ndbd(DB)]
+NodeId=4
+-IndexMemory=10485760
++IndexMemory=20971520
+..
+Node 2 connected
+Starting configuration change, generation: 1
+Configuration 2 commited
+Config change completed! New generation: 2
+</code></pre>
+
+<p>Notice that currently in MySQL Cluster 7.0.7 <a href="http://bugs.mysql.com/bug.php?id=47036">there is bug</a> that when changing 2 parameters, only 1 will show up when the difference is shown in the logs.</p>
+
+<p>On the second management node you&rsquo;ll find in <code>ndb_2_cluster.log</code> something like this:</p>
+
+<pre><code>..Node 2: Node 1 Connected
+..
+..Configuration 2 commited
+</code></pre>
+
+<p>Both management nodes have agreed on the same configuration, and both have it binary cached in files named like <code>ndb_2_config.bin.*</code>.</p>
+
+<p>We continue now with restarting the data nodes, while connected to either management node do the following:</p>
+
+<pre><code># On machine-1 or machine-2
+$ ndb_mgm
+
+ndb_mgm&gt; ALL REPORT MEMORY USAGE
+Node 3: Data usage is 0%(4 32K pages of total 2560)
+Node 3: Index usage is 0%(8 8K pages of total 1312)
+Node 4: Data usage is 0%(4 32K pages of total 2560)
+Node 4: Index usage is 0%(8 8K pages of total 1312)
+
+ndb_mgm&gt; 3 RESTART
+Node 3: Node shutdown initiated
+Node 3: Node shutdown completed, restarting, no start.
+Node 3 is being restarted
+Node 3: Started (version 7.0.7)
+
+ndb_mgm&gt; 4 RESTART
+Node 4: Node shutdown initiated
+Node 4: Node shutdown completed, restarting, no start.
+Node 4 is being restarted
+Node 4: Data usage decreased to 0%(0 32K pages of total 5120)
+Node 4: Started (version 7.0.7)
+
+ndb_mgm&gt; ALL REPORT MEMORY USAGE
+Node 3: Data usage is 0%(6 32K pages of total 5120)
+Node 3: Index usage is 0%(8 8K pages of total 2592)
+Node 4: Data usage is 0%(6 32K pages of total 5120)
+Node 4: Index usage is 0%(8 8K pages of total 2592)
+</code></pre>
+
+<p>The <code>ALL REPORT MEMORY USAGE</code> output shows that the configuration took effect and a rolling restart was succesful.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          val-ufo
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon May 3 2010, 12:13</time>
+      </div>
+    <div>
+      Thank you very very very very much.
+    </div>
+    </dd>
+  
+    <dt>
+          iCafeMinds
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri May 14 2010, 16:05</time>
+      </div>
+    <div>
+      How about Api for example I have more than 2 is there anything I need to check for my.cnf?
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri May 14 2010, 16:34</time>
+      </div>
+    <div>
+      API/SQL Nodes dont&#39; have to be restarted when memory is increased. Some other parameters might need a restart. It&#39;s good to restart all the APIs anyways, but not always needed thus.
+    </div>
+    </dd>
+  
+    <dt>
+          kbenton
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat May 22 2010, 21:26</time>
+      </div>
+    <div>
+      It is worth mentioning that the bug shown above in 7.0.7 is against the log and not against the logs communicated between nodes.  Geert - would you mind updating your article to reflect that?  :-)
+    </div>
+    </dd>
+  
+    <dt>
+          kbenton
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat May 22 2010, 21:28</time>
+      </div>
+    <div>
+      Correction - the bug is against what is logged, not against the configuration communicated between nodes.
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun May 23 2010, 04:48</time>
+      </div>
+    <div>
+      @kbenton: thank for your comment. In my blog post I say &ldquo;..shown in the logs.&rdquo;, that should be clear enough, no? But, I&#39;ll update to reflect the fix too.
+    </div>
+    </dd>
+  
+    <dt>
+          rav3n2010
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon May 24 2010, 14:12</time>
+      </div>
+    <div>
+      Hi Geert I encountered this problem on my live server &#39;Out of fragment records (increase MaxNoOfOrderedIndexes) I&#39;ve setup local cluster here in our office try to change values of MaxNoOfOrderedIndexes so I can Alter table. In my production sever I have 6 servers 2 nodes, 2 mgmt, 2 api&hellip; how can I apply new settings on my mysql mgmt without losing my data and downtime? thus this same apply shell&gt; ndb_mgmd -f config.ini --reload --configdir=/path/to/configcache/dir?
+    </div>
+    </dd>
+  
+    <dt>
+          rav3n2010
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon May 24 2010, 14:15</time>
+      </div>
+    <div>
+      by way I&#39;m using mysql cluster 7.1.3
+    </div>
+    </dd>
+  
+    <dt>
+          rav3n2010
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue May 25 2010, 01:15</time>
+      </div>
+    <div>
+      I did try to kill ndb_mgmd on mgmt 1 and start mgmt server with this command  /usr/sbin/ndb_mgmd -f config.ini --configdir=/var/lib/mysql-cluster --initial<br />Error on my logs2010-05-25 08:26:55 [MgmtSrvr] ERROR    -- This node was started --initial with a config which is <em>not</em> equal to the one node 2 is using. Refusing to start with different configurations, diff:<br />How to fix this?
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue May 25 2010, 05:46</time>
+      </div>
+    <div>
+      @rav3n2010: killall ndb_mgmd, and using --reload like in my blog post.<br />Maybe it&#39;s also better to get help through our lists: <a href="http://lists.mysql.com/">http://lists.mysql.com/</a>
+    </div>
+    </dd>
+  
+    <dt>
+          rav3n2010
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue May 25 2010, 10:32</time>
+      </div>
+    <div>
+      Hi! Geert I did follow your guide I got same error. 2010-05-25 18:27:15 [MgmtSrvr] INFO     -- Id: 1, Command port: *:11862010-05-25 18:27:15 [MgmtSrvr] INFO     -- Node 1: Node 4 Connected2010-05-25 18:27:15 [MgmtSrvr] INFO     -- Node 1: Node 2 Connected2010-05-25 18:27:15 [MgmtSrvr] INFO     -- Node 1: Node 3 Connected2010-05-25 18:27:15 [MgmtSrvr] INFO     -- Node 2 connected2010-05-25 18:27:15 [MgmtSrvr] ERROR    -- This node was started --initial with a config which is <em>not</em> equal to the one node 2 is using. Refusing to start with different configurations, diff:
+    </div>
+    </dd>
+  
+    <dt>
+          rav3n2010
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue May 25 2010, 16:32</time>
+      </div>
+    <div>
+      Geert I&#39;ve already solve the problem, thanks a lot I just miss read your blog. By the way in commerce site how much memory for data node and api node does I need, I believe management can run on 2gb. On Config.ini DataMemory and IndexMemory is that for physical Memory of Data Node?
+    </div>
+    </dd>
+  
+    <dt>
+          iCafeMinds
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 7 2010, 06:31</time>
+      </div>
+    <div>
+      Hi! Geert I was wondering why my 2 api node does not have the same data and tables. When I try to setup load balancing for api node I found out that 2nd api node table is incomplete. Everytime I made changes on my 1st api node does not replicated to 2nd api node. When I check management server all mysql cluster is connected.
+    </div>
+    </dd>
+  
+    <dt>
+          iCafeMinds
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 7 2010, 08:02</time>
+      </div>
+    <div>
+      One more question Geert everytime I create user or tables, should be manually executed on 2 sql node(api)?
+    </div>
+    </dd>
+  
+    <dt>
+          iCafeMinds
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 7 2010, 23:47</time>
+      </div>
+    <div>
+      Hi Geert been I can figure out how to post question on lists.mysql.com&hellip; I almost forgot thanks for your guide it helps me a lot when I setup my cluster&hellip;
+    </div>
+    </dd>
+  
+    <dt>
+          ambi
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Nov 20 2010, 17:02</time>
+      </div>
+    <div>
+      <p>Hi Geert, I tried setting up cluster on EC2. My config files are like this:
+config.ini:
+[ndbd default]
+noofreplicas=2
+datadir=/usr/tarmysql/my_cluster/ndb_data
+[ndb_mgmd]
+hostname=localhost
+datadir=/usr/tarmysql/my_cluster/ndb_data
+nodeid=1
+[ndbd]
+hostname=localhost
+datadir=/usr/tarmysql/my_cluster/ndb_data
+nodeid=3
+[ndbd]
+hostname=localhost
+datadir=/usr/tarmysql/my_cluster/ndb_data
+nodeid=4
+[mysqld]
+nodeid=50</p>
+
+<p>my.cnf
+[mysqld]
+ndbcluster
+ndb-connectstring=localhost
+datadir=c:\Users\user1\\my_cluster\mysqld_data
+basedir=c:\Users\user1\mysqlc
+port=5000</p>
+
+<p>[mysql_cluster]
+ndb-connectstring=localhost</p>
+
+<p>Whenever I try to start management server, it throws error that its not able to open ndb_1_config.bin file as no such file exist(But this is the first time I m starting it).How to fix this?</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          ambi
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Nov 20 2010, 17:15</time>
+      </div>
+    <div>
+      <p>Below is exact log I got:</p>
+
+<p>2010-11-20 12:13:33 [MgmtSrvr] INFO     -- Got initial configuration from &lsquo;conf/config.ini&rsquo;, will try to set it when all ndb_mgmd(s) started
+2010-11-20 12:13:33 [MgmtSrvr] INFO     -- Mgmt server state: nodeid 1 reserved for ip 127.0.0.1, m_reserved_nodes 1.
+2010-11-20 12:13:33 [MgmtSrvr] INFO     -- Id: 1, Command port: *:1186
+2010-11-20 12:13:33 [MgmtSrvr] INFO     -- Starting initial configuration change
+2010-11-20 12:13:33 [MgmtSrvr] ERROR    -- Failed to open file &lsquo;../my_cluster/conf/ndb_1_config.bin.1.tmp&rsquo; while preparing, errno: 2
+2010-11-20 12:13:33 [MgmtSrvr] WARNING  -- Node 1 refused configuration change, error: 6
+2010-11-20 12:13:33 [MgmtSrvr] INFO     -- MySQL Cluster Management Server mysql-5.1.51 ndb-7.1.9 started</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">geert</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Nov 21 2010, 23:03</time>
+      </div>
+    <div>
+      <p>Looks like you are missing ndb_mgmd --configdir option in my.cnf:</p>
+
+<p>[ndb_mgmd]
+configdir = /opt/mysql/clusters/machA/ndb</p>
+
+<p>Please use <a href="http://lists.mysql.com/cluster" rel="nofollow">MySQL Cluster mailinglist</a> if problem persists.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">geert</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Nov 21 2010, 23:06</time>
+      </div>
+    <div>
+      <a href="#comment-195" rel="nofollow">@iCafeMinds </a>
+Heya, this reply is way overdue, I hope you solved it already. If you create users in the MySQL server, they will not propagate to the other SQL nodes in the MySQL Cluster. The grant tables are local MyISAM tables. You have to create the user on each SQL node manually.
+When you create NDB tables in a MySQL Cluster, all the other SQL nodes will detect it and make it available. That, of course, only works with NDB tables not with InnoDB or MyISAM.
+    </div>
+    </dd>
+  
+    <dt>
+          rav3n
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 5 2011, 23:33</time>
+      </div>
+    <div>
+      Hi geert I have this question in our production server I have 2 mgmt, 2 api, 2 data node&hellip; I read in other blogs that to fully used mysql cluster with high availability it need at least 4 data node&hellip; is this correct? In this way I could shutdown 1 data node without losing any data? Also what is best to create table partition or unpartition?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jan 7 2011, 07:38</time>
+      </div>
+    <div>
+      <a href="#comment-594" rel="nofollow">@rav3n </a>
+No, you need at least 2 data nodes with NoOfReplicas=2. You need at least 3 physical machines to reach high availability, 2 of them running each 1 data node or ndbd process.
+You can shutdown all data nodes without losing data, but if you shutdown 1 data node, your data will still be accessible.
+NDB tables are and should always be partitioned.
+    </div>
+    </dd>
+  
+    <dt>
+          rav3n
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jan 11 2011, 23:35</time>
+      </div>
+    <div>
+      Hi Geert thanks for the explanation&hellip; one more question I having problem with queries very slow in getting data&hellip; we use join, left, inner to get data&hellip; we also try to replace join with sub queries and give much better query&hellip; When we create tables we don&rsquo;t partition it so I was wondering if we could alter it so that  all tables will be partition and also we won&rsquo;t lost any data? It is ok to have 2 api and 4 data node? would it give much faster query?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 12 2011, 09:49</time>
+      </div>
+    <div>
+      <a href="#comment-606" rel="nofollow">@rav3n </a>
+Please use <a href="http://lists.mysql.com/cluster">http://lists.mysql.com/cluster</a> for posting (new) questions. This is a blog post about configuration changes and rolling restarts.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/java-6-v1-6-developer-documentation-and-source-for-mac-os-x-10-5/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/how-to-start-mysql-cluster-7-0-with-2-management-nodes/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

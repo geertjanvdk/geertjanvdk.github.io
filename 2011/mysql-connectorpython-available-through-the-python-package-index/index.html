@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2011/mysql-connectorpython-available-through-the-python-package-index/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python available through the Python Package Index</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/connector-python-auto-reconnect/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/mysql-connectorpython-bug-category-on-bugs-mysql-com/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python available through the Python Package Index
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Nov 3, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Today we registered <a href="http://launchpad.net/myconnpy">MySQL Connector/Python</a> with the <a href="http://pypi.python.org/pypi/MySQL-Connector/">Python Package Index</a> (PyPI). It makes installing your favorite connector even easier (provided you first install <a href="http://pypi.python.org/pypi/setuptools">setuptools</a> or <a href="http://pip-installer.org">pip</a>):</p>
+
+<pre><code class="language-shell">$ easy_install mysql-connector
+$ pip install mysql-connector
+</code></pre>
+
+<p>Please report problems either using <a href="https://bugs.launchpad.net/myconnpy">Launchpad</a> or <a href="http://bugs.mysql.com">MySQL Bugs website</a>.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Nick Coghlan
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Nov 4 2011, 00:25</time>
+      </div>
+    <div>
+      <p>Even better is to use the pip installer: <a href="http://pypi.python.org/pypi/pip">http://pypi.python.org/pypi/pip</a></p>
+
+<p>$ pip install mysql-connector</p>
+
+<p>(pip does the same job as setuptools, but without messing with the system Python install the way setuptools does)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Nov 4 2011, 07:00</time>
+      </div>
+    <div>
+      <a href="#comment-1225" rel="nofollow">@Nick Coghlan </a>
+Thanks for reminding me about pip! I&rsquo;m so used to easy_install.. Updating my post.
+    </div>
+    </dd>
+  
+    <dt>
+          Daniel Gerep
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Nov 13 2011, 01:22</time>
+      </div>
+    <div>
+      <p>Hi Geert, this is my first time with Python and thanks you I&rsquo;ve found a practical way to install MySQL connector on Python but Im having difficulties, so if you can help me&hellip;</p>
+
+<p>I have used pip to install the connector but when I try to install MySQLdb it gives me this error:</p>
+
+<p>Traceback (most recent call last):
+  File &ldquo;C:\Python27\downloads\MySQL-python-1.2.3\setup.py&rdquo;, line 15, in</p>
+
+<pre><code>metadata, options = get_config()
+</code></pre>
+
+<p>File &ldquo;C:\Python27\downloads\MySQL-python-1.2.3\setup_windows.py&rdquo;, line 7, in g
+et_config
+    serverKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, options[&lsquo;registry_ke
+y&rsquo;])
+WindowsError: [Error 2] The system cannot find the file specified</p>
+
+<p>I&rsquo;m using Windows x64 and I have created on regedit under Wow6432Node a Python node, the same created by the installer under SOFTWARE. I have added C:\Python27\Scripts on my PATH</p>
+
+<p>Any idea?</p>
+
+<p>Thanks in advance for any help.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Nov 13 2011, 09:52</time>
+      </div>
+    <div>
+      <a href="#comment-1249" rel="nofollow">@Daniel Gerep </a>
+1) MySQLdb is not MySQL Connector/Python. If you want to use Connector/Python, you are not using the command line posted in my blog.
+2) I&rsquo;m not Windows savvy enough to help you but it seems it can&rsquo;t really find the file it wants.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://codetrips.blogspot.com">Marco Massenzio</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Sep 3 2012, 05:39</time>
+      </div>
+    <div>
+      <p>Hi Geert,</p>
+
+<p>there seems to be a problem with mysql-connector and pypi:</p>
+
+<p>$ easy_install mysql-connector
+Searching for mysql-connector
+Reading <a href="http://pypi.python.org/simple/mysql-connector/">http://pypi.python.org/simple/mysql-connector/</a>
+Couldn&rsquo;t find index page for &lsquo;mysql-connector&rsquo; (maybe misspelled?)
+Scanning index of all packages (this may take a while)
+Reading <a href="http://pypi.python.org/simple/">http://pypi.python.org/simple/</a>
+No local packages or download links found for mysql-connector
+error: Could not find suitable distribution for Requirement.parse(&lsquo;mysql-connector&rsquo;)</p>
+
+<p>This seems to have been going on for quite some while: any idea for when it&rsquo;ll be fixed? if at all?</p>
+
+<p>thanks,
+Marco</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://codetrips.blogspot.com">Marco Massenzio</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Sep 3 2012, 05:41</time>
+      </div>
+    <div>
+      <p>BTW - pip install fails just as well:</p>
+
+<p>$ pip install mysql-connector
+Downloading/unpacking mysql-connector
+  Could not find any downloads that satisfy the requirement mysql-connector
+No distributions at all found for mysql-connector
+Storing complete log in /home/marco/.pip/pip.log</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Sep 6 2012, 13:58</time>
+      </div>
+    <div>
+      <a href="#comment-1961" rel="nofollow">@Marco Massenzio </a>
+The old development release was removed. The new name is &lsquo;mysql-connector-python&rsquo; as explained in a more recent blog post: <a href="http://geert.vanderkelen.org/connectorpython-1-0-5-on-pypi/">http://geert.vanderkelen.org/connectorpython-1-0-5-on-pypi/</a>
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/connector-python-auto-reconnect/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/mysql-connectorpython-bug-category-on-bugs-mysql-com/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

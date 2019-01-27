@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2007/postfix-mysql-dovecot-spamassassin-sieve-yes/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Postfix, MySQL, DoveCot, Spamassassin, Sieve: YES!</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/moved-from-livejournal-to-blogger/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2007/export-apple-numbers-data-to-png/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Postfix, MySQL, DoveCot, Spamassassin, Sieve: YES!
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Oct 30, 2007</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/opinion">opinion</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This is more venting my frustration over installing Postfix on a new (xen)box (old 1U VALinux finally crashed, blablah..).</p>
+
+<p>I have been putting days, if not weeks into trying to figure out how to make Postfix with virtual users work together with Amavis and Spamassassin so it filters out to the Spam maildir of users.</p>
+
+<p>Now, some will say: oh, that&rsquo;s peanuts. You take Courier&rsquo;s Maildrop and off you go.. Maybe I&rsquo;m stupid with this, maybe, but it took me far less headaches and an hour (+ burger + pint in the bar) to get Dovecot &lsquo;deliver&rsquo; figured out with Sieve.. and it actually works!</p>
+
+<p>What I have now working on my Ubuntu Feisty server is</p>
+
+<ul>
+<li>Postfix with virtual users using MySQL 5.1 (duh)</li>
+<li>Amavisd going through new email using Spamassassin (still have to figure out how to add the X-Spam header</li>
+<li>Using Dovecot&rsquo;s deliver tool instead of this .. #!@$#$.. maildrop thing.. (no offense)</li>
+<li>Sieve plugin for Dovecot to filter and put the Spam into the virtual users junk maildir.</li>
+</ul>
+
+<p>I think Dovecot is just great! If you need a simple mailserver solution, just go with Dovecot for IMAP/POP3 and local delivery agent for Postfix and others. I&rsquo;m scrapping Courier stuff for good.</p>
+
+<p>A How-I-did-it will come probably later.. just having some &lsquo;olut&rsquo; now.. and lots of other things on my mind to get my domains back up.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/moved-from-livejournal-to-blogger/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2007/export-apple-numbers-data-to-png/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

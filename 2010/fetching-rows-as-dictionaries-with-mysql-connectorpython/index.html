@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/fetching-rows-as-dictionaries-with-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Fetching rows as dictionaries with MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/buffering-results-with-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mysql-connectorpython-0-2-devel-available/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Fetching rows as dictionaries with MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Oct 13, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This post describes how to make a custom cursor returning rows as dictionaries using <a href="http://dev.mysql.com/doc/connector-python/en/index.html">MySQL Connctor/Python</a> v0.2 (or later).</p>
+
+<h2 id="problem">Problem</h2>
+
+<p>You want to fetch rows from the database and return them as a dictionary with keys being the column names.</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>First, lets check how you would do it <strong>without any custom cursor</strong>.</p>
+
+<pre><code class="language-python">cnx = mysql.connector.connect(host='localhost',database='test')
+cur = cnx.cursor()
+cur.execute(&quot;SELECT c1, c2 FROM t1&quot;)
+result = []
+columns = tuple( [d[0].decode('utf8') for d in cur.description] )
+for row in cur:
+  result.append(dict(zip(columns, row)))
+pprint(result)
+cur.close()
+cnx.close()
+</code></pre>
+
+<p>The above results in an output like this:</p>
+
+<pre><code class="language-python">[{u'c1': datetime.datetime(2010, 10, 13, 8, 55, 35), u'c2': u'ham'},
+ {u'c1': datetime.datetime(2010, 10, 13, 8, 55, 38), u'c2': u'spam'}]
+</code></pre>
+
+<p>Alternatively, you can <strong>code your own cursor</strong> which will return a row as a dictionary. Here is an example on how to do this:</p>
+
+<pre><code class="language-python">import mysql.connector
+
+class MySQLCursorDict(mysql.connector.cursor.MySQLCursor):
+
+  def fetchone(self):
+    row = self._fetch_row()
+    if row:
+      return dict(zip(self.column_names, self._row_to_python(row)))
+    return None
+</code></pre>
+
+<p>What we did is subclassing <code>MySQLCursor</code> and overload the <code>fetchone()</code>-method. To use the above, you can do following:</p>
+
+<pre><code class="language-python">cnx = mysql.connector.connect(host='localhost',database='test')
+cur = cnx.cursor(cursor_class=MySQLCursorDict)
+cur.execute(&quot;SELECT c1, c2 FROM t1&quot;)
+rows = cur.fetchall()
+pprint(rows)
+cur.close()
+cnx.close()
+</code></pre>
+
+<p>The <strong>trick is to pass the <code>cursor_class</code>-argument when creating the cursor</strong>. (At the time of writing, I realize that the <code>cursor_class</code> should be part of the connection arguments to set a default for all requested cursors. We&rsquo;ll change that.)</p>
+
+<p>It&rsquo;s <strong>a bit more elegant coding</strong> and possibilities are endless. Maybe you&rsquo;d like a cursor which returns a row in XML for example.</p>
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://openark.org">Shlomi Noach</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 13 2010, 14:18</time>
+      </div>
+    <div>
+      <p>Keep them coming!
+Any chance of also doing it a-la MySQLDb? Which is, specify per connection (or per statement execution) the type of result set you want to get:
+e.g.
+cur.execute(&ldquo;SELECT c1, c2 FROM t1&rdquo;, result_set_as_dict=True)
+cur.execute(&ldquo;SELECT c1, c2 FROM t1&rdquo;, result_set_as_dict=False)
+(the above is not like MySQLDb does)</p>
+
+<p>And so have the cursor return a list ([]) or a dict({}) accordingly?</p>
+
+<p>Following the steps you&rsquo;ve describes leads to an endlessly repeating pattern of always doing the same thing, something a simple driver implementation could very much ease.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">geert</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 13 2010, 15:03</time>
+      </div>
+    <div>
+      <p>Hello Shlomi,</p>
+
+<p>I like the way it is right now: &ldquo;Need new functionality? Subclass and overload&rdquo;, you know, the OO way. Adding all these arguments to execute() would make it complicated.
+What I will do is adding &lsquo;cursor_class&rsquo; as connecting argument, I just forgot about that :)</p>
+
+<p>Cheers,
+Geert</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          PBLN RAO
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 24 2012, 12:43</time>
+      </div>
+    <div>
+      <p>Greet,</p>
+
+<p>ur class</p>
+
+<p>import mysql.connector</p>
+
+<p>[code]</p>
+
+<p>class MySQLCursorDict(mysql.connector.cursor.MySQLCursor):</p>
+
+<p>def fetchone(self):
+    row = self._fetch_row()
+    if row:
+      return dict(zip(self.column_names, self._row_to_python(row)))
+    return None</p>
+
+<p>[/code]</p>
+
+<p>is returning all records without column names, where as other is working fine.
+I tried changing ur definition from</p>
+
+<p>fetchone</p>
+
+<p>to</p>
+
+<p>fetchall</p>
+
+<p>and it returned the result with column names as desired but only 1st row in the table is returned.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Aug 29 2012, 08:44</time>
+      </div>
+    <div>
+      <a href="#comment-1903" rel="nofollow">@PBLN RAO </a>
+Thanks for reporting this problem! I have written a new blog entry describing how to do it with MySQL Connector/Python v1.0: <a href="http://geert.vanderkelen.org/connectorpython-custom-cursors/">http://geert.vanderkelen.org/connectorpython-custom-cursors/</a>
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://NA">biz</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jan 31 2013, 22:06</time>
+      </div>
+    <div>
+      <p>Thanks for sharing this.  It helped me with a problem that I was having converting a postgresql database interface into mysql using python.  Just as a side note, you don&rsquo;t have to create a custom cursor to have MySQLdb return a dictionary.  There is an existing cursor object that will do it for you.</p>
+
+<p>cur = db.cursor(MySQLdb.cursors.DictCursor)
+cur.fetchone()  # or cur.fetchmany()</p>
+
+<h1 id="returns-a-dictionary-object-column-value">returns a dictionary object {column: value, &hellip;}</h1>
+
+<p><a href="http://forums.devshed.com/showpost.php?p=1838520&amp;postcount=2">http://forums.devshed.com/showpost.php?p=1838520&amp;postcount=2</a></p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Feb 5 2013, 06:26</time>
+      </div>
+    <div>
+      <a href="#comment-2315" rel="nofollow">@biz </a>
+Yes, but that uses MySQLdb, and that&rsquo;s not MySQL Connector/Python.
+    </div>
+    </dd>
+  
+    <dt>
+          Thomas
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Apr 22 2013, 10:22</time>
+      </div>
+    <div>
+      <p>Hi Geert,</p>
+
+<p>I&rsquo;m searching quite a while to get rid of a certain problem, maybe you could help me&hellip;</p>
+
+<p>You wrote:
+The above results in an output like this:
+1
+[{u&rsquo;c1&rsquo;: datetime.datetime(2010, 10, 13, 8, 55, 35), u&rsquo;c2&rsquo;: u&rsquo;ham&rsquo;},
+ {u&rsquo;c1&rsquo;: datetime.datetime(2010, 10, 13, 8, 55, 38), u&rsquo;c2&rsquo;: u&rsquo;spam&rsquo;}]</p>
+
+<p>Now you&rsquo;re output is in unicode and I like it to be just printed to the screen as normal text.
+My question to you is if you know how to convert it or to get rid of the unicode characters??</p>
+
+<p>Thanks!</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Apr 22 2013, 10:33</time>
+      </div>
+    <div>
+      <a href="#comment-2746" rel="nofollow">@Thomas </a>
+Unicode is important, so better start getting used to it. In Python v3 strings are Unicode.
+That said, in Python v2, simply use &lsquo;use_unicode=False&rsquo; as connection argument, or use <str>.encode(&lsquo;utf8&rsquo;) on the result.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://fiveholiday55.blogspot.com">Helen Neely</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Nov 25 2013, 12:13</time>
+      </div>
+    <div>
+      <p>Thanks Geert, for this post. It saved me hours of headache on getting column names for my select statement.</p>
+
+<p>Nice blog BTW :)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://ievfx.com">Grant Miller</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jan 3 2014, 23:55</time>
+      </div>
+    <div>
+      Thanks a ton for posting this, exactly what I needed.  This module is a great alternative to the compile problems we have with MySQLdb.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/buffering-results-with-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/mysql-connectorpython-0-2-devel-available/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

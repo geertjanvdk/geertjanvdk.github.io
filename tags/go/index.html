@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/tags/go/">
+  
+  <link rel="feed" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/go/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Geert JM Vanderkelen" href="https://geert.vanderkelen.org/tags/go/index.xml" />
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Go</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+  
+  <div class="content-meta top">
+    
+
+  </div>
+
+  <div>
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2018/go-mysql80-compat/">Go MySQL driver working with new default authentication</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Jun 3, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><a href="https://github.com/go-sql-driver/mysql"><img src="../../images/go_mysql.jpg" class="summary"/></a>
+After the official release of <a href="https://dev.mysql.com/doc/refman/8.0/en/introduction.html">MySQL 8.0</a>, a few were complaining that the Go driver for MySQL did not have support for new default authentication method. It did indeed miss support, but this was <a href="https://github.com/go-sql-driver/mysql/issues/625">already noticed and bug reported</a> when moving to MySQL 8.0.4-rc. But, there was a valid workaround: you could (re-)create the users with a different authentication plugin, or set it globally in the configuration file using <a href="https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_authentication_plugin"><code>default_authenication_plugin</code></a>.</p>
+
+<p>A few days a ago, 1 June 2018, the good folks working on Go MySQL driver pushed a new <a href="https://github.com/go-sql-driver/mysql/commit/d743639f9cefbadabe171d5fe22c9008b06dd2f5">feature to support the <code>caching_sha2_password</code> plugin</a>  (1 June 2018), pushed to <code>master</code> (so not yet released). Result: users with native passwords can login, as well as users using the new default. Nice work!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2018/go-mysql80-compat/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2018/mysql8-unattended-dpkg/">Unattended Install of MySQL 8.0 on Debian</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 28, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/debian">debian</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><img src="../../images/mysql-deb-authconfig.png" class="summary"/>
+At <a href="https://www.dcso.de">work</a> we are doing quite a bit with Debian. To make things easier and automated, we can use the non-interactive feature of the Debian packaging system to deploy services. One of the stacks we are enrolling is <a href="https://dev.mysql.com/doc/refman/8.0/en/group-replication.html">MySQL Group Replication</a>, which requires at least 3 servers.</p>
+
+<p>Although the <a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#repo-qg-apt-repo-non-insteractive">MySQL Documentation</a> show how to install MySQL non-interactively, it is not entirely complete. The missing part is the extra question during the installation of the server whether you want to keep using the new default authentention method, or use the (now) legacy native method.</p>
+
+<p>If you are using a MySQL driver which has no support yet for strong password encryption (for example the <a href="https://github.com/go-sql-driver/mysql/issues/625"><code>go-sql-driver/mysql</code> package</a> driver), or you &ldquo;need&rdquo; to switch to MySQL 8.0 and keep previous user accounts intact, you will want to set the default back to the <code>mysql_native_plugin</code> for authentication. If you start new, and you can, stick to the new method.</p>
+
+<p>This post will show how to install MySQL 8.0 on a Debian 9 using the official MSQL APT repositories. It also shows the extra step to keep using the legacy MySQL authentencation method.</p>
+
+<p>Bonus: Ansible playbook included!</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2018/mysql8-unattended-dpkg/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
+      <a href="../../2018/go-year/">The Go Year</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu May 3, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary"><p><img src="../../images/go_logo.svg" class="summary"/>
+Leaving the <a href="https://www.mysql.com">MySQL</a> Team mid 2016 was personally quite something. I needed a change, but I didn&rsquo;t realise it would change that much.</p>
+
+<p>I started my new job at <a href="https://dcso.de">DCSO</a> working on project written in Python. With my experience creating <a href="https://dev.mysql.com/downloads/connector/python/8.0.html">MySQL Connector/Python</a> I felt right where I should be. Good colleague, nice office, no more alone at home.. Soon, however, my scepticism of <a href="https://golang.org">Go</a>, the other programming language used at work, moved to acceptance. And here I am, more than a year later, writing pretty much everything using in Go.</p>
+
+<p><a href="https://graphql.org">GraphQL</a> servers and clients, single-binary web server applications, new ways using MySQL, .. those are a few things I&rsquo;ve been doing. I am still discovering the possibilities, and also the pains. Yes, there are things that annoy me, but I consider that more a good thing; nothing is perfect.</p></p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+  
+  </div>
+  
+  <div class="content-meta bottom">
+    
+
+  </div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

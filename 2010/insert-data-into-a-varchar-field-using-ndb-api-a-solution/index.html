@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Insert data into a VARCHAR field using NDB API: a solution</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/the-wrapped-jumbo-prawns/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/a-new-dutch-word-avonkuren/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Insert data into a VARCHAR field using NDB API: a solution
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Apr 2, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>You are using <a href="http://dev.mysql.com/downloads/cluster/">MySQL Cluster</a> and crazy enough to digest NDB API? Sick of <em>SQL</em>? Here&rsquo;s a treat: a function to make C/C++ strings ready for inserting into a <code>VARCHAR</code> field. The special thing about them is that the length is prefixed in the first 2 bytes.</p>
+
+<pre><code class="language-c">void make_ndb_varchar(char *buffer, char *str)
+{
+  int len = strlen(str);
+  int hlen = (len &gt; 255) ? 2 : 1;
+  buffer[0] = len &amp; 0xff;
+  if( len &gt; 255 )
+    buffer[1] = (len / 256);
+  strcpy(buffer+hlen, str);
+}
+</code></pre>
+
+<p>Yes, you can use <code>memcpy</code>. Whatever floats your boat.</p>
+
+<p>Lets use this function for a table <code>t1</code>, defined as follows (note: <code>latin1</code>!):</p>
+
+<pre><code class="language-sql">CREATE TABLE t1 (
+  id INT UNSIGNED NOT NULL,
+  vc VARCHAR(128),
+  vclong VARCHAR(1280),
+  PRIMARY KEY (id)
+  ) ENGINE=NDB DEFAULT CHARSET=latin1
+</code></pre>
+
+<p>Here is part of the code, simplified for this post:</p>
+
+<pre><code class="language-c"> char vc[128+1]; // Size of 'vc', +1 for length info
+ char vclong[1280+2]; // Size of 'vclong', +2 for length info
+ ..
+ make_ndb_varchar(vc, &quot;NDB API kicks ass&quot;);
+ operation-&gt;setValue(&quot;vc&quot;, vc);
+ ..
+</code></pre>
+
+<p>The above example uses <code>latin1</code>. You could use <code>Unicode</code>, but that would probably mean converting from one encoding to the other using <code>[iconv](http://www.gnu.org/software/libiconv/)</code>. That&rsquo;s another story.</p>
+
+<p>This post complements <a href="http://johanandersson.blogspot.com/2006/10/using-charvarchar-data-types-in-ndbapi.html">Johan Andersson&rsquo;s blog entry</a>. Thanks to my colleagues Mats and Roger who helped me with a silly problem today regarding this function.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          gthorslund
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Apr 3 2010, 20:48</time>
+      </div>
+    <div>
+      Nice post Geert!<br /><br />One little note. make_ndb_varchar() should not look at the length of the string passed to it but at the type of the column using Column::getType(), see:<br /><br /> <a href="http://dev.mysql.com/doc/ndbapi/en/ndb-column-methods.html#ndb-column-gettype">http://dev.mysql.com/doc/ndbapi/en/ndb-column-methods.html#ndb-column-gettype</a><br /><br />to see if it is Varchar, Longvarchar, or something else listed in:<br /><br /> <a href="http://dev.mysql.com/doc/ndbapi/en/ndb-column-types.html#ndb-column-type">http://dev.mysql.com/doc/ndbapi/en/ndb-column-types.html#ndb-column-type</a><br /><br />I suspect make_ndb_varchar(vclong, &ldquo;Easter egg&rdquo;) will not work as expected (depending on expectations).<br /><br />/Gustaf
+    </div>
+    </dd>
+  
+    <dt>
+          Johan Andersson
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Apr 7 2010, 12:21</time>
+      </div>
+    <div>
+      Good stuff!<br /><br />And if some is interested in NDBScanFilters :) - <a href="http://johanandersson.blogspot.com/2006/10/ndbscanfilter.html">http://johanandersson.blogspot.com/2006/10/ndbscanfilter.html</a>
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/the-wrapped-jumbo-prawns/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/a-new-dutch-word-avonkuren/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2013/mysql-fabric-support-in-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Fabric support in Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/column-info-using-connector-python/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-1-1a/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Fabric support in Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Sep 22, 2013</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><a href="http://mysqlmusings.blogspot.de/2013/09/brief-introduction-to-mysql-fabric.html">MySQL Fabric</a> was officially introduced during Tomas his keynote at <a href="http://www.oracle.com/mysqlconnect/index.html">MySQL Connect 2013</a>. MySQL Fabric will help you managing lots of MySQL server supporting both high-availability and sharding. Just like <a href="https://blogs.oracle.com/jbalint/entry/mysql_connector_j_with_fabric">Connector/J</a>, <a href="http://dev.mysql.com/doc/connector-python/en/index.html">MySQL Connector/Python</a> v1.1.1 Alpha has support for MySQL Fabric on <a href="http://labs.mysql.com">MySQL Labs</a>. Note that the MySQL Fabric as well as support for it in Connector/Python is Alpha.</p>
+
+<p>When you download MySQL Connector/Python from MySQL Labs, you will also see a ZIP archive containing the MySQL Utilities documentation as PDF. You will find everything in there to get started. It&rsquo;s a big document, but look for &lsquo;Fabric&rsquo;.</p>
+
+<p>It&rsquo;s probably a good idea to read up on MySQL Fabric from following excellent blog posts authored by the guys who made it happen:</p>
+
+<ul>
+<li><a href="http://mysqlmusings.blogspot.de/2013/09/brief-introduction-to-mysql-fabric.html">A Brief Introduction to MySQL Fabric</a></li>
+<li><a href="http://vnwrites.blogspot.de/2013/09/mysqlfabric-sharding-introduction.html">MySQL Fabric - Sharding - Introduction</a></li>
+<li><a href="http://alfranio-distributed.blogspot.in/2013/09/writing-fault-tolerant-database.html">Writing a Fault-tolerant Database Application using MySQL Fabric</a></li>
+</ul>
+
+<p>Here are the usual references for MySQL Connector/Python:</p>
+
+<ul>
+<li>Documentation: <a href="http://dev.mysql.com/doc/connector-python/en/index.html">http://dev.mysql.com/doc/connector-python/en/index.html</a></li>
+<li>Release Notes: <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/index.html">http://dev.mysql.com/doc/relnotes/connector-python/en/index.html</a></li>
+<li>Downloads: <a href="http://dev.mysql.com/downloads/connector/python/#downloads">http://dev.mysql.com/downloads/connector/python/#downloads</a></li>
+<li>Feedback: <a href="http://bugs.mysql.com">http://bugs.mysql.com</a></li>
+<li>Forum: <a href="http://forums.mysql.com/list.php?50">http://forums.mysql.com/list.php?50</a></li>
+</ul>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/column-info-using-connector-python/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-1-1a/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

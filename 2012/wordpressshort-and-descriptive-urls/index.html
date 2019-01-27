@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2012/wordpressshort-and-descriptive-urls/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Accepting both short and descriptive URLs with Wordpress</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/bootstrapping-mysql-on-windows/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/invalid-dates-and-connector-python/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Accepting both short and descriptive URLs with Wordpress
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Jun 3, 2012</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/wordpress">wordpress</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/lighttpd">lighttpd</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>I was asked whether it was possible to use more descriptive URLs for my blog posts instead of using the post ID only. <a href="http://wordpress.org/">Wordpress</a> permalinks only allow to have one structure active, but that doesn&rsquo;t mean you can&rsquo;t change the webserver (<a href="http://www.lighttpd.net/">lighttpd</a> in my case) to do some redirections.</p>
+
+<p>Until an hour ago, my blog accepted only the following kind of url:</p>
+
+<pre><code>http://example.com/post/871
+</code></pre>
+
+<p>This was, in my opinion, easier to use since shorter. However, it is not very descriptive. So, we would like to have the following URLs:</p>
+
+<pre><code>(1) http://example.com/more-descriptive-urls
+(2) http://example.com/post/871
+</code></pre>
+
+<p>In Wordpress v3.3 (and also earlier version), you go to &ldquo;Settings &gt; Permalinks&rdquo; and change the &ldquo;Common Settings&rdquo; to a custom structure like this:</p>
+
+<pre><code>Custom Structure: /%postname%/
+</code></pre>
+
+<p>This makes more descriptive URLs (1) work, but it breaks our existing shorter URLs (2).</p>
+
+<p>Using lighttpd, we have to change the Wordpress rules so we are redirecting URLs with a post ID, to the descriptive URLs.</p>
+
+<pre><code>url.rewrite-once += (
+    # more rules..
+    &quot;^&quot; + wpdir + &quot;post/(\d+)/?$&quot; =&gt; wpdir + &quot;index.php/?p=$1&quot;,
+    &quot;^&quot; + wpdir + &quot;(.+)/?$&quot; =&gt; wpdir + &quot;index.php/$1&quot;
+)
+</code></pre>
+
+<p>The above redirects <code>http://example.com/post/871</code> to <code>/index.php/?p=871</code>.</p>
+
+<p>Restart lighttpd and we&rsquo;re done. Now both the longer, more descriptive URLs will be default, and the old URLs using only the post ID, will redirect to the new location.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/bootstrapping-mysql-on-windows/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/invalid-dates-and-connector-python/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

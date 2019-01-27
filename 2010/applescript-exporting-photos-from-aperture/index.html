@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/applescript-exporting-photos-from-aperture/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>AppleScript exporting photos from Aperture</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/using-globals-in-pylons-everywhere/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/splitting-as-string-and-joining-a-list-using-applescript/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      AppleScript exporting photos from Aperture
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/applescript">applescript</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/aperture">aperture</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>The following AppleScript will:</p>
+
+<ul>
+<li>Prompt for a destination folder</li>
+<li>Ask for an album name, which will be a folder in destination folder</li>
+<li>Get currently selected photo(s) from Aperture</li>
+<li>Store the image files using the Image ID of Aperture</li>
+<li>Store some META information in a text file, with similar name as image file</li>
+</ul>
+
+<p>The export format is <code>PNG 1024x1024</code>. I needed only that, so I hardcoded it.</p>
+
+<p><strong>Note dependencies</strong>: You need the <a href="{% post_url 2010-08-26-renaming-a-file-using-applescript %}">renameFile</a>, <a href="{% post_url 2010-08-26-splitting-as-string-and-joining-a-list-using-applescript %}">joinList and splitString</a> functions found in earlier blog entries.</p>
+
+<pre><code class="language-applescript">property defExportSetting : &quot;PNG - Fit within 1024 x 1024&quot;
+
+on apertureExport(fldAlbum)
+ tell application &quot;Aperture&quot;
+  set imageSel to (get selection)
+ end tell
+
+ set out to {}
+ repeat with img in imageSel
+  tell application &quot;Aperture&quot;
+   set kwList to (get id of every keyword of img)
+   set imgDate to value of EXIF tag &quot;ImageDate&quot; of img
+  end tell
+  set imgId to id of img
+
+  set imgName to name of img
+  set imgTags to my joinList(kwList, &quot;,&quot;)
+
+  copy &quot;Name: &quot; &amp; imgName to end of out
+  copy &quot;Tags: &quot; &amp; imgTags to end of out
+  copy &quot;ApertureId: &quot; &amp; imgId to end of out
+
+  set dstFileMeta to (fldAlbum &amp; imgId &amp; &quot;.meta&quot;) as string
+ end repeat
+
+ tell application &quot;Aperture&quot;
+  set dstFile to (export imageSel using export setting defExportSetting to fldAlbum)
+ end tell
+ set dstFile to my renameFile(dstFile, imgId)
+ copy &quot;File: &quot; &amp; (POSIX path of dstFile) to end of out
+ tell application &quot;Finder&quot;
+ end tell
+
+ set fp to open for access file dstFileMeta with write permission
+ write (joinList of out given delimiter:return) to fp
+ close access fp
+
+end apertureExport
+
+on run
+ set dstFolder to (choose folder with prompt &quot;Choose an destination&quot;) as text
+ set dlgAlbum to display dialog &quot;Album name&quot; buttons {&quot;OK&quot;, &quot;Cancel&quot;} default answer &quot;Picture pool&quot;
+
+ set dstAlbum to (text returned of dlgAlbum) as text
+
+ tell application &quot;Finder&quot;
+  if not (exists alias (dstFolder &amp; dstAlbum)) then
+   make new folder at alias (dstFolder) with properties {name:dstAlbum}
+  end if
+ end tell
+ set fldAlbum to (dstFolder &amp; dstAlbum) as alias
+
+ apertureExport(fldAlbum)
+end run
+</code></pre>
+
+<p>This script is safe, but I don&rsquo;t take any responsibility when it screws up you Aperture library. It shouldn&rsquo;t really, I coded it on my main library: hardcore!</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/using-globals-in-pylons-everywhere/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/splitting-as-string-and-joining-a-list-using-applescript/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

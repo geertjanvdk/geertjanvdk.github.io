@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/disabling-binary-logging-when-restoring-a-mysql-dump/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Disabling binary logging when restoring a MySQL dump</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/getting-online-in-poland-using-3g/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/eu-mobile-operators-suck/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Disabling binary logging when restoring a MySQL dump
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Jul 17, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>There is a cool option for <code>mysqlbinlog</code> for disabling the binary log when doing recovery using binary logs, namely <code>--disable-log-bin</code>. How, one would think it is also avialable for something like <code>mysqldump</code> or even the <code>mysql</code> CLI? Nope.</p>
+
+<p>There are various ways for doing this, here is one:</p>
+
+<pre><code class="language-bash">$ (echo &quot;SET SESSION SQL_LOG_BIN=0;&quot;; cat dump.sql) &gt; dump_nobinlog.sql
+</code></pre>
+
+<p>Obviously, bit pain for really big files, and when dumping to multiple files. So what is your favorite way for disabling binary logging when restoring a MySQL dump?</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Rob
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jul 17 2009, 16:18</time>
+      </div>
+    <div>
+      mysql&gt; SET SESSION SQL_LOG_BIN=0;
+Query OK, 0 rows affected (0.00 sec)
+mysql&gt; source blah;
+Query OK, 1 row affected (0.00 sec)
+    </div>
+    </dd>
+  
+    <dt>
+          Morgan
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jul 17 2009, 16:26</time>
+      </div>
+    <div>
+      I remember filing a feature request that would also help with this:
+<a href="http://bugs.mysql.com/bug.php?id=39233">http://bugs.mysql.com/bug.php?id=39233</a>
+    </div>
+    </dd>
+  
+    <dt>
+          arjen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jul 17 2009, 22:50</time>
+      </div>
+    <div>
+      There&rsquo;s more settings you want to change when loading a dump, like
+innodb_flush_log_at_trx_commit and such. So what you want is
+$ cat prefix.sql dumpfile.sql postfix.sql | mysql -u
+&hellip;I&rsquo;ll write a blog entry on the complete story.
+    </div>
+    </dd>
+  
+    <dt>
+          Chuck
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Aug 13 2009, 16:02</time>
+      </div>
+    <div>
+      Similar to yours but no need to create another .sql file.
+shell&gt; (echo &ldquo;set session sql_log_bin=0;&rdquo; ; cat dump.sql) | mysql
+    </div>
+    </dd>
+  
+    <dt>
+          Laurence
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jul 23 2010, 11:35</time>
+      </div>
+    <div>
+      Ideally, IMHO, a wrapper/alias would be ideal, such as:
+$ alias mysqldump=&lsquo;(printf &ldquo;SET SESSION SQL_LOG_BIN=0;\n&rdquo; &amp;&amp; /usr/local/bin/mysqldump)&rsquo;
+However, this doesn&rsquo;t seem to work, unfortunately. The prepend/append feature would be ideal&hellip;
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.nairaland.com/">Seun Osewa</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat May 7 2011, 00:38</time>
+      </div>
+    <div>
+      @Chuck
+Your approach is perfect.&rdquo;
+    </div>
+    </dd>
+  
+    <dt>
+          Gerhard
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Oct 11 2012, 16:30</time>
+      </div>
+    <div>
+      Rather than do it when playning back the dump, I do it when taking the dump:
+$ echo &ldquo;SET SESSION SQL_LOG_BIN=0;&rdquo; &gt; dumpfile
+$ mysqldump &hellip;. &gt;&gt; dumpfile
+This means I don&rsquo;t forget to do it when doing a recovery.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.databasesystems.info">Kubilay</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Mar 25 2014, 09:32</time>
+      </div>
+    <div>
+      Is this safe? Is a great performance enhancer and space saver, but would
+want to know its cost? Is this similar to non-recoverable operations in Oracle?
+Like NOLOGGING? I suppose if we have the dump we can always recover it from the
+dump, hence recoverable and repeatable operation. Just wanted to know what you
+guys think. Thanks
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Mar 25 2014, 10:29</time>
+      </div>
+    <div>
+      @Kubilay: You answered your own question: you have the dump, so the data
+is recoverable and repeatable. If you disable binary logging, it will not go to
+slave MySQL servers. That would be the only problem you have to tackle.&rsquo;
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/getting-online-in-poland-using-3g/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/eu-mobile-operators-suck/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

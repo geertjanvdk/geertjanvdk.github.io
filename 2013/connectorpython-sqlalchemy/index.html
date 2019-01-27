@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2013/connectorpython-sqlalchemy/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Using Connector/Python with SQLAlchemy</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/mysql-connectorpython-1-0-10-available-for-download/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-0-9/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Using Connector/Python with SQLAlchemy
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Apr 11, 2013</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><a href="http://www.sqlalchemy.org">SQLAchemy</a> has support for <a href="http://dev.mysql.com/doc/connector-python/en/index.html">MySQL Connector/Python</a> for a while now. Here is a little HOWTO showing how install both, and setup a database engine.</p>
+
+<p>There are multiple ways of installing both projects, but here is the simplest using <a href="https://pypi.python.org/pypi/pip">pip</a>, whatever platform you use:</p>
+
+<pre><code class="language-shell">$ pip install SQLAlchemy
+$ pip install mysql-connector-python
+</code></pre>
+
+<p>Start your SQLAlchemy engines using a URL pointing to Connector/Python. Note the <code>connect_args</code> argument which passes extra <a href="http://dev.mysql.com/doc/connector-python/en/connector-python-connectargs.html">connection arguments</a> to Connector/Python. In the following example we set the MySQL session variable <code>time_zone</code> to UTC:</p>
+
+<pre><code class="language-python">from sqlalchemy import create_engine
+
+DB_URI = &quot;mysql+mysqlconnector://{user}:{password}@{host}:{port}/{db}&quot;
+
+engine = create_engine(DB_URI.format(
+  user ='sakila',
+  password = 'yoursecret',
+  host = '127.0.0.1',
+  db = 'test'),
+  connect_args = {'time_zone': '+00:00'}
+  )
+</code></pre>
+
+<p>That&rsquo;s it. Now just continue with SQLAlchemy as usual.</p>
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Michael
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Mar 19 2014, 23:46</time>
+      </div>
+    <div>
+      <p>I am getting the error on Mac OS:
+  sqlalchemy.exc.NoSuchModuleError: Can&rsquo;t load plugin: sqlalchemy.dialects:connector</p>
+
+<p>The following folder  contains mysql-connector-python driver:
+/usr/local/Cellar/python/2.7.6/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/mysql/connector/</p>
+
+<p>The sqllalchemy/connectors/ folder has the following files:
+ls /usr/local/Cellar/python/2.7.6/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/sqlalchemy/connectors</p>
+
+<p><strong>init</strong>.py <strong>init</strong>.pyc    mxodbc.py   mxodbc.pyc  mysqldb.py  mysqldb.pyc pyodbc.py   pyodbc.pyc  zxJDBC.py   zxJDBC.pyc</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Mar 20 2014, 05:53</time>
+      </div>
+    <div>
+      <p>@Michael:</p>
+
+<p>You have to use &ldquo;mysql+mysqlconnector&rdquo; in the database URI, not &ldquo;connector&rdquo;.</p>
+
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/mysql-connectorpython-1-0-10-available-for-download/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-0-9/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

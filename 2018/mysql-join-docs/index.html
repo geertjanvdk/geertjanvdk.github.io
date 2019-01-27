@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2018/mysql-join-docs/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Joining tables with JSON docs using MySQL 8.0</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2018/mysql8-unattended-dpkg/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2018/go-year/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Joining tables with JSON docs using MySQL 8.0
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 21, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><img src="../../images/join_json.png" class="summary"/>
+<a href="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-11.html">MySQL 8.0</a> got GA last month (April 2018) and that means it is time to get serious about getting back the relational in schema-less storage using the <a href="https://dev.mysql.com/doc/refman/8.0/en/json.html">JSON datatype</a> and JSON functions.</p>
+
+<p>I have been very sceptic about <a href="https://en.wikipedia.org/wiki/SQL:2016">JSON support in a RDBMS</a>. The way XML was used in the past to store information, using functions to &lsquo;query&rsquo; unindexable data.. a bit messy. This same mess exists with JSON, but it&rsquo;s much easier to parse (=faster), easier to read, and still easy to mess it up (for nostalgics).</p>
+
+<p>This post is about getting back relational with JSON document storage, joining tables using schema-less stuff. Yes, I used a buzz word!</p>
+
+<h1 id="context">Context</h1>
+
+<p>You have two tables <code>employees</code> and <code>departments</code> (similar to <a href="https://dev.mysql.com/doc/employee/en/">MySQL&rsquo;s Employees Database</a>). Both tables store information about their entities in a JSON document (tables have pretty much same DDL).</p>
+
+<p>For this example, we have one constraint: an employee must belong to exactly one department.</p>
+
+<p>We use <a href="https://dev.mysql.com/doc/refman/8.0/en/create-table-generated-columns.html">Generated Columns</a> to get information from the
+document store indexed, and used in constraints.</p>
+
+<pre><code>-- DROP TABLE IF EXISTS employees, departments;
+CREATE TABLE departments (
+    id INT NOT NULL,
+    doc JSON,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE employees (
+    id INT NOT NULL,
+    doc JSON,
+    PRIMARY KEY (id),
+    dep_id INT AS (doc-&gt;&gt;'$.department_id') STORED NOT NULL
+);
+
+-- Due to MySQL Bug#88128, we create index separately 
+ALTER TABLE employees ADD INDEX (dep_id);
+ALTER TABLE employees ADD FOREIGN KEY (dep_id) REFERENCES departments (id);
+
+INSERT INTO departments (id, doc) VALUES (1, '{&quot;name&quot;: &quot;DevOps&quot;}');
+INSERT INTO departments (id, doc) VALUES (2, '{&quot;name&quot;: &quot;Accounting&quot;}');
+
+INSERT INTO employees (id, doc) VALUES (1000,
+   '{&quot;given_name&quot;: &quot;Alice&quot;, &quot;department_id&quot;: 1}');
+INSERT INTO employees (id, doc) VALUES (1101,
+   '{&quot;given_name&quot;: &quot;Bob&quot;, &quot;department_id&quot;: 2}');
+</code></pre>
+
+<h1 id="problem">Problem</h1>
+
+<p>We are using a GraphQL API, and it would help to get a JSON payload we can
+easily unmarschal in Go.</p>
+
+<p>How do we get the department information together with the employee information
+in one single JSON document?</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>A constraint exists on the employee table: if you insert a JSON document for
+which no <code>department_id</code> exists in the <code>department</code> table, you will get a foreign
+key violation:</p>
+
+<pre><code>mysql&gt; INSERT INTO employees (id, doc) VALUES (1101,
+   '{&quot;given_name&quot;: &quot;Walter&quot;, &quot;department_id&quot;: 5}');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key
+    constraint fails...
+</code></pre>
+
+<p>Using this relation, we can join the tables:</p>
+
+<pre><code>SELECT e.id, d.id FROM employees AS e JOIN departments AS d ON e.dep_id = d.id;
+</code></pre>
+
+<p>Note that the <code>department_id</code> is stored in the JSON document (and also in the index column).</p>
+
+<p>To merge the JSON department document information in the JSON doc of the employee,
+we use <a href="https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-insert"><code>JSON_INSERT()</code></a>.
+Lets say we want all information of Alice, and her department:</p>
+
+<pre><code>SELECT JSON_INSERT(e.doc, '$.department', d.doc) AS doc 
+FROM employees AS e JOIN departments AS d ON e.dep_id = d.id WHERE e.id = 1000;
+</code></pre>
+
+<p>The result (using <a href="https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty"><code>JSON_PRETTY()</code></a>):</p>
+
+<pre><code>{
+  &quot;department&quot;: {
+    &quot;name&quot;: &quot;DevOps&quot;
+  },
+  &quot;given_name&quot;: &quot;Alice&quot;,
+  &quot;department_id&quot;: 1
+}
+</code></pre>
+
+<h1 id="resulting-context">Resulting Context</h1>
+
+<p>We store information about employees and departments in a (more-or-less) schema-less way into the MySQL tables.
+We ensure that each employee has exactly one, existing department assigned. Using <code>JSON_INSERT</code> we can join
+the two tables and retrieve information in one document.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>I am starting to like the way normalization gets a bit redefined. Where it makes sense, you normalize the data
+from your document store which you need to have indexed, or have constraints on them: the data you use to
+actually query. All other data is are pretty much useless to have in columns for it.</p>
+
+<p>You can still select partial data from the document using the JSON functions, but no optimization in the world will make
+it as fast as having columns. But, the way we use APIs, and in Go with structs: loading all data is pretty much needed
+without having messy code.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2018/mysql8-unattended-dpkg/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2018/go-year/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

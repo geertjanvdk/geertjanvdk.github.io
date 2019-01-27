@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2008/apple-airport-broke-on-5-macs-simultaneously/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Apple Airport broke on 5 Macs simultaneously</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/removing-airport-preferences-on-mac-os-10-5/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/first-leg-of-my-main-square-project/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Apple Airport broke on 5 Macs simultaneously
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Aug 21, 2008</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>During the day, while doing daily work, my old PowerBook lost network connection.. Just like that. My iMac next to it has exactly the same problem: they can&rsquo;t connect to my wireless network anymore! I opened my MacBook Air, and tata.. FUBAR! iPhone also gone.. And my kitchen iMac too.. NOOOooo..</p>
+
+<p>So, I thought, my wireless in my router is broken, and I started to look at my Fritz!</p>
+
+<p>Box Fon WLAN router.. giving it bad eyes. After 2 hours, and dinner, I went to bye a wireless router from LinkSys. I hooked it on my DSL capable router, and after some work setting that up.. Crap! Doesn&rsquo;t work either!</p>
+
+<pre><code>Aug 21 21:35:14 air airportd[252]: Error: __ACNetworkAssociate() failed to find some_abstract_type
+Aug 21 21:35:14 air SystemUIServer[98]: Error: airportd MIG failed = -6 ((null))  (port = 50695)
+Aug 21 21:35:14 air airportd[252]: Error: process_command_dict() failed
+Aug 21 21:35:14 air SystemUIServer[98]: Error joining some_abstract_type: Connection timeout (-6 timeout connecting)Aug 21 21:35:36 air /usr/sbin/ocspd[253]: starting
+</code></pre>
+
+<p>It&rsquo;s seriously pissing me off! It has been working flawlessly for almost 3 years now..</p>
+
+<p>Changing the MTU didn&rsquo;t help. Resetting the PRAM neither. Everywhere posts, but nothing helps..</p>
+
+<p>I AM OFF FOR A BEER! FFS!</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2008/removing-airport-preferences-on-mac-os-10-5/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2008/first-leg-of-my-main-square-project/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

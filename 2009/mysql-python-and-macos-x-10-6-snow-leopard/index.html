@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/mysql-python-and-macos-x-10-6-snow-leopard/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL, Python and MacOS X 10.6 (Snow Leopard)</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/fixing-iphotos-albumdata-xml-for-importing-into-googles-picasa/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/macports-and-mac-os-x-10-6-snow-leopard/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL, Python and MacOS X 10.6 (Snow Leopard)
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Sep 23, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This has been already mentioned in on a few blogs, but I thought it would be good to post here too. Note: <strong>this is not using</strong> <a href="http://www.macports.org/">MacPorts</a>!</p>
+
+<p>To get MySQL and Python going on MacOS X 10.6 you need the following:</p>
+
+<ul>
+<li><a href="http://dev.mysql.com/downloads/mysql/5.1.html#macosx">Download MySQL MacOS X 10.5 (x86_64)</a> tar ball. Yes, we download for v10.5 currently.</li>
+<li>Get a copy of <a href="http://sourceforge.net/projects/mysql-python/files/">MySQL-python</a></li>
+<li>Install the latest XCode tools found on the Snow Leopard CD under option installs or <a href="http://developer.apple.com/TOOLS/Xcode/">download it</a>.</li>
+</ul>
+
+<p><a href="http://dev.mysql.com/doc/refman/5.1/en/installing-binary.html">Install MySQL</a> using the tar ball and make sure you get it up and running.</p>
+
+<p>Compile MySQL-python (leave out setting the $PATH when it&rsquo;s already done):</p>
+
+<pre><code class="language-shell">$ PATH=&quot;/usr/local/mysql/bin:$PATH&quot;
+$ tar xzf MySQL-python-1.2.3c1.tar.gz
+$ cd MySQL-python-1.2.3c1
+$ ARCHFLAGS=&quot;-arch x86_64&quot; /usr/bin/python setup.py build
+$ /usr/bin/python setup.py install
+</code></pre>
+
+<p>I&rsquo;m giving the full path for <code>python</code> to make sure it does not use the MacPorts one.</p>
+
+<p><strong>EDIT 2009-09-24</strong>: If it can&rsquo;t find <code>mysql_config</code>, you did not set your path correctly, but you can update the <code>setup_posix.py</code> fine of MySQL-Python and change it to something like this (<a href="http://forums.mysql.com/read.php?50,282809,282836#msg-282836">as seen on our forums</a>):</p>
+
+<pre><code>mysql_config.path = &quot;/usr/local/mysql-5.1.39-osx10.5-x86_64/bin/mysql_config&quot;
+</code></pre>
+
+<p>Here a test script <code>test_mysql.py</code>:</p>
+
+<pre><code class="language-python">import MySQLdb
+
+if __name__ == &quot;__main__&quot;:
+  db = MySQLdb.connect(host=&quot;localhost&quot;,user=&quot;root&quot;,db=&quot;test&quot;)
+  cursor = db.cursor()
+  cursor.execute(&quot;SHOW ENGINES&quot;)
+
+  for row in cursor.fetchall():
+    print row
+
+  cursor.close()
+  db.close()
+</code></pre>
+
+<p>Run the above script like:</p>
+
+<pre><code class="language-shell">$ /usr/bin/python test_mysql.py
+</code></pre>
+
+<p>It should output the available storage engines.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Kenneth Anguish
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Sep 26 2009, 10:31</time>
+      </div>
+    <div>
+      You can edit the site.cfg file with mysql-python, and specify the mysqld-config.
+    </div>
+    </dd>
+  
+    <dt>
+          note19
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Sep 27 2009, 00:26</time>
+      </div>
+    <div>
+      Great post. Very useful. Thank you!
+    </div>
+    </dd>
+  
+    <dt>
+          Philip
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Sep 29 2009, 15:51</time>
+      </div>
+    <div>
+      Thanks for this post.  When I try and run the sample script I get a mysqldb not defined error.  The install didn&#39;t give any errors (I don&#39;t think it did..)
+    </div>
+    </dd>
+  
+    <dt>
+          SAKrisT
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Oct 6 2009, 19:24</time>
+      </div>
+    <div>
+      Thanks!
+    </div>
+    </dd>
+  
+    <dt>
+          red.is.the.new.black.
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 21 2009, 18:17</time>
+      </div>
+    <div>
+      Says <br /><br />gcc-4.2 -fno-strict-aliasing -fno-common -dynamic -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -pipe -Dversion_info=(1,2,3,&#39;gamma&#39;,1) -D<strong>version</strong>=1.2.3c1 -I/usr/local/mysql/include -I/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6 -c _mysql.c -o build/temp.macosx-10.6-universal-2.6/_mysql.o -g -Os -arch ppc64 -fno-common -D_P1003_1B_VISIBLE -DSIGNAL_WITH_VIO_CLOSE -DSIGNALS_DONT_BREAK_READ -DIGNORE_SIGHUP_SIGQUIT -DDONT_DECLARE_CXA_PURE_VIRTUAL<br />unable to execute gcc-4.2: No such file or directory<br />error: command &#39;gcc-4.2&#39; failed with exit status 1<br /><br />WHY??
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 21 2009, 20:32</time>
+      </div>
+    <div>
+      It&#39;s in the error message..<br />..unable to execute gcc-4.2: No such file or directory<br />error: command &#39;gcc-4.2&#39; failed with exit status 1<br /><br />Check X-Code installation..
+    </div>
+    </dd>
+  
+    <dt>
+          Alex
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 28 2009, 01:57</time>
+      </div>
+    <div>
+      I&#39;m getting a similar error, but I&#39;ve reinstalled xcode, not sure how to resolve this, any ideas?<br /><br />Mine is complaining about a lot of missing files:<br /><br />core:MySQL-python-1.2.3c1 ayoung$ ARCHFLAGS=&#39;-arch x86_64&#39; /usr/bin/python setup.py build<br />running build<br />running build_py<br />copying MySQLdb/release.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb<br />running build_ext<br />building &#39;_mysql&#39; extension<br />gcc-4.2 -fno-strict-aliasing -fno-common -dynamic -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -pipe -arch x86_64 -Dversion_info=(1,2,3,&#39;gamma&#39;,1) -D<strong>version</strong>=1.2.3c1 -I/usr/include -I/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6 -c _mysql.c -o build/temp.macosx-10.6-universal-2.6/_mysql.o -fno-omit-frame-pointer -pipe -D_P1003_1B_VISIBLE -DSIGNAL_WITH_VIO_CLOSE -DSIGNALS_DONT_BREAK_READ -DIGNORE_SIGHUP_SIGQUIT<br />_mysql.c:36:23: error: my_config.h: No such file or directory<br />_mysql.c:38:19: error: mysql.h: No such file or directory<br />_mysql.c:39:26: error: mysqld_error.h: No such file or directory<br />_mysql.c:40:20: error: errmsg.h: No such file or directory<br /><br />&hellip;<br /><br />_mysql.c:2421: error: initializer element is not constant<br />_mysql.c:2421: error: (near initialization for &lsquo;_mysql_ResultObject_memberlist[0].offset&rsquo;)<br />_mysql.c: In function &lsquo;_mysql_ConnectionObject_getattr&rsquo;:<br />_mysql.c:2443: error: &lsquo;_mysql_ConnectionObject&rsquo; has no member named &lsquo;open&rsquo;<br />error: command &#39;gcc-4.2&#39; failed with exit status 1<br />core:MySQL-python-1.2.3c1 ayoung$
+    </div>
+    </dd>
+  
+    <dt>
+          Alex
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 28 2009, 02:00</time>
+      </div>
+    <div>
+      Should have noted that I&#39;m using os x server with MySQL built in, don&#39;t know if that may be the difference.  (Maybe it needs mysql sources?  Not sure how to go about adding them&hellip;)
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 28 2009, 07:06</time>
+      </div>
+    <div>
+      @Alex<br />Try to install the tar ball distribution of MySQL for Mac OS X in /usr/local. Unpack it there and make sure the /usr/local/mysql symlink is in place.<br />Then try again with that version.
+    </div>
+    </dd>
+  
+    <dt>
+          Alex
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Oct 31 2009, 16:22</time>
+      </div>
+    <div>
+      Thanks Geert, I decided I really wanted to keep the Apple version of MySQL so updates / administration would be consistent as possible with the rest of the services installed.<br /><br />I did find a solution to my problem, it&#39;s not as elegant as I would desire, but that would depend on Apple releasing MySQL libs for 10.6 server.<br /><br />I followed the directions for the 10.5 library download and install on this Apple kb article: <a href="http://support.apple.com/kb/TA25017">http://support.apple.com/kb/TA25017</a><br /><br />That got me where I needed to be to get django running as desired with a MySQL backend.
+    </div>
+    </dd>
+  
+    <dt>
+          dhatch
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Dec 5 2009, 22:11</time>
+      </div>
+    <div>
+      Thanks for this post.  The install completes successfully but when I try to import MySQLLdb i get an error saying it does not exist.  I noticed that the .egg file was installed in my /Library/Python/2.6/site-packages folder but my python installation is located in /Library/Frameworks/Python.framework/ and the .egg file is not in the site-packages folder in that directory.  Could this be a problem?
+    </div>
+    </dd>
+  
+    <dt>
+          xtfer
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jan 26 2010, 02:33</time>
+      </div>
+    <div>
+      After a number of different attempts, I managed to set this up using these instructions and the current 10.6 binaries from mysql.com. Thanks.
+    </div>
+    </dd>
+  
+    <dt>
+          Jimmy
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 27 2010, 04:00</time>
+      </div>
+    <div>
+      If you get a compiler error with an exit status 1, about 8 lines above it will say there&#39;s an error with the Xcode install. Basically, you need to install the latest version of Xcode (or at least install it again, I&#39;d just go find the latest version at Apple&#39;s Dev Central).
+    </div>
+    </dd>
+  
+    <dt>
+          psico
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Apr 11 2011, 14:44</time>
+      </div>
+    <div>
+      <p>I&rsquo;m getting this error:</p>
+
+<p>gcc-4.2 -fno-strict-aliasing -fno-common -dynamic -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -pipe -Dversion_info=(1,2,3,&lsquo;final&rsquo;,0) -D<strong>version</strong>=1.2.3 -I/usr/local/mysql/include -I/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6 -c _mysql.c -o build/temp.macosx-10.6-universal-2.6/_mysql.o -Os -g -fno-common -fno-strict-aliasing -arch x86_64
+In file included from /usr/include/unistd.h:519,
+                 from /System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/Python.h:44,
+                 from pymemcompat.h:10,
+                 from _mysql.c:29:
+/usr/include/sys/select.h:114: error: expected &lsquo;=&rsquo;, &lsquo;,&rsquo;, &lsquo;;&rsquo;, &lsquo;asm&rsquo; or &lsquo;<strong>attribute</strong>&rsquo; before numeric constant
+In file included from _mysql.c:36:
+/usr/local/mysql/include/my_config.h:327:1: warning: &ldquo;SIZEOF_SIZE_T&rdquo; redefined
+In file included from /System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/Python.h:9,
+                 from pymemcompat.h:10,
+                 from _mysql.c:29:
+/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/pymacconfig.h:33:1: warning: this is the location of the previous definition
+In file included from _mysql.c:36:
+/usr/local/mysql/include/my_config.h:420:1: warning: &ldquo;HAVE_WCSCOLL&rdquo; redefined
+In file included from /System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/Python.h:8,
+                 from pymemcompat.h:10,
+                 from _mysql.c:29:
+/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/pyconfig.h:803:1: warning: this is the location of the previous definition
+error: command &lsquo;gcc-4.2&rsquo; failed with exit status 1</p>
+
+<p>Any ideas?</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Apr 11 2011, 19:06</time>
+      </div>
+    <div>
+      <a href="#comment-839" rel="nofollow">@psico </a>
+Use MySQL 64-bit.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.stoneschool.com">leovitch</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jul 19 2011, 12:02</time>
+      </div>
+    <div>
+      <p>Sigh, how can this still be so hard in 2011?  I downloaded the 64-bit version of MySQL:</p>
+
+<p><a href="http://ftp.iij.ad.jp/pub/db/mysql/Downloads/MySQL-5.5/mysql-5.5.14-osx10.6-x86_64.dmg">http://ftp.iij.ad.jp/pub/db/mysql/Downloads/MySQL-5.5/mysql-5.5.14-osx10.6-x86_64.dmg</a></p>
+
+<p>It&rsquo;s all installed and running happily (not shown here but I can connect to db etc. too).</p>
+
+<p>% set path=($path /usr/local/mysql/bin)
+% mysql_config
+&hellip;
+        --cflags         [-I/usr/local/mysql/include  -Os -g -fno-common -fno-strict-aliasing -arch x86_64]
+        --include        [-I/usr/local/mysql/include]
+        --libs           [-L/usr/local/mysql/lib -lmysqlclient   -lpthread]
+        --libs_r         [-L/usr/local/mysql/lib -lmysqlclient_r   -lpthread]
+        --version        [5.5.14]
+        --libmysqld-libs [-L/usr/local/mysql/lib -lmysqld    -lpthread]
+&hellip;</p>
+
+<p>The client library exists and is 64-bit:</p>
+
+<p>% lipo /usr/local/mysql/lib/libmysqlclient.dylib -info
+Non-fat file: /usr/local/mysql/lib/libmysqlclient.dylib is architecture: x86_64</p>
+
+<p>But even so, python can&rsquo;t find the mysql client lib:</p>
+
+<p>% python
+Python 2.6.1 (r261:67515, Aug  2 2010, 20:10:18)
+[GCC 4.2.1 (Apple Inc. build 5646)] on darwin
+Type &ldquo;help&rdquo;, &ldquo;copyright&rdquo;, &ldquo;credits&rdquo; or &ldquo;license&rdquo; for more information.
+&gt;&gt;&gt; import MySQLdb
+Traceback (most recent call last):
+  File &ldquo;&rdquo;, line 1, in
+  File &ldquo;build/bdist.macosx-10.6-universal/egg/MySQLdb/<strong>init</strong>.py&rdquo;, line 19, in
+  File &ldquo;build/bdist.macosx-10.6-universal/egg/_mysql.py&rdquo;, line 7, in
+  File &ldquo;build/bdist.macosx-10.6-universal/egg/_mysql.py&rdquo;, line 6, in <strong>bootstrap</strong>
+ImportError: dlopen(/Users/leo.hourvitz/.python-eggs/MySQL_python-1.2.3-py2.6-macosx-10.6-universal.egg-tmp/_mysql.so, 2): Library not loaded: libmysqlclient.18.dylib
+  Referenced from: /Users/leo.hourvitz/.python-eggs/MySQL_python-1.2.3-py2.6-macosx-10.6-universal.egg-tmp/_mysql.so
+  Reason: image not found
+&gt;&gt;&gt; ^D</p>
+
+<p>Is Python really running 64-bit?   Looks like it:</p>
+
+<p>% python
+Python 2.6.1 (r261:67515, Aug  2 2010, 20:10:18)
+[GCC 4.2.1 (Apple Inc. build 5646)] on darwin
+Type &ldquo;help&rdquo;, &ldquo;copyright&rdquo;, &ldquo;credits&rdquo; or &ldquo;license&rdquo; for more information.
+&gt;&gt;&gt; import platform
+&gt;&gt;&gt; print platform.architecture()
+(&lsquo;64bit&rsquo;, &ldquo;)
+&gt;&gt;&gt; ^D
+%</p>
+
+<p>What happened when I compiled, you ask?  Some warnings, but the link command in particular looks perfectly sensible.  I did the build in bash just to be sure I&rsquo;m following the instructions above:</p>
+
+<p>bash-3.2$ pwd
+MySQL-python-1.2.3
+bash-3.2$ PATH=&ldquo;/usr/local/mysql/bin:$PATH&rdquo;
+bash-3.2$ ARCHFLAGS=&ldquo;-arch x86_64&rdquo; python setup.py build
+running build
+running build_py
+creating build/lib.macosx-10.6-universal-2.6
+copying _mysql_exceptions.py -&gt; build/lib.macosx-10.6-universal-2.6
+creating build/lib.macosx-10.6-universal-2.6/MySQLdb
+copying MySQLdb/<strong>init</strong>.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb
+copying MySQLdb/converters.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb
+copying MySQLdb/connections.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb
+copying MySQLdb/cursors.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb
+copying MySQLdb/release.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb
+copying MySQLdb/times.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb
+creating build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+copying MySQLdb/constants/<strong>init</strong>.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+copying MySQLdb/constants/CR.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+copying MySQLdb/constants/FIELD_TYPE.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+copying MySQLdb/constants/ER.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+copying MySQLdb/constants/FLAG.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+copying MySQLdb/constants/REFRESH.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+copying MySQLdb/constants/CLIENT.py -&gt; build/lib.macosx-10.6-universal-2.6/MySQLdb/constants
+running build_ext
+building &lsquo;_mysql&rsquo; extension
+creating build/temp.macosx-10.6-universal-2.6
+gcc-4.2 -fno-strict-aliasing -fno-common -dynamic -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -pipe -Dversion_info=(1,2,3,&lsquo;final&rsquo;,0) -D<strong>version</strong>=1.2.3 -I/usr/local/mysql/include -I/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6 -c _mysql.c -o build/temp.macosx-10.6-universal-2.6/_mysql.o -Os -g -fno-common -fno-strict-aliasing -arch x86_64
+In file included from _mysql.c:36:
+/usr/local/mysql/include/my_config.h:330:1: warning: &ldquo;SIZEOF_SIZE_T&rdquo; redefined
+In file included from /System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/Python.h:9,
+                 from pymemcompat.h:10,
+                 from _mysql.c:29:
+/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/pymacconfig.h:33:1: warning: this is the location of the previous definition
+In file included from _mysql.c:36:
+/usr/local/mysql/include/my_config.h:423:1: warning: &ldquo;HAVE_WCSCOLL&rdquo; redefined
+In file included from /System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/Python.h:8,
+                 from pymemcompat.h:10,
+                 from _mysql.c:29:
+/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/pyconfig.h:803:1: warning: this is the location of the previous definition
+gcc-4.2 -Wl,-F. -bundle -undefined dynamic_lookup build/temp.macosx-10.6-universal-2.6/_mysql.o -L/usr/local/mysql/lib -lmysqlclient_r -lpthread -o build/lib.macosx-10.6-universal-2.6/_mysql.so -arch x86_64</p>
+
+<p>bash-3.2$</p>
+
+<p>The output from setup.py install was clean with no errors.</p>
+
+<p>It seems like the MySQLdb .so is not correctly referencing the mysql client library via the full absolute path.  But isn&rsquo;t it supposed to do that by itself?</p>
+
+<p>This machine has been nowhere near Mac Ports.</p>
+
+<p>Thanks for any help,</p>
+
+<p>Leo</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jul 19 2011, 12:48</time>
+      </div>
+    <div>
+      <p><a href="#comment-1174" rel="nofollow">@leovitch </a>
+To get you going, you can do like this:
+ shell&gt; DYLD_LIBRARY_PATH=&ldquo;/usr/local/mysql/lib&rdquo; python
+ python&gt; import MySQLdb</p>
+
+<p>Not sure still what is wrong. Doing more steps than what I blogged is just annoyance. Maybe you can google to solution though? I&rsquo;ll check later more.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.stoneschool.com">leovitch</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 20 2011, 01:51</time>
+      </div>
+    <div>
+      <p>Geert,</p>
+
+<p>Thanks, I knew there was some variable like that and the above does let me load MySQLdb for test purposes.  Of course since I&rsquo;m installing this for the sake of a web app and fiddling with DYLD_LIBRARY_PATH in my Apache is a bit sketchy, I&rsquo;m trying to find the real solution.  It seems like the crux of it must be the link command, huh?</p>
+
+<p>Leo</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.stoneschool.com">leovitch</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 20 2011, 02:21</time>
+      </div>
+    <div>
+      <p>FWIW, otool does seem to show the built _mysql.so has a relative rather than absolute path in it:</p>
+
+<p>% otool -L build/lib.macosx-10.6-universal-2.6/_mysql.so
+build/lib.macosx-10.6-universal-2.6/_mysql.so:
+    libmysqlclient.18.dylib (compatibility version 18.0.0, current version 18.0.0)
+    /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 125.2.11)</p>
+
+<p>Is that expected?</p>
+
+<p>Leo</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.stoneschool.com">leovitch</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 20 2011, 02:58</time>
+      </div>
+    <div>
+      <p>I found a workaround although it still feels like something must be going wrong if this extra step is required.</p>
+
+<p>After building, as mentioned before, the _mysql.o has a relative path:</p>
+
+<p>% otool -L build/lib.macosx-10.6-universal-2.6/_mysql.so
+build/lib.macosx-10.6-universal-2.6/_mysql.so:
+    libmysqlclient.18.dylib (compatibility version 18.0.0, current version 18.0.0)
+    /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 125.2.11)</p>
+
+<p>So I use install_name_tool to change it as suggested at <a href="http://lightyearsoftware.com/2011/02/mysql-5-5-on-mac-os-x/:">http://lightyearsoftware.com/2011/02/mysql-5-5-on-mac-os-x/:</a></p>
+
+<p>% install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib build/lib.macosx-10.6-universal-2.6/_mysql.so</p>
+
+<p>And sure enough it&rsquo;s absolute afterwards:</p>
+
+<p>% otool -L build/lib.macosx-10.6-universal-2.6/_mysql.so
+build/lib.macosx-10.6-universal-2.6/_mysql.so:
+    /usr/local/mysql/lib/libmysqlclient.18.dylib (compatibility version 18.0.0, current version 18.0.0)
+    /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 125.2.11)</p>
+
+<p>And sure enough if I reinstall that, it works without DYLD_LIBRARY_PATH:</p>
+
+<p>% python
+Python 2.6.1 (r261:67515, Aug  2 2010, 20:10:18)
+[GCC 4.2.1 (Apple Inc. build 5646)] on darwin
+Type &ldquo;help&rdquo;, &ldquo;copyright&rdquo;, &ldquo;credits&rdquo; or &ldquo;license&rdquo; for more information.
+&gt;&gt;&gt; import MySQLdb
+/Library/Python/2.6/site-packages/MySQL_python-1.2.3-py2.6-macosx-10.6-universal.egg/_mysql.py:3: UserWarning: Module _mysql was already imported from /Library/Python/2.6/site-packages/MySQL_python-1.2.3-py2.6-macosx-10.6-universal.egg/_mysql.pyc, but /Users/leovitch/src/MySQL-python-1.2.3 is being added to sys.path
+&gt;&gt;&gt; ^D</p>
+
+<p>I&rsquo;m not sure what the origin of the warning message is -- why should my build directory be added to sys.path? -- but it seems like this at least gets the module installed correctly.</p>
+
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/fixing-iphotos-albumdata-xml-for-importing-into-googles-picasa/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/macports-and-mac-os-x-10-6-snow-leopard/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

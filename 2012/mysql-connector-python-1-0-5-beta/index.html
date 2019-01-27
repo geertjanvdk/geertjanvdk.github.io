@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2012/mysql-connector-python-1-0-5-beta/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python v1.0.5 beta available for download</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/connectorpython-1-0-5-on-pypi/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/naming-a-python-package-for-distribution/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python v1.0.5 beta available for download
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Aug 7, 2012</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>MySQL Connector/Python v1.0.5 beta is now available for <a href="http://dev.mysql.com/downloads/connector/python/#downloads">download from the MySQL website</a>. This version is feature complete and we welcome and appreciate feedback and <a href="http://bugs.mysql.com">bug reports</a>.</p>
+
+<p>We&rsquo;re also interested in hearing your <a href="http://forums.mysql.com/list.php?50">feedback</a> for future enhancements. Let us know how you&rsquo;re using the connector too, especially if you are using it with Django, SQLAlchemy and similar Python technologies.</p>
+
+<p>A few things have changed since the last development releases and we hope the manual shipping with the Connector/Python distribution (and also available online soon) will help you get up to speed.</p>
+
+<p>Here are a few important changes that might be incompatible with current scripts using the now obsolete development releases v0.3.2 and earlier:</p>
+
+<ul>
+<li>MySQLCursor.execute() returns None. When multiple statements are send, it will return a generator object.</li>
+<li>MySQLConnection.ping() raises and exception. The is_connected() method will return True or False.</li>
+<li>The following methods of MySQLConnection changed: set_charset() replaced by set_charset_collation(); unset_client_flag() and set_client_flag() are removed, use set_client_flags() instead.</li>
+</ul>
+
+<p>There have been quite a few changes and bug fixes. I recommend checking the ChangeLog file in the distribution of MySQL Connector/Python, and, once available, also the change log in the MySQL manual.</p>
+
+<p>You can download Connector/Python 1.0.5-beta at:</p>
+
+<ul>
+<li>Download: <a href="http://dev.mysql.com/downloads/connector/python/">http://dev.mysql.com/downloads/connector/python/</a></li>
+</ul>
+
+<p>If you&rsquo;d like to ask questions or seek advice in using the connector, check out the following MySQL forum:</p>
+
+<ul>
+<li>Forum: <a href="http://forums.mysql.com/list.php?50">http://forums.mysql.com/list.php?50</a></li>
+</ul>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://www.fizyk.net.pl/">Fizyk</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Aug 8 2012, 11:05</time>
+      </div>
+    <div>
+      <p>How is it compared to MySQLdb?</p>
+
+<p>We&rsquo;ve been using this library so far, on mysql 5.1, and with sqlalchemy</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Aug 8 2012, 14:01</time>
+      </div>
+    <div>
+      <p>Connector/Python 1.0 will work with SQLAlchemy once the dialect is updated.</p>
+
+<p>But Connector/Python is pure Python and does not need any other MySQL software, thus no C libraries and compiling.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.fizyk.net.pl/">Fizyk</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Aug 9 2012, 08:15</time>
+      </div>
+    <div>
+      <p>So&hellip; not ready yet? I&rsquo;m looking for mysqldb replacement, since this library seems to no longer be maintaned, and latest release is about 5 years old ;)</p>
+
+<p>I&rsquo;ve found your old status report:
+<a href="http://geert.vanderkelen.org/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/">http://geert.vanderkelen.org/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/</a></p>
+
+<p>And I think I will have to do some testing with all three libraries ;)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          s7v7nislands
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 10 2012, 02:03</time>
+      </div>
+    <div>
+      <p><a href="https://launchpad.net/myconnpy">https://launchpad.net/myconnpy</a></p>
+
+<p>why don&rsquo;t update this project?</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 10 2012, 05:07</time>
+      </div>
+    <div>
+      Everything has its time, but we will update Launchpad.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 10 2012, 05:09</time>
+      </div>
+    <div>
+      Thanks for checking it out!
+I will try to follow up on that old post.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://emergingthreatspro.com">David McNelis</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Aug 14 2012, 22:46</time>
+      </div>
+    <div>
+      The removal of set_client_flag doesn&rsquo;t jive well in SqlAlchemy 0.7.  It wants to run set_client_flag recursively.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://emergingthreatspro.com">David McNelis</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Aug 14 2012, 23:06</time>
+      </div>
+    <div>
+      <p>One more thing.  SQLAlchemy was looking for get_characterset_info().  I was able to get everything working without any blatant issues with the following (which is hacky.. but I needed it to work right now).  Fwiw, I&rsquo;m running SQLAlchemy 0.7, MySQL 5.1 and needed to support SSL connections to the db&hellip; they seem to be working just fine.</p>
+
+<p>[python]
+def get_characterset_info(self, **kwargs):
+        pass</p>
+
+<p>def set_client_flag(self, flags):
+        return self.set_client_flags(flags)
+[/python]</p>
+
+<p>(Updated by Geert: Showing Python code better)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Aug 15 2012, 05:12</time>
+      </div>
+    <div>
+      <p>Thanks so much for trying out the beta of Connector/Python with SQLAlchemy!</p>
+
+<p>The best way would be to update the dialect of SQLAlchemy:
+   lib/sqlalchemy/dialects/mysql/mysqlconnector.py</p>
+
+<p>[python]
+def _get_server_version_info(self, connection):
+  ..
+  from mysql.connector.constants import ClientFlag
+  dbapi_con.set_client_flags([ClientFlag.FOUND_ROWS])
+  ..
+[/python]</p>
+
+<p>Although I&rsquo;m not sure why the client flags have to be set there.
+And:</p>
+
+<p>[python]
+def _detect_charset(self, connection):
+  return connection.connection.charset
+[/python]</p>
+
+<p>There seems to be not much to change in the dialect, which is a good thing :)
+(Above code is not tested, but should be good start)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://emergingthreatspro.com">David McNelis</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Aug 15 2012, 15:02</time>
+      </div>
+    <div>
+      Thanks a ton, Geert!
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/connectorpython-1-0-5-on-pypi/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/naming-a-python-package-for-distribution/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

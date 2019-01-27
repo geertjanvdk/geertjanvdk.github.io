@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/mysql-v5-5-and-python/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL v5.5 and Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/my-family-end-2010/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/this-blog-served-by-mysql-v5-5/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL v5.5 and Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Dec 17, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p><a href="http://www.mysql.com">MySQL</a> <a href="http://blogs.oracle.com/mysql/2010/12/mysql_55_is_ga.html">v5.5 is GA</a>, but is it working with <a href="http://www.python.org">Python</a>? Yes, it does. Below you&rsquo;ll find some quick, small tests I did with <a href="http://sourceforge.net/projects/mysql-python/">MySQLdb</a>, <a href="https://launchpad.net/oursql">oursql</a> and our own <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a>.</p>
+
+<p>My desktop is a Mac, but when it works on that, I&rsquo;m sure it works elsewhere too. If not, just <a href="http://bugs.mysql.com">let us know</a>!</p>
+
+<h2 id="mysql-for-python-aka-mysqldb">MySQL for Python (aka MySQLdb)</h2>
+
+<p>Installing <a href="http://dev.mysql.com/downloads/mysql/">MySQL v5.5.8 64-bit</a> from tar ball on MacOS X 10.6, it compiled fine and the module loaded giving me the expected result:</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; import MySQLdb
+&gt;&gt;&gt; cnx = MySQLdb.connect(user='root')
+&gt;&gt;&gt; cur = cnx.cursor()
+&gt;&gt;&gt; cur.execute(&quot;SELECT VERSION()&quot;)
+1L
+&gt;&gt;&gt; print cur.fetchall()
+(('5.5.8',),)
+</code></pre>
+
+<h2 id="oursql">oursql</h2>
+
+<p>oursql is an alternative for MySQLdb. Both are using the <a href="http://dev.mysql.com/doc/refman/5.5/en/c.html">MySQL C API</a> and thus need to be compiled from source (if you don&rsquo;t find binaries of course).</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; import oursql
+&gt;&gt;&gt; cnx = oursql.connect(user='root')
+&gt;&gt;&gt; cur = cnx.cursor()
+&gt;&gt;&gt; cur.execute(&quot;SELECT VERSION()&quot;)
+&gt;&gt;&gt; print cur.fetchall()
+[(u'5.5.8',)]
+</code></pre>
+
+<h2 id="mysql-connector-python">MySQL Connector/Python</h2>
+
+<p>Our own MySQL Connector/Python doesn&rsquo;t need compiling and doesn&rsquo;t need any MySQL software installed to be able to connect to a MySQL server. Current unittests run fine against MySQL v5.5.8.</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; cnx = mysql.connector.connect(user='root')
+&gt;&gt;&gt; cur = cnx.cursor()
+&gt;&gt;&gt; cur.execute(&quot;SELECT VERSION()&quot;)
+-1
+&gt;&gt;&gt; print cur.fetchall()
+[(u'5.5.8',)]
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>One can&rsquo;t really conclude anything with the simple tests above, but it looks like MySQL v5.5 will work fine with Python.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Alex
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu May 5 2011, 11:59</time>
+      </div>
+    <div>
+      <p>Hi Geert,</p>
+
+<p>Python -&gt; 2.4.3 (#1, Jan 14 2011, 22:42:01)
+mysql  -&gt; Ver 14.14 Distrib 5.5.8, for Linux (x86_64)
+MySQLdb.version_info -&gt; (1, 2, 1, &lsquo;final&rsquo;, 1)</p>
+
+<p>Doing the above tests:
+&gt;&gt; cur = cnx.cursor()
+Traceback (most recent call last):
+  File &ldquo;&rdquo;, line 1, in ?
+  File &ldquo;/usr/lib64/python2.4/site-packages/MySQLdb/connections.py&rdquo;, line 219, in cursor
+    return (cursorclass or self.cursorclass)(self)
+AttributeError: &lsquo;Connection&rsquo; object has no attribute &lsquo;cursorclass&rsquo;
+&gt;&gt;&gt;
+----&gt;</p>
+
+<p>Tried upgrading MySQLdb-Python to 1.2.3 but there are multiple mysql related errors.</p>
+
+<p>build/lib.linux-x86_64-2.4/MySQLdb
+running build_ext
+building &lsquo;_mysql&rsquo; extension
+gcc -pthread -fno-strict-aliasing -DNDEBUG -O2 -g -m64 -mtune=generic -D_GNU_SOURCE -fPIC -fPIC -Dversion_info=(1,2,3,&lsquo;final&rsquo;,0) -D<strong>version</strong>=1.2.3 -I/usr/include/mysql -I/usr/include/python2.4 -c _mysql.c -o build/temp.linux-x86_64-2.4/_mysql.o -g -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -fPIC -g -static-libgcc -fno-omit-frame-pointer -fno-strict-aliasing
+In file included from _mysql.c:29:
+pymemcompat.h:10:20: error: Python.h: No such file or directory
+_mysql.c:30:26: error: structmember.h: No such file or directory
+_mysql.c:62: error: expected &lsquo;=&rsquo;, &lsquo;,&rsquo;, &lsquo;;&rsquo;, &lsquo;asm&rsquo; or &lsquo;<strong>attribute</strong>&rsquo; before &lsquo;*&rsquo; token</p>
+
+<p>---&gt;</p>
+
+<p>I am working on it now, but if you have some tips, please let me know.</p>
+
+<p>Thanks, Alex.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Alex
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu May 5 2011, 16:09</time>
+      </div>
+    <div>
+      <p>Solved the issue using the &ldquo;magic&rdquo; bellow:</p>
+
+<h1 id="yum-install-python-devel-x86-64">yum install python-devel.x86_64</h1>
+
+<p>when installing MySQLdb-Python it was complaining about missing libmysqlclient_r.so.15, I only had version 16, downgrade not an option. Created a sym link to libmysqlclient_r.so.16 so that the install went smooth, nevertheless MySQLdb-Python was failing with the errors in previous post.</p>
+
+<p>Installed python-devel, now it is ok.</p>
+
+<p>Maybe this will help somebody.</p>
+
+<p>Cheers, Alex.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Gordon
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Feb 24 2012, 13:27</time>
+      </div>
+    <div>
+      Have you had any luck with python 2.4, mysql 5.5 and mysqldb 1.2.3 (or 1.2.2)? thanks
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/my-family-end-2010/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/this-blog-served-by-mysql-v5-5/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

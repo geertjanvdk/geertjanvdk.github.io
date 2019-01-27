@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/a-simpler-startup-script-for-mysql-on-macos-x/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>A simpler startup script for MySQL on MacOS X</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mounting-a-macos-x-disk-image-at-login/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      A simpler startup script for MySQL on MacOS X
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Nov 22, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>What you do when you&rsquo;re fed up with a script? Right, you write your own.</p>
+
+<p>You&rsquo;ll have to excuse me for the long shell script you&rsquo;ll find here below, but I&rsquo;m not going to bother putting it on some download website.</p>
+
+<p>It&rsquo;s <strong>a shell script which starts and stops the MySQL server</strong>. Indeed, a replacement for the <code>init.d</code> script found in the <a href="http://dev.mysql.com">MySQL</a> distributions. I&rsquo;m using it personally on my Macs and it&rsquo;s <em>not supported in any way</em>.</p>
+
+<h2 id="but-why">But why?</h2>
+
+<p>Well, I&rsquo;m playing with <a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>, Server Administration. The MySQL <code>init.d</code> script didn&rsquo;t work right away (oh, various reasons for that), so I used mine. So I figured it might be useful for others and it&rsquo;s not complicated or shocking-new-stuff. If you want to use it, you&rsquo;ll have to edit the 2 variables at the top. It&rsquo;s only going to work on MacOS X.</p>
+
+<pre><code class="language-shell">#!/bin/bash
+# Author: Geert Vanderkelen &lt;geert@vanderkelen.org&gt;
+
+BASEDIR=&quot;/opt/mysql/mysql&quot;
+CNF=&quot;/opt/mysql/my51.cnf&quot;
+
+MODE=&quot;$1&quot;
+_RETURN=&quot;&quot; # for returning from functions
+
+pidof() {
+    local CMD=$1
+    local PID=`ps cax -o &quot;pid,command&quot; | awk -v cmd=&quot;$CMD&quot; '{ if (\$2 == cmd) printf(&quot;%s&quot;,\$1) }'`
+    if [ &quot;x$PID&quot; == &quot;x&quot; ]; then
+        _RETURN=&quot;&quot;
+        return 1
+    else
+        _RETURN=$PID
+        return 0
+    fi
+}
+
+checkprocess() {
+    local CMD=$1
+    _RETURN=&quot;&quot;
+    pidof $CMD
+    if [ $? -eq 0 ];
+    then
+        local PID=${_RETURN}
+        kill -n 0 $PID 2&gt;/dev/null 1&gt;&amp;2
+        if [ $? -ne 0 ]; then
+            return 2
+        fi
+        _RETURN=$PID
+        return 0
+    fi
+
+    return 1
+}
+
+waituntildown() {
+    local CMD=$1
+    pidof $CMD
+    while [ $? -eq 0 ]; do
+        echo -n '.'
+        sleep 1
+        pidof $CMD
+    done
+}
+
+exec_mysqld_safe() {
+    (
+        cd $BASEDIR
+        ./bin/mysqld_safe --defaults-file=$CNF 2&gt;/dev/null 1&gt;&amp;amp;2 &lt;/dev/null &amp;amp;
+    )
+}
+
+status() {
+    checkprocess mysqld
+    RET=$?
+    if [ $RET -ne 0 ]; then
+        if [ $RET -eq 1 ]; then
+            echo &quot;MySQL is not running.&quot;
+        elif [ $RET -eq 2 ]; then
+            echo &quot;You have no permission to stop MySQL.&quot;
+        fi
+        return 1
+    fi
+    return 0
+}
+
+start() {
+    checkprocess mysqld
+    if [ $? -eq 0 ]; then
+        echo &quot;MySQL is running.&quot;
+        exit 1
+    fi
+    echo -n &quot;Starting MySQL.. &quot;
+    exec_mysqld_safe
+    sleep 2
+    checkprocess mysqld
+    if [ $? -ne 0 ]; then
+        echo &quot; Failed!&quot;
+        exit 1
+    fi
+    echo &quot; OK&quot;
+
+}
+
+stop() {
+    status
+    RET=$?
+    if [ $RET -ne 0 ]; then
+        exit 1
+    fi
+    PID=${_RETURN}
+    echo -n &quot;Stopping MySQL.. &quot;
+    kill $PID 2&gt;/dev/null 1&gt;&amp;2
+    if [ $? -eq 0 ]; then
+        waituntildown mysqld
+        echo &quot; OK&quot;
+    else
+        echo &quot; Failed!&quot;
+    fi
+}
+
+case &quot;$MODE&quot; in
+    &quot;start&quot;)
+        start
+    ;;
+
+    &quot;stop&quot;)
+        stop
+    ;;
+
+    &quot;restart&quot;)
+        stop
+        start
+    ;;
+
+    &quot;status&quot;)
+        status
+        if [ $? -eq 0 ]; then
+            echo &quot;MySQL is running.&quot;
+            exit 0
+        else
+            exit 1
+        fi
+    ;;
+
+    &quot;getpid&quot;)
+        pidof mysqld
+        if [ $? -eq 0 ]; then
+            echo ${_RETURN}
+        fi
+    ;;
+
+    *)
+        echo &quot;Usage: $0 {start|stop|restart|status|getpid}&quot;
+        exit 1
+    ;;
+esac
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Ken Whitmore
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jan 26 2010, 18:41</time>
+      </div>
+    <div>
+      With MacOS X Leopard installed, I&#39;ve selected &ldquo;Automatically start MySQL on System Startup&rdquo;, but it doesn&#39;t start, and I have to manually click the &ldquo;Start MySQL Server&rdquo; button after each restart.<br /><br />I found your script here and thought it might be the answer to my problem. Seeing your explanation that it is meant to replace the preinstalled mysql &ldquo;init.d&rdquo; file, I did a search of my hard drive for init.d using Terminal as a super user and found no init.d file in the MySQL installation.<br /><br />What do I do then, to make it start at system startup?
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 27 2010, 10:32</time>
+      </div>
+    <div>
+      @Ken:<br />My script wasn&#39;t meant to be used with the MySQL Mac OS distribution.<br /><br />Did you install the additional Startup Item, it is explained in the MySQL manual in section <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-installation-macosx-startupitem.html" rel="nofollow">Installing the MySQL Startup Item</a>. I hope that solves it for you.
+    </div>
+    </dd>
+  
+    <dt>
+          basti
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Jul 21 2014, 14:44</time>
+      </div>
+    <div>
+      thanks for script.
+to stop the daemon i would use &ldquo;/path/to/mysql/bin/mysqladmin shutdown&rdquo;.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mounting-a-macos-x-disk-image-at-login/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

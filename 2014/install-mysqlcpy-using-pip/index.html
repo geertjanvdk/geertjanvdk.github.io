@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2014/install-mysqlcpy-using-pip/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Installing MySQL Connector/Python using pip 1.5 and later</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/mysql-connector-python-1-1-6/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-1-4/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Installing MySQL Connector/Python using pip 1.5 and later
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Jan 29, 2014</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>The latest <a href="https://pypi.python.org/pypi/pip">pip</a> versions will fail on you when the packages it needs to install are not hosted on <a href="https://pypi.python.org">PyPI</a>. When you try to install <a href="http://dev.mysql.com/doc/connector-python/en/index.html">MySQL Connector/Python</a> the usually way, you get following message is:</p>
+
+<pre><code class="language-sh">$ sudo pip install mysql-connector-python
+  Could not find any downloads that satisfy the requirement
+    mysql-connector-python
+  Some externally hosted files were ignored
+    (use --allow-external mysql-connector-python to allow).
+</code></pre>
+
+<p>I have updated the download URL to include the MD5 checksum, and MySQL Connector/Python should now install using pip using following command:</p>
+
+<pre><code class="language-sh">$ sudo pip install --allow-external mysql-connector-python mysql-connector-python
+</code></pre>
+
+<p>Yes, you have to repeat the <code>mysql-connector-python</code> name.</p>
+
+<p><em>Author&rsquo;s note: Originally published January 2014, I have edited the command examples and added some extra information.</em></p>
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="https://gedmin.as">Marius Gedminas</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 29 2014, 13:56</time>
+      </div>
+    <div>
+      Why not upload mysql-connector-python to PyPI so it would just work?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://blog.ionelmc.ro/">Ionel Cristiam Mărieș</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 29 2014, 17:37</time>
+      </div>
+    <div>
+      I think it&rsquo;s better to just upload the distribution to PyPI instead. It has a CDN too ! Why don&rsquo;t you upload it there ?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 29 2014, 18:23</time>
+      </div>
+    <div>
+      Well, 1) it is not my decision to make, and 2) hosting remotely works.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jan 29 2014, 18:27</time>
+      </div>
+    <div>
+      Yes, I understand that, and I would definitely do that for my own projects. Also, see my reply to Marius.
+    </div>
+    </dd>
+  
+    <dt>
+          Cole
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jan 30 2014, 02:00</time>
+      </div>
+    <div>
+      Thanks, this saved my bacon&hellip;I was beating my head against the wall wondering why it couldn&rsquo;t find the &ldquo;external&rdquo; host even when I had the --allow-external flag.
+    </div>
+    </dd>
+  
+    <dt>
+          Rob
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Feb 8 2014, 20:06</time>
+      </div>
+    <div>
+      Thanks for keeping this module updated and available via pip!!! Helluva lot easier than it was the last time I used your connector.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://fixmycode.me">Pablo</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Aug 14 2014, 22:34</time>
+      </div>
+    <div>
+      is there a way I can add mysql-connector-python to my requirements.txt file now? or I&rsquo;m out of luck with this modification?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Aug 16 2014, 16:26</time>
+      </div>
+    <div>
+      @Pablo: You could modify pip if the options for allow &ldquo;external&rdquo; pacakges not working out. Currently, the package is not uploaded to PyPI.
+    </div>
+    </dd>
+  
+    <dt>
+          Luke Massa
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Sep 30 2014, 18:37</time>
+      </div>
+    <div>
+      <p>Just an FYI, running</p>
+
+<p>pip install mysql-connector-python</p>
+
+<p>On CentOS 6.5 with pip 1.3.1 and python 2.6.6 just worked for me without any &ldquo;allow-external&rdquo; stuff.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 1 2014, 05:52</time>
+      </div>
+    <div>
+      @Luke: Yup, earlier versions of pip work still without the verbose options.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/mysql-connector-python-1-1-6/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/mysql-connector-python-1-1-4/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

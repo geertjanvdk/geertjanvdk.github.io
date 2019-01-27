@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/why-it-is-important-to-use-columns-or-aliases-in-mysql-views/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Why it is important to use columns or aliases in MySQL Views</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/want-to-compile-a-mysql-cluster-mgm-api-application/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/readying-first-alpha-release-but-where-to-install-mysql-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Why it is important to use columns or aliases in MySQL Views
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Nov 10, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>You can <strong>define a view</strong> in <a href="http://dev.mysql.com">MySQL</a> as follows:</p>
+
+<pre><code> CREATE VIEW v AS SELECT  'MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL';
+</code></pre>
+
+<p>The above long string might give trouble reading, but &lsquo;MySQLMy..</p>
+
+<p>&rsquo; is 70 characters long. <strong>It will work fine</strong>, but check out how MySQL stores it (output of <code>SHOW CREATE VIEW</code>):</p>
+
+<pre><code class="language-sql">CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost`
+SQL SECURITY DEFINER VIEW `v` AS select
+  'MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL'
+  AS `MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL`
+</code></pre>
+
+<p>This is where <strong>the trouble starts</strong>. If you backup your schema using mysqldump, it will get the above definition, but when you restore it, you&rsquo;ll get the following error:</p>
+
+<pre><code>ERROR 1166 (42000) at line 43: Incorrect column name
+'MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL'
+</code></pre>
+
+<h2 id="why">Why?</h2>
+
+<p>Quoting the <a href="http://dev.mysql.com/doc/refman/5.1/en/create-view.html">MySQL Manual</a>:</p>
+
+<blockquote>
+<p>As of MySQL 5.1.23, aliases for column names in the SELECT statement are checked against the maximum column length of 64 characters (not the maximum alias length of 256 characters).&rdquo;</p>
+</blockquote>
+
+<h2 id="solutions">Solutions</h2>
+
+<p>General good practice:</p>
+
+<ul>
+<li>Use columns when defining the view: <code>CREATE VIEW v (MySQLString) AS SELECT 'MySQLMy..</code></li>
+<li>or use an alias: <code>CREATE VIEW v AS SELECT 'MySQLMy..' AS</code>MySQLString``</li>
+</ul>
+
+<p>Both will result in the following being stored:</p>
+
+<pre><code>CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost`
+  SQL SECURITY DEFINER VIEW `v` AS select
+  'MySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQLMySQL'
+  AS `MySQLString`
+</code></pre>
+
+<p>In <strong>my honest opinion</strong>, there should be a warning stating that the resulting alias is too long. This was discussed in <a href="http://bugs.mysql.com/bug.php?id=36287">bug #36287</a>.</p>
+
+<p><strong>Note</strong>: If you got the above <code>ERROR 1166</code> with your views, it means you never tested your backups! HA! Got ya!</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Shlomi N.
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Nov 11 2009, 03:55</time>
+      </div>
+    <div>
+      Hi,<br /><br />Good post.<br />The problem would also emerge if you&#39;re using replication; the slave will fail to replicate the query.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/want-to-compile-a-mysql-cluster-mgm-api-application/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/readying-first-alpha-release-but-where-to-install-mysql-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

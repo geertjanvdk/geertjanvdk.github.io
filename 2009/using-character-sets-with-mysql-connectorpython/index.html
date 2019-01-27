@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/using-character-sets-with-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Using character sets with MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/a-chessboard-in-mysql/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-connectorpython-0-1-2-devel-available/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Using character sets with MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Dec 23, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>Here is two small examples showing the wonderful world of character sets and unicode using <a href="https://launchpad.net/myconnpy/">MySQL Connector/Python</a> (using 0.1.2-devel and up) in both <a href="http://www.python.org/">Python</a> v2.x and v3.1.</p>
+
+<p>The following table will be used with default character set <code>latin7</code>, i.e. <code>[ISO-8859-13](http://en.wikipedia.org/wiki/ISO/IEC_8859-13)</code>. Just setting it to <code>[UTF-8](http://en.wikipedia.org/wiki/UTF-8)</code> would be bit boring!</p>
+
+<pre><code class="language-sql">CREATE TABLE `latin7test` (
+  `c1` varchar(60) DEFAULT NULL
+) DEFAULT CHARSET=latin7
+</code></pre>
+
+<p>Things to note for the code listed below are:</p>
+
+<ul>
+<li>We&rsquo;re using <code>charset='latin7'</code> as connection option. This is important!</li>
+<li>We set <code>use_unicode=True</code> so the results coming from MySQL are encoded to unicode. For testing, we disable this later.</li>
+</ul>
+
+<h2 id="python-v2-x">Python v2.x</h2>
+
+<p>Here is the code which will insert (Polish) <code>latin7</code> text and selects them again from the table.</p>
+
+<pre><code class="language-python">db = mysql.connect(user='root',db='test', buffered=True,
+                   charset=&quot;latin7&quot;, use_unicode=True)
+
+latin7 = [
+    # Hello in Polish
+    'dzie\xf1 dobry!',
+    'cze\xfa\xe3!'
+]
+
+cur = db.cursor()
+stmt = 'INSERT INTO latin7test VALUES (%(c1)s)'
+cur.execute(stmt, { 'c1' : latin7[0] } )
+stmt = 'INSERT INTO latin7test VALUES (%s)'
+cur.execute(stmt, (latin7[1],) )
+stmt = 'SELECT * FROM latin7test'
+cur.execute(stmt)
+rows = cur.fetchall()
+
+print(rows)
+db.set_unicode(False)
+cur.execute(stmt)rows = cur.fetchall()
+print(rows)
+
+cur.close()
+db.close()
+</code></pre>
+
+<h2 id="the-result">The result</h2>
+
+<pre><code class="language-python">[(u'dzie\u0144 dobry!',), (u'cze\u015b\u0107!',)]
+[('dzie\xf1 dobry!',), ('cze\xfa\xe3!',)]
+</code></pre>
+
+<p>The above might look weird, but if you put this in a webpage with proper encoding or print it in a terminal which supports <code>UTF8</code> or <code>latin1</code>, it should look nice.</p>
+
+<h2 id="python-v3-1">Python v3.1</h2>
+
+<pre><code class="language-python">db = mysql.connect(user='root',db='test',
+                   charset=&quot;latin7&quot;,use_unicode=True)
+
+latin7 = [
+    # Hello in Polish    
+    b'dzie\xf1 dobry!',
+    b'cze\xfa\xe3!'
+]
+
+cur = db.cursor()
+stmt = 'INSERT INTO latin7test VALUES (%(c1)s)'
+cur.execute(stmt, { 'c1' : latin7[0] } )
+stmt = 'INSERT INTO latin7test VALUES (%s)'
+cur.execute(stmt, (latin7[1],) )
+stmt = 'SELECT * FROM latin7test'
+cur.execute(stmt)
+rows = cur.fetchall()
+
+print(rows)db.set_unicode(False)
+cur.execute(stmt)
+rows = cur.fetchall()
+print(rows)
+
+cur.close()
+db.close()
+</code></pre>
+
+<h2 id="the-result-1">The result</h2>
+
+<pre><code class="language-python">[('dzień dobry!',), ('cześć!',)]
+[(b'dzie\xf1 dobry!',), (b'cze\xfa\xe3!',)]
+</code></pre>
+
+<p>The above looks nicer than the Python v2.4+ one. That&rsquo;s because in Python v3.x every string is now unicode. The second line shows the same data, but encoded in <code>latin7</code> and returned as bytes-objects since <code>use_unicode</code> is set to <code>False</code>.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Hafeez
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jan 24 2013, 22:08</time>
+      </div>
+    <div>
+      <p>Thankx man It really helped!!!</p>
+
+<p>Live long and have a blessed life! :)</p>
+
+<p>Hafeez,
+Pakistan</p>
+
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/a-chessboard-in-mysql/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-connectorpython-0-1-2-devel-available/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

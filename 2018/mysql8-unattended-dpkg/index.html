@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2018/mysql8-unattended-dpkg/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Unattended Install of MySQL 8.0 on Debian</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2018/go-mysql80-compat/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2018/mysql-join-docs/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Unattended Install of MySQL 8.0 on Debian
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 28, 2018</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/debian">debian</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/go">go</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><img src="../../images/mysql-deb-authconfig.png" class="summary"/>
+At <a href="https://www.dcso.de">work</a> we are doing quite a bit with Debian. To make things easier and automated, we can use the non-interactive feature of the Debian packaging system to deploy services. One of the stacks we are enrolling is <a href="https://dev.mysql.com/doc/refman/8.0/en/group-replication.html">MySQL Group Replication</a>, which requires at least 3 servers.</p>
+
+<p>Although the <a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#repo-qg-apt-repo-non-insteractive">MySQL Documentation</a> show how to install MySQL non-interactively, it is not entirely complete. The missing part is the extra question during the installation of the server whether you want to keep using the new default authentention method, or use the (now) legacy native method.</p>
+
+<p>If you are using a MySQL driver which has no support yet for strong password encryption (for example the <a href="https://github.com/go-sql-driver/mysql/issues/625"><code>go-sql-driver/mysql</code> package</a> driver), or you &ldquo;need&rdquo; to switch to MySQL 8.0 and keep previous user accounts intact, you will want to set the default back to the <code>mysql_native_plugin</code> for authentication. If you start new, and you can, stick to the new method.</p>
+
+<p>This post will show how to install MySQL 8.0 on a Debian 9 using the official MSQL APT repositories. It also shows the extra step to keep using the legacy MySQL authentencation method.</p>
+
+<p>Bonus: Ansible playbook included!</p>
+
+<h1 id="unattended-debian-installation">Unattended Debian Installation</h1>
+
+<p>Debian comes with <a href="https://wiki.debian.org/debconf"><code>debconf</code></a> which can be used to do install the whole distribtion non-interactively without a (virtual) monitor attached. You can also do such unattended installs for each application.</p>
+
+<p>Installing a single MySQL server is easy, but once you have done it, the fun starts to fade after a dozen or so times doing it. Especially with Group Replication, where you need a minimal of 3 servers.</p>
+
+<p>There are currently two interactive questions being asked:</p>
+
+<ol>
+<li>Password for the root MySQL user</li>
+<li>Re-entry of password for root MySQL</li>
+<li>Selection of authentication method</li>
+</ol>
+
+<p>The first two screens are not new; the 3rd is, and it is not documented. Whether that is a documetation bug is open for discussion.</p>
+
+<p>If you are using <a href="https://golang.org">Go</a>, the new default authentication of MySQL 8.0 <a href="https://github.com/go-sql-driver/mysql/issues/625">does not work</a> yet. You need the “legacy” plugin which can be set globally in the configuration or, more preferably, when creating the database user.</p>
+
+<h1 id="first-set-up-official-mysql-apt-repository">First, Set Up Official MySQL APT Repository</h1>
+
+<p>The following is inspired by the MySQL Documentation under <a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/">A Quick Guide to Using the MySQL APT Repository</a> and <a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#repo-qg-apt-repo-manual-setup">Adding and Configuring the MySQL APT Repository Manually</a>.</p>
+
+<p>In the following steps, we do not download the <code>mysql-apt-repo</code> package, instead we do whatever it does, manually:</p>
+
+<pre><code>sudo apt install -y dirmngr
+sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 5072E1F5
+# Note: key 5072E1F5 is MySQL official's (always double check!)
+</code></pre>
+
+<p>Next, we add the actualy APT repository. You could use <code>add-apt-repository</code>, but it would mean installing yet again more dependencies. The other way is to simple create the file <code>/etc/apt/sources.list.d/mysql8.list</code>:</p>
+
+<pre><code>echo &quot;deb http://repo.mysql.com/apt/debian $(lsb_release -sc) mysql-8.0&quot; | \
+    sudo tee /etc/apt/sources.list.d/mysql80.list
+sudo apt update
+</code></pre>
+
+<p>The above commands can be easily scripted, and no interaction is needed. At the end of the post you have the full playbook in which we do it all using Ansible.</p>
+
+<h1 id="non-interactive-installation-of-mysql-server-8-0">Non-Interactive Installation of MySQL Server 8.0</h1>
+
+<p>Interaction is required when you install the MySQL server.</p>
+
+<pre><code>sudo apt update
+sudo apt install mysql-server
+</code></pre>
+
+<p>The above commands will install the server, but require you to:</p>
+
+<ol>
+<li>enter the MySQL root user&rsquo;s password,</li>
+<li>re-enter that same password,</li>
+<li>and new: choose the authentication method.</li>
+</ol>
+
+<p>This last step is not documemented (at the time of writing) in the MySQL Documentation. Possible reason, and also a good reason, is that it is good for new installations to use the newer, more secure method.</p>
+
+<p>If you however have systems, applications, or MySQL drivers, which do not support the new method, you can either:</p>
+
+<ul>
+<li>choose the legacy method,</li>
+<li>or recreate the users with the <a href="https://dev.mysql.com/doc/refman/8.0/en/create-user.html"><code>... IDENTIFIED BY 'mysql_native_password' ...</code></a>.</li>
+</ul>
+
+<p>The latter is preferred, but it can be tedious.</p>
+
+<p>When doing an non-interative install, and you want the legacy method, you have to do the following before doing the <code>apt install mysql-server</code>:</p>
+
+<pre><code>sudo debconf-set-selections &lt;&lt;&lt; &quot;mysql-community-server mysql-server/default-auth-override select Use Legacy Authentication Method (Retain MySQL 5.x Compatibility)&quot;
+</code></pre>
+
+<p>It&rsquo;s quite a long string, and you have to be careful with the format, your you will have lots of fun debugging:</p>
+
+<ul>
+<li>single space (or tab) between <code>mysql-community-server</code> and  <code>mysql-server/...</code></li>
+<li>a single space (or tab) around the word <code>select</code>.</li>
+</ul>
+
+<p>To recap, the following will install the MySQL Server non-interactively, setting the root password to &lsquo;tiger&rsquo;, and enabling the legacy authentication method:</p>
+
+<pre><code>sudo apt update
+
+sudo debconf-set-selections &lt;&lt;&lt; \
+  &quot;mysql-community-server mysql-community-server/root-pass password tiger&quot;
+
+sudo debconf-set-selections &lt;&lt;&lt; \
+  &quot;mysql-community-server mysql-community-server/re-root-pass password tiger&quot;
+
+sudo debconf-set-selections &lt;&lt;&lt; \
+  &quot;mysql-community-server mysql-server/default-auth-override select Use Legacy Authentication Method (Retain MySQL 5.x Compatibility)&quot;
+
+sudo DEBIAN_FRONTEND=noninteractive apt install mysql-server
+</code></pre>
+
+<p>You can verify checking the configuration:</p>
+
+<pre><code>cat /etc/mysql/mysql.conf.d/default-auth-override.cnf
+</code></pre>
+
+<p>If you made a mistake, and you want to start over, don&rsquo;t forget to purge the <code>debconf</code> database for the MySQL server:</p>
+
+<pre><code>echo PURGE | sudo debconf-communicate mysql-community-server
+sudo apt purge mysql-client mysql-server
+</code></pre>
+
+<h1 id="full-ansible-playbook">Full Ansible Playbook</h1>
+
+<p>The following playbook can be used with Ansible to automate the installation of MySQL 8.0 on Debian 9:</p>
+
+<pre><code>---
+- hosts: mysql_servers
+  become: true
+  tasks:
+  - name: Install APT extras
+    apt:
+      name: &quot;{{ item }}&quot;
+      update_cache: yes
+      state: latest
+    with_items:
+      - dirmngr
+      - debconf
+    
+  - name: Add official MySQL package authentication key
+    apt_key:
+      keyserver: pool.sks-keyservers.net
+      id: 5072E1F5
+      state: present
+
+  - name: Add MySQL repository
+    apt_repository:
+      repo: deb http://repo.mysql.com/apt/debian/ stretch mysql-8.0
+      filename: mysql80
+      state: present
+
+  - name: Set MySQL root password
+    debconf:
+      name: mysql-community-server
+      question: mysql-community-server/root-pass
+      value: &quot;{{ root_password }}&quot;
+      vtype: password
+
+  - name: Confirm MySQL root password
+    debconf:
+      name: mysql-community-server
+      question: mysql-community-server/re-root-pass
+      value: &quot;{{ root_password }}&quot;
+      vtype: password
+
+  - name: Enable Legacy Authentication Method
+    debconf:
+      name: mysql-community-server
+      question: mysql-server/default-auth-override
+      value: Use Legacy Authentication Method (Retain MySQL 5.x Compatibility)
+      vtype: select
+
+  - name: Install/Update MySQL 8.0 Community Server
+    apt:
+      name: &quot;{{ item }}&quot;
+      update_cache: yes
+      state: latest
+    with_items:
+      - mysql-server
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+</code></pre>
+
+<p>A possible inventory file:</p>
+
+<pre><code>[mysql_servers]
+192.168.99.100 root_password=tiger
+</code></pre>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2018/go-mysql80-compat/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2018/mysql-join-docs/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

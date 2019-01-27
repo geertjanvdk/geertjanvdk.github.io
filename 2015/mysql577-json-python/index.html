@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2015/mysql577-json-python/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL 5.7 with JSON and Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/private-share-still-problematic/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/going-static/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL 5.7 with JSON and Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Jun 18, 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/labs">labs</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>In this post we will use the <a href="http://http://labs.mysql.com">MySQL 5.7.7</a> labs release which has support for <a href="http://www.json.org">JSON</a> documents stored in a special data type. We will be using <a href="http://dev.mysql.com/doc/connector-python/en/index.html">Connector/Python</a> and show how to get going with updating documents and getting data out.</p>
+
+<h1 id="required-read">Required read</h1>
+
+<p>If you wonder what this is all about, please check the following great reads from the MySQL Server team:</p>
+
+<ul>
+<li><a href="http://mysqlserverteam.com/json-labs-release-native-json-data-type-and-binary-format/">JSON Labs Release: Native JSON Data Type and Binary Format</a></li>
+<li><a href="http://mysqlserverteam.com/mysql-5-7-lab-release-json-functions-part-2-querying-json-data/">JSON Labs Release: JSON Functions, Part 2 — Querying JSON Data</a></li>
+</ul>
+
+<p>Please also consider that MySQL 5.7 introduce lots of new features, changes and also deprecates/removes functionality. Read up the <a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-nutshell.html">&ldquo;What is new in MySQL 5.7&rdquo;</a>-section of the manual to know more.</p>
+
+<h1 id="installing-mysql-5-7-7-labs">Installing MySQL 5.7.7 Labs</h1>
+
+<p>If work on Oracle Linux or Red Hat Enterprise 6, you are lucky: a binary is provided. So go ahead and download the file <code>mysql-5.7.7-labs-json-linux-el6-x86_64.tar.gz</code>.</p>
+
+<p>For the rest of, we have to compile and follow the instructions from the <a href="https://dev.mysql.com/doc/refman/5.7/en/installing-source-distribution.html">manual</a>. If too long for you, here are the few steps to get you  going using the downloaded tar ball <code>mysql-5.7.7-labs-json.tar.gz</code>:</p>
+
+<pre><code class="language-shell">$ tar xzf mysql-5.7.7-labs-json.tar.gz
+$ cd mysql-5.7.7-labs/build
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/opt/mysql-5.7.7-labs
+$ make
+$ make install
+</code></pre>
+
+<p>Make sure that:</p>
+
+<ul>
+<li>you can write to the path you set for the <code>CMAKE_INSTALL_PREFIX</code>,</li>
+<li>and you have your operating system&rsquo;s development packages/applications installed.</li>
+</ul>
+
+<h1 id="starting-mysql-5-7">Starting MySQL 5.7</h1>
+
+<p>Here are the instructions to get you going with a MySQL Server 5.7 configured so the root user has no password. For testing, this is sufficient. Note, I do everything using OS X, but instructions should be OS agnostic unless otherwise noted. (Windows users should adapt a bit.)</p>
+
+<h2 id="configuration-file">Configuration file</h2>
+
+<p>We will be using data directory in the MySQL installation itself. Bad practice, but remember: this is testing and it&rsquo;s a lab release. So lets make sure it&rsquo;s self contained.</p>
+
+<p>Save the following to <code>/opt/mysql-5.7.7-labs/my.cnf</code>:</p>
+
+<pre><code>[mysqld]
+basedir = /opt/mysql-5.7.7-labs/
+datadir = /opt/mysql-5.7.7-labs/data/
+socket = mysql.sock
+log_error = mysql_labs.err
+port = 3357      # Or use default 3306 if no MySQL server is running
+</code></pre>
+
+<h2 id="initialize-and-start">Initialize and Start</h2>
+
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization-mysqld.html">Initializing the MySQL data directory changed a bit</a>, and MySQL 5.7 does not use the <code>mysql_install_db</code> any longer:</p>
+
+<pre><code class="language-shell">$ cd /opt/mysql-5.7.7-labs
+$ ./bin/mysqld --defaults-file=./my.cnf --initialize-insecure
+</code></pre>
+
+<p>To start the MySQL Server, use <code>mysqld_safe</code>:</p>
+
+<pre><code class="language-shell">$ cd /opt/mysql-5.7.7-labs
+$ ./bin/mysqld_safe --defaults-file=./my.cnf &amp;
+</code></pre>
+
+<p>At this point, if MySQL does not start, check the error log. In our example it is located in the data directory:</p>
+
+<pre><code class="language-shell">$ less /opt/mysql-5.7.7-labs/data/mysql_labs.err
+</code></pre>
+
+<p>Look for <code>Aborting</code>.</p>
+
+<h2 id="install-mysql-connector-python">Install MySQL Connector/Python</h2>
+
+<p>We are a <a href="http://python.org">Python</a> shop. We do it Python.</p>
+
+<p>Of course you know how to install Connector/Python, but here&rsquo;s the <code>pip</code> one liner (yeah, I know.. annoying extra command line argument):</p>
+
+<pre><code class="language-shell">$ pip install mysql-connector-python --allow-external mysql-connector-python
+</code></pre>
+
+<h1 id="mysql-json-data-type-and-python">MySQL JSON data type and Python</h1>
+
+<p>You could store your JSON data (or documents) in a <code>TEXT</code> field. That&rsquo;s fine, but that&rsquo;s so 2014. In 2015 and later you can take advantage of the new MySQL data type called <code>JSON</code>.</p>
+
+<pre><code class="language-sql">CREATE TABLE `blogs` (
+  `doc` json DEFAULT NULL,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+</code></pre>
+
+<h2 id="inserting-data">Inserting data</h2>
+
+<p>Lets do JSON in Python</p>
+
+<pre><code class="language-python">import json
+import mysql.connector
+
+cnx = mysql.connector.connect(user=&quot;root&quot;, port=3357, database=&quot;blog&quot;)
+cur = cnx.cursor()
+
+new_blog = {
+    'page_id': 'c262672a1e9e',
+    'title': 'MySQL 5.7 with JSON and Connector/Python',
+}
+
+insert = &quot;INSERT INTO blogs (doc) VALUES (%s)&quot;
+cur.execute(insert, (json.dumps(new_blog),))
+cnx.commit()
+</code></pre>
+
+<h2 id="selecting-data">Selecting data</h2>
+
+<pre><code class="language-python">select = (
+    &quot;SELECT JSN_EXTRACT(doc, '$.page_id'), &quot;
+    &quot;JSN_EXTRACT(doc, '$.title') &quot;
+    &quot;FROM blogs &quot;
+    &quot;WHERE JSN_CONTAINS(doc, JSN_OBJECT('page_id', %s))&quot;
+)
+
+cur.execute(select, ('c262672a1e9e',))
+
+for row in cur:
+    print(&quot;%s | %s&quot; % (row[0], row[1]))
+</code></pre>
+
+<p>The result is:</p>
+
+<pre><code>&quot;c262672a1e9e&quot; | &quot;MySQL 5.7 with JSON and Connector/Python&quot;
+</code></pre>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>I hope the above will get going with MySQL 5.7.7 labs release. There are two things though. There is the problem with committing the transaction explicitly using <code>cnx.commit()</code>. Need to check that.
+And there is the issue with the extra quotes in the result. But I guess we&rsquo;ll get that figured out as well.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/private-share-still-problematic/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/going-static/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

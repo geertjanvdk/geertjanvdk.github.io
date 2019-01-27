@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/simulating-server-side-cursors-with-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Simulating server-side cursors with MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mobileme-is-still-useless/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/multiple-result-sets-in-mysql-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Simulating server-side cursors with MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Apr 26, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/hacking">hacking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/pyhon">pyhon</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Last week, my colleague Massimo and I discussed <strong>how to handle big result sets</strong> coming from <a href="http://dev.mysql.com">MySQL</a> in <a href="http://www.python.org">Python</a>. The problem is that MySQL doesn&rsquo;t support server-side cursors, so you need to select everything and then read it. You can do it either buffered or not. <a href="http://launchpad.net/myconnpy">MySQL Connector/Python</a> defaults to non-buffered, meaning that you need to fetch all rows after issuing a <code>SELECT</code> statement. You can also turn on the buffering, mimicking what <a href="http://sourceforge.net/projects/mysql-python/files/">MySQL for Python</a> (MySQLdb) does.</p>
+
+<p>For big result sets, <strong>it&rsquo;s better to limit your search</strong>. You can do this using an integer primary key or some temporal field for example. Or you can use the <code>LIMIT</code> keyword. The latter solution is what is used in the <code>MySQLCursorServerSide</code> cursor-class. Using the <code>SELECT</code> it creates a temporary table from which the fetch-methods will get the information. It is something people have probably implemented in their applications, but I hope this new class will make it easier since it&rsquo;s done transparently.</p>
+
+<p><strong>The code is not pushed yet</strong>, but expect it to be available in next release. Here is an example how you could use it. This code selects cities staring with <code>Z</code>, loops over the result getting the country (yes, this is a simple join made difficult):</p>
+
+<pre><code class="language-python">cnx = db.connect(user='root', db='world')
+cur = cnx.cursor()
+curCity = cnx.cursor(db.cursor.MySQLCursorServerSide)
+
+curCity.execute(
+    &quot;SELECT ID,Name,CountryCode FROM City &quot;
+    &quot;WHERE NAME LIKE 'Z%' ORDER BY ID&quot;)
+
+query = &quot;SELECT Code, Name FROM Country WHERE CODE = %s&quot;
+for city in curCity:
+    cur.execute(query, (city[2],))
+    country = cur.fetchone()
+    print(&quot;{0} ({1})&quot;.format(city[1], country[1]))
+
+cur.close()
+cnx.close()
+</code></pre>
+
+<p>I guess <strong>the main advantage</strong> is that you can use two or more cursor objects with the same connection without the need of buffering everything in Python. On the MySQL side, the temporary table could go to disk when to big. It&rsquo;s maybe slower, but keeping big result sets in memory ain&rsquo;t good either.</p>
+
+<p>Comments are welcome!</p>
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          compandu
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Feb 26 2013, 16:17</time>
+      </div>
+    <div>
+      Did the server side cursor class ever end up getting pushed? Unable to find it in the latest release (1.0.9). Pretty much exactly what I need at the moment. Rather not have to write it from scratch
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Mar 4 2013, 06:32</time>
+      </div>
+    <div>
+      <a href="#comment-2356" rel="nofollow">@compandu </a>
+This cursor is indeed not in v1.0.9. This post was still from the Sun-days. I&rsquo;ll have to recheck this. Thanks for pay attention and poking me about it :)
+    </div>
+    </dd>
+  
+    <dt>
+          DL
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Feb 6 2014, 12:26</time>
+      </div>
+    <div>
+      <p>The main thing that confused me was that I thought MySQLdb&rsquo;s SScursor was a &ldquo;server-side&rdquo; cursor, but it isn&rsquo;t - it&rsquo;s simply a non-buffered cursor such that the default cursor in MySQLdb is the Mysql Connect cursor with buffering turned on while the default Mysql Connect cursor is the MySQLdb SScursor equivalent.</p>
+
+<p>This MySQLCursorServerSide class - if it were implemented - would allow for new execute commands to be called from the same connection before the MySQLCursorServerSide cursor was finished iterating through the rows which neither the default Mysql Connect cursor nor SScursor allow.</p>
+
+<p>Is this correct?</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Feb 6 2014, 12:31</time>
+      </div>
+    <div>
+      @DL: Yes, that is correct.
+    </div>
+    </dd>
+  
+    <dt>
+          DL
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Feb 8 2014, 08:17</time>
+      </div>
+    <div>
+      <p>Thanks!</p>
+
+<p>Out of curiosity (if you can comment on roadmaps), are there any plans to bring this class or a Dictionary cursor class to mysql.connector? I recognize a Dictionary cursor class is not really a necessity (and mysql.connector has a return column name(s) function), but on occasion I&rsquo;ve found it to be a nicety.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Feb 13 2014, 08:38</time>
+      </div>
+    <div>
+      And no I can not discuss roadmaps, etc.. :)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mobileme-is-still-useless/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/multiple-result-sets-in-mysql-connectorpython/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

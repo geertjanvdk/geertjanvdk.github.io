@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/fixing-iphotos-albumdata-xml-for-importing-into-googles-picasa/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Fixing iPhoto&#39;s AlbumData.xml for importing into Google&#39;s Picasa</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/how-to-install-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-python-and-macos-x-10-6-snow-leopard/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Fixing iPhoto&#39;s AlbumData.xml for importing into Google&#39;s Picasa
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Sep 24, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/google">google</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Yesterday I gave <a href="http://picasa.google.com/">Google&rsquo;s Picasa</a> again a try. Importing my <a href="http://www.apple.com/ilife/iphoto/">iPhoto</a> library I ran into the now infamous error message: &ldquo;corrupted AlbumData.xml&rdquo;. The Apple support website <a href="http://support.apple.com/kb/TS1192">has some tips</a> on how to fix this, but it&rsquo;s too vague. Luckily there are smart people out there and I stumbled upon <a href="http://www.google.com/support/forum/p/Picasa/thread?tid=398543949040ab76&amp;hl=en">a good way in the Picasa help forums to debug</a> your <code>AlbumData.xml</code> using <a href="http://www.barebones.com/products/TextWrangler/">TextWrangler</a>.</p>
+
+<ol>
+<li>Install <a href="http://www.barebones.com/products/TextWrangler/download.html">TextWrangler</a> if you haven&rsquo;t already.</li>
+<li>Open your iPhoto Library using Finder: right-click (Ctrl-Click) and select &lsquo;Show Package Contents&rsquo;. <strong>Copy</strong> the <code>AlbumData.xml</code> file to your desktop.</li>
+<li>Open the <code>AlbumData.xml</code> from on your Desktop using TextWrangler.</li>
+<li>From the Text-menu, choose &lsquo;Zap Gremlins&rsquo;.</li>
+<li>Deselect &lsquo;Non-ASCII Characters&rsquo; and select &lsquo;Replace with: &bull;&rsquo;.</li>
+<li>Wait for TextWrangler to finish the zapping! Can take a while.</li>
+<li>When done, search (Cmd-f) for occurrence of the &bull; (Option-8)</li>
+<li>Open iPhoto and fix wherever you find a dot in the copy of <code>AlbumData.xml</code></li>
+</ol>
+
+<p>If you are lucky, you&rsquo;ll find quickly the character that is bugging Picasa. I had only one of these Gremlins in the XML file.</p>
+
+<p>So, I gave Picasa a try, but it failed importing captions of the pictures, only tags. I haven&rsquo;t found a fix/workaround for that, so it&rsquo;s a no-go for me still.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          dcat
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Nov 14 2011, 17:50</time>
+      </div>
+    <div>
+      <p>Geert:</p>
+
+<p>Excellent tip!
+Worked like a charm!
+I really appreciate you help with those instructions!
+Regards&hellip;</p>
+
+<p>dcat</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://steveinpei.blogspot.ca/">Steve Dimond</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 30 2013, 01:42</time>
+      </div>
+    <div>
+      <p>Geert:   DITTO &hellip;.</p>
+
+<p>Excellent tip!
+Worked like a charm!
+And here we are two years later &hellip; except I used BBEdit, and with iPhoto 11
+and Picasa ( 3.9.16.37 )</p>
+
+<p>I ALSO really appreciate you help with those instructions!</p>
+
+<p>Many thanks &hellip;
+Steve D.</p>
+
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/how-to-install-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/mysql-python-and-macos-x-10-6-snow-leopard/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2012/connectorpython-custom-cursors/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Fetching rows as dictionaries with MySQL Connector/Python (revised)</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/mysql-connector-python-1-0-6-beta/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/connectorpython-1-0-5-on-pypi/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Fetching rows as dictionaries with MySQL Connector/Python (revised)
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Aug 29, 2012</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>It is possible with <a href="http://dev.mysql.com/doc/connector-python/en/index.html">MySQL Connector/Python</a> to define your own cursor classes. A very good use case is to return rows as dictionary instead of tuples. This post shows how to do this using MySQL Connector/Python v1.0 and is an update for an <a href="../../2010/fetching-rows-as-dictionaries-with-mysql-connectorpython">older blog entry</a>.</p>
+
+<p>In the example below we are subclassing the <code>MySQLCursor</code> class to create a new class called <code>MySQLCursorDict</code>. We change the <code>_row_to_python()</code> method to return a dictionary instead of a tuple. The keys of the dictionary will be (unicode) column names.</p>
+
+<pre><code class="language-python">from pprint import pprint
+import mysql.connector
+
+class MySQLCursorDict(mysql.connector.cursor.MySQLCursor):
+    def _row_to_python(self, rowdata, desc=None):
+        row = super(MySQLCursorDict, self)._row_to_python(rowdata, desc)
+        if row:
+            return dict(zip(self.column_names, row))
+        return None
+
+cnx = mysql.connector.connect(user='root', database='test')
+cur = cnx.cursor(cursor_class=MySQLCursorDict)
+cur.execute(&quot;SELECT c1, c2 FROM t1&quot;)
+rows = cur.fetchall()
+pprint(rows)
+cur.close()
+cnx.close()
+</code></pre>
+
+<p>The output of the above script would be (formatted):</p>
+
+<pre><code class="language-python">[
+ {u'c1': 1,
+  u'c2': 10},
+ {u'c1': 2,
+  u'c2': 20}
+]
+</code></pre>
+
+<p>Depending on your needs, you can subclass from any class found in the <code>mysql.connector.cursor</code> module, but note that you will need to change some other methods to make it work.</p>
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          marco
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Aug 29 2012, 10:12</time>
+      </div>
+    <div>
+      <p>A namedtuple could be an alternative:</p>
+
+<p>[python]
+    # in mysql.connector.cursor.MySQLCursor</p>
+
+<pre><code>    tuple_factory = tuple
+
+    def _row_to_python(self, rowdata, desc=None):
+        try:
+            if not desc:
+                desc = self.description
+            to_python = self._connection.converter.to_python
+            gen = (to_python(desc[i], v) for i, v in enumerate(rowdata))
+            return self.tuple_factory(gen)
+        except StandardError, e:
+             raise errors.InterfaceError(
+                 &quot;Failed converting row to Python types; %s&quot; % e)
+
+
+cnx = mysql.connector.connect(user='root', database='test')
+cur = cnx.cursor()
+cur.execute(...)
+cur.tuple_factory = namedtuple('Row', cur.column_names)._make
+cur.fetchall()
+</code></pre>
+
+<p>[/python]</p>
+
+<p>A namedtuple preserves the order of the columns but the same could be achieved with an OrderedDict.</p>
+
+<p>(Edited by Geert: Python code syntax)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Aug 29 2012, 14:08</time>
+      </div>
+    <div>
+      <a href="#comment-1914" rel="nofollow">@marco </a>
+Thanks for the suggestion using namedtuple(). However, we can not use that in Python v2 code since only supported since v2.6. Making a custom cursor is, again, the way to go here.
+    </div>
+    </dd>
+  
+    <dt>
+          Pete
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Sep 6 2012, 12:12</time>
+      </div>
+    <div>
+      <p>Thank you very much for this. It&rsquo;s very useful. I have had a couple of issues with (my incompetence and) getting it to work though.</p>
+
+<p>I have added the class you gave above to the bottom of the cursor.py file to make it accessible without referencing it each time. When copied directly I get a</p>
+
+<p>&ldquo;NameError: name &lsquo;mysql&rsquo; is not defined&rdquo;</p>
+
+<p>error presumably because it doesn&rsquo;t need the full reference when in the same file. I then tried removing it to leave</p>
+
+<p>&ldquo;class MySQLCursorDict(MySQLCursor):&rdquo;</p>
+
+<p>as the first line and I now get &ldquo;NameError: name &lsquo;MySQLCursorDict&rsquo; is not defined&rdquo; as an error from my file.</p>
+
+<p>What am I missing to get this to work correctly? Or is it not possible to get it to work this way?</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Sep 6 2012, 14:05</time>
+      </div>
+    <div>
+      <p><a href="#comment-1970" rel="nofollow">@Pete </a>
+Adding new cursors directly to mysql/connector/cursor.py is <em>not</em> a good idea: on the next update of Connector/Python you will lose your custom classes.</p>
+
+<p>That said, you will need to import the new cursor when you want to use it:
+  from mysql.connector.cursor import MySQLCursorDict</p>
+
+<p>So, in the end, you better put it in your project/application/package since you have to import it anyway.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://zamphatta.com/">Forrest</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 3 2012, 15:10</time>
+      </div>
+    <div>
+      In the old blog post, you show how to do this without a custom cursor. That code breaks now that I&rsquo;ve upgraded to Connector v1.0.7 (AttributeError: &lsquo;str&rsquo; object has no attribute &lsquo;decode&rsquo;), and I&rsquo;d rather not create a whole custom cursor just for this. Is there a way to do this in Python 3 without all that fluff? I&rsquo;m still a bit new to Python, so I&rsquo;m not sure exactly what I need to do to achieve this.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Nov 8 2012, 06:50</time>
+      </div>
+    <div>
+      <a href="#comment-2126" rel="nofollow">@Forrest </a>
+Remove the &lsquo;.decode(&lsquo;utf8&rsquo;)&rsquo; and it should work.
+    </div>
+    </dd>
+  
+    <dt>
+          Aijaz
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Mar 15 2013, 01:53</time>
+      </div>
+    <div>
+      May be I am missing something here.
+<code>import MySQLdb
+dbConn = MySQL.connect(host=&lsquo;xyz&rsquo;, user=&lsquo;xyz&rsquo;, passwd=&lsquo;xyz&rsquo;, db=&lsquo;xyz&rsquo;)
+dictCursor = dbConn.cursor(MySQLdb.cursors.DictCursor)
+dictCursor.execute(&ldquo;SELECT a,b,c FROM table_xyz&rdquo;)
+resultSet = dictCursor.fetchall()
+for row in resultSet:
+    print row[&lsquo;a&rsquo;]</code>
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Mar 15 2013, 09:10</time>
+      </div>
+    <div>
+      <a href="#comment-2466" rel="nofollow">@Aijaz </a>
+Yes, you missed something: you are using MySQLdb, not MySQL Connector/Python.
+    </div>
+    </dd>
+  
+    <dt>
+          Pythotic
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Apr 15 2013, 08:54</time>
+      </div>
+    <div>
+      Thank you for sharing  !
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.eddiedunn.com">Eddie Dunn</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Nov 2 2013, 15:48</time>
+      </div>
+    <div>
+      <p>Hi Thanks for this. I am however struggling with attempting this when calling stored procedures. I am wondering if this is possible with mysql.connector?
+The only way I can seem to get my SP result using mysql.connector is to do something like the following:
+    cursor.callproc(&ldquo;get_annual_entries_by_area_code&rdquo;,[area,year])
+    for result in cursor.stored_results():
+        results=result.fetchall()</p>
+
+<p>however the method you describe seems to only work with execute() also tried the namedtuple as I am using python3 but still no dice.</p>
+
+<p>I am far from an expert python programmer but would like to make use of some kind of associative field name to value in my code.</p>
+
+<p>All these array indices are driving me crazy! :)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.eddiedunn.com">Eddie Dunn</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Nov 2 2013, 19:26</time>
+      </div>
+    <div>
+      OK well I figured out what is going on as well as I can understand at this point and a way around.
+It seems callproc() returns a MySQLCursorBuffered no matter what you pass to connection.cursor() in this case. The following achieved my desired effect.
+[sourcecode language=&ldquo;python&rdquo; wraplines=&ldquo;false&rdquo; collapse=&ldquo;false&rdquo;]
+cursor.callproc(&ldquo;get_annual_entries_by_area_code&rdquo;,(&lsquo;37001&rsquo;,&lsquo;2012&rsquo;))
+result = []
+for recordset in cursor.stored_results():
+    for row in recordset:
+        result.append(dict(zip(recordset.column_names,row)))
+[/sourcecode]
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://ievfx.com">Grant Miller</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Jan 6 2014, 20:54</time>
+      </div>
+    <div>
+      This is what I was missing, I followed the first tutorial which works great for fetchone but doesn&rsquo;t work for fetchall, might be good to just replace the old one with this new one :)
+    </div>
+    </dd>
+  
+    <dt>
+          Anurag Kesari
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Jul 9 2014, 19:20</time>
+      </div>
+    <div>
+      What is the &lsquo;u&rsquo; character that appears everywhere in the dictionary output? How can you suppress it?
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/mysql-connector-python-1-0-6-beta/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/connectorpython-1-0-5-on-pypi/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

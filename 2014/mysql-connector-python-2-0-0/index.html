@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2014/mysql-connector-python-2-0-0/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python v2.0.0 alpha</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/mysql-connectorpython-on-github/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2014/mysql-connector-python-1-2-2/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python v2.0.0 alpha
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Jul 25, 2014</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>A new major version of Connector/Python is available: <a href="http://forums.mysql.com/read.php?3,617989,617989#msg-617989">v2.0.0 alpha</a> has been been released and is <a href="http://dev.mysql.com/downloads/connector/python/"><strong>available for download</strong></a>! As with any alpha-software, it&rsquo;s probably not good to throw it in production just yet.</p>
+
+<p>Our manual has the <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/news-2-0-0.html">full change log</a> but here&rsquo;s an overview of most important changes for this relase.</p>
+
+<h2 id="some-incompatibilities">Some incompatibilities</h2>
+
+<p>The world evolves, at least the software does, and Python is not different. I&rsquo;m not as bold as the guys at Django who dropped support of Python v2.6 with the Django v1.7 release. I&rsquo;m leaving it in because I&rsquo;m nice.</p>
+
+<h3 id="supported-python-2-6-and-2-7-and-3-3-and-3-4">Supported Python: 2.6 and 2.7 and 3.3 and 3.4</h3>
+
+<p>We do not support any longer Python 3.1 and 3.2. One of the reasons is that we consolidated the code bases for both major Python versions, and the unicode syntax brought back in 3.3 was a blessing (for example, u&rsquo;パイソン&rsquo;).</p>
+
+<h3 id="raw-cursors-return-bytearray-objects">Raw Cursors Return bytearray Objects</h3>
+
+<p>Since we consolidated the code bases for Python 2 and 3, we needed make the behaviour as much as possible the same between the two. It&rsquo;s not easy with Unicode strings, but with bytes we have the bytearray type. Raw cursors will return them instead of strings in Python 2 and bytes in Python 3.</p>
+
+<p>If you want to have previous behaviour back, you can inherit from MySQLCursorRaw and change some methods. Please leave comments if you&rsquo;d like an example for this.</p>
+
+<h3 id="load-local-data-infile-on-by-default">LOAD LOCAL DATA INFILE On by Default</h3>
+
+<p>In Connector/Python v1.x you needed to set the client flags to enable the <code>LOAD LOCAL DATA INFILE</code> on the client side. Here an example:</p>
+
+<pre><code class="language-python"># Connector/Python v1.2
+import mysql.connector
+from mysql.connector import ClientFlag
+cnx = mysql.connector.connect(.. , client_flags=[ClientFlag.LOCAL_FILES])
+</code></pre>
+
+<p>Now in Connector/Python v2.0 it is on. However, some people might not like it so there is a switch to disable it:</p>
+
+<pre><code class="language-python"># Connector/Python v2.0
+import mysql.connector
+cnx = mysql.connector.connect(.. , allow_local_infile=False)
+</code></pre>
+
+<p>Note that you still need to make sure that the MySQL Server is configured to allow this statement.</p>
+
+<h2 id="new-cursors-dict-and-namedtuple">New Cursors: dict and namedtuple</h2>
+
+<p>At last, we have cursors which return rows as dictionaries or named tuples. PEP-249 does not define these since not all database systems might return the columns in a case insensitive or sensitive way.</p>
+
+<p>But this is MySQL.</p>
+
+<p>Here is an example how to use cursor returning dictionaries:</p>
+
+<pre><code class="language-python">query = (
+    &quot;SELECT TABLE_NAME, TABLE_ROWS &quot;
+    &quot;FROM INFORMATION_SCHEMA.TABLES &quot;
+    &quot; WHERE TABLE_SCHEMA='mysql' ORDER BY TABLE_NAME&quot;
+)
+cur = cnx.cursor(**dictionary=True**)
+cur.execute(query)
+for row in cur:
+    print(&quot;{TABLE_NAME:&gt;30s} {TABLE_ROWS}&quot;.format(**row))
+</code></pre>
+
+<p>That&rsquo;s far less code for something simple. Each row would look this:</p>
+
+<pre><code class="language-python">{u'TABLE_NAME': u'user', u'TABLE_ROWS': 11}
+</code></pre>
+
+<p>If you like named tuples better, you can do the same, simply giving the <code>named_tuple</code> argument.</p>
+
+<pre><code class="language-python">cur = cnx.cursor(named_tuple=True)
+cur.execute(query)
+for row in cur:
+    if row.TABLE_ROWS &gt; 0:
+        print(&quot;{name:&gt;30s} {rows}&quot;.format(
+            name=row.TABLE_NAME,
+            rows=row.TABLE_ROWS))
+</code></pre>
+
+<p>You can also combine it with the <code>raw=True</code> argument to have raw cursors.</p>
+
+<h2 id="options-files-support-added">Options Files Support Added</h2>
+
+<p>Option files can now be read so you don&rsquo;t have to have all these connection arguments repeated everywhere in your source code. There are lots of ways to do it this, but we needed to be able to read and support the MySQL options files read by client tools and server.</p>
+
+<pre><code class="language-python">import mysql.connector
+cnx = mysql.connector.connect(options_files='/etc/mysql/connectors.cnf')
+</code></pre>
+
+<p>By default we do not read any file. You have to explicitly specify which files and in which order have to be read. The options groups that are read are <code>client</code> and <code>connector_python</code>. You can also override this and specify which particular group(s) using the argument <code>option_groups</code>.</p>
+
+<h2 id="and-more">And more..</h2>
+
+<ul>
+<li>The  packaging and other supporting files have been removed. If you like to see WiX file (I dare you) for the Windows packaging, then you can (still) check the v1.x branches. We moved them away because these modules and files are (or can be) fixed and developed by other teams.</li>
+<li>And watch out for v2.0.1 !</li>
+</ul>
+
+<h2 id="useful-links">Useful links</h2>
+
+<ul>
+<li>Documentation: <a href="http://dev.mysql.com/doc/connector-python/en/index.html">http://dev.mysql.com/doc/connector-python/en/index.html</a></li>
+<li>Release Notes: <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/index.html">http://dev.mysql.com/doc/relnotes/connector-python/en/index.html</a></li>
+<li>Downloads: <a href="http://dev.mysql.com/downloads/connector/python/#downloads">http://dev.mysql.com/downloads/connector/python/#downloads</a></li>
+<li><strong>Feedback, bugs and feature requests</strong>: <a href="http://bugs.mysql.com">http://bugs.mysql.com</a></li>
+<li>Forum: <a href="http://forums.mysql.com/list.php?50">http://forums.mysql.com/list.php?50</a></li>
+<li>v2.0.0-alpha is not available through PyPI. No alpha/beta/RC will be.</li>
+</ul>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          J
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Jul 28 2014, 00:08</time>
+      </div>
+    <div>
+      Any plans for PyPy support?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Jul 28 2014, 08:41</time>
+      </div>
+    <div>
+      <p>We do not support PyPy officially, but that doesn&rsquo;t mean we would not keep an eye on it.
+The unittests.py will not run out-of-the-box, but the examples found in Connector/Python 2.0 work with PyPy.</p>
+
+<p>If there is anything not working with PyPy, please report using bugs.mysql.com and we&rsquo;ll see what we can do.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Paulie
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Sep 15 2014, 18:09</time>
+      </div>
+    <div>
+      Your example on how to enable LOCAL INFILE support has a couple typos. It should be like this:
+cnx = mysql.connector.connect(&hellip; , client_flags=[ClientFlag.LOCAL_FILES])
+    </div>
+    </dd>
+  
+    <dt>
+          Ian
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Nov 19 2014, 23:31</time>
+      </div>
+    <div>
+      Pretty sure the keyword for the Options File is &lsquo;option_files&rsquo; rather than &lsquo;options_files&rsquo;.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/mysql-connectorpython-on-github/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2014/mysql-connector-python-1-2-2/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

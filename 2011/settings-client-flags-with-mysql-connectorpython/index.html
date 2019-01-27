@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2011/settings-client-flags-with-mysql-connectorpython/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Setting client flags with MySQL Connector/Python</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/mysql-connectorpython-v0-3-1-devel-released/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/my-family-end-2010/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Setting client flags with MySQL Connector/Python
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Jan 5, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Setting <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-real-connect.html">client flags</a> with <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a> works a bit differently than the other MySQL Python drivers. This blog post describes how to set and unset flags, like the <code>CLIENT_FOUND_ROWS</code>.</p>
+
+<p>The <strong>default client flags</strong> for the MySQL Client/Server protocol can be retrieved using the <code>constants.ClientFlag</code> class:</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; from mysql.connector.constants import ClientFlag
+&gt;&gt;&gt; defaults = ClientFlag.get_default()
+&gt;&gt;&gt; print ClientFlag.get_bit_info(defaults)
+['SECURE_CONNECTION', 'TRANSACTIONS', 'CONNECT_WITH_DB',
+ 'PROTOCOL_41', 'LONG_FLAG', 'MULTI_RESULTS',
+ 'MULTI_STATEMENTS', 'LONG_PASSWD']
+</code></pre>
+
+<p><strong>To set an extra flag</strong> when connecting to MySQL you use the <code>client_flags</code> argument of <code>connect()</code>-method. For example, you&rsquo;d like to have the <code>CLIENT_FOUND_ROWS</code> set:</p>
+
+<pre><code class="language-python">import mysql.connector
+from mysql.connector.constants import ClientFlag
+extra_flags = [ClientFlag.FOUND_ROWS]
+cnx = mysql.connector.connect(client_flags=extra_flags)
+</code></pre>
+
+<p>Similar, you can <strong>unset a flag</strong> passing a list of negative values, or all at the same time. For example, you&rsquo;d like the <code>CLIENT_FOUND_ROWS</code> set, but you don&rsquo;t want <code>CLIENT_MULTI_STATEMENTS</code>:</p>
+
+<pre><code class="language-python">import mysql.connector
+from mysql.connector.constants import ClientFlag
+extra_flags = [ClientFlag.FOUND_ROWS, -ClientFlag.MULTI_STATEMENTS]
+cnx = mysql.connector.connect(client_flags=extra_flags)
+</code></pre>
+
+<p>It is also possible to pass the <code>client_flags</code> an integer, but you need to get first the defaults, and do bitwise operations to set/unset flags yourself. At the moment of writing, there is a bug about this, see <a href="https://bugs.launchpad.net/myconnpy/+bug/695514">lp:695514</a>, but I recommend using the list-method.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Mark Huang
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jan 7 2011, 21:24</time>
+      </div>
+    <div>
+      Where would I do this in a pylons project? Development.ini? Middleware.py?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Jan 7 2011, 23:27</time>
+      </div>
+    <div>
+      <a href="#comment-597" rel="nofollow">@Mark Huang </a>
+I&rsquo;m afraid you can&rsquo;t, since MySQL Connector/Python dialect is part of SQLAlchemy 0.6 and AFAIK Pylons can&rsquo;t use that. Also, the dialect in SQLAlchemy might need some updating with the recent changes done in MySQL Connector/Python.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/mysql-connectorpython-v0-3-1-devel-released/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/my-family-end-2010/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

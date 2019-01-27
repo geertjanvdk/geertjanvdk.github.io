@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/want-to-compile-a-mysql-cluster-mgm-api-application/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Want to compile a MySQL Cluster MGM API application?</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mounting-a-macos-x-disk-image-at-login/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/why-it-is-important-to-use-columns-or-aliases-in-mysql-views/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Want to compile a MySQL Cluster MGM API application?
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Nov 12, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>Here is a quick way to compile a simple <a href="http://dev.mysql.com/doc/ndbapi/en/mgm-api.html">MGM API</a> application. The example will get the state of all nodes in <a href="http://www.mysql.com/products/database/cluster/">MySQL Cluster</a> and print whether they are connected or not.</p>
+
+<p>All this without a <code>Makefile</code>, we just want to have some simple example on Linux to see how it works. It&rsquo;s basic, maybe, but sometimes useful to just have a peek.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>We assume that:</p>
+
+<ol>
+<li>you installed <a href="http://dev.mysql.com/downloads/select.php?id=14">MySQL Cluster 6.3</a> or higher, preferably under <code>/usr/local/mysql</code>,</li>
+<li>your cluster is up and shiny,</li>
+<li>and <code>ndb_mgmd</code> runs on the same machine you are compiling the MGM API test application on.</li>
+</ol>
+
+<h2 id="the-code">The code</h2>
+
+<p>Save it in a file called <code>mgmapi_test.cc</code> (from the <a href="http://dev.mysql.com/doc/ndbapi/en/mgm-api-concepts.html">MySQL manual</a>):</p>
+
+<pre><code class="language-cpp">#include &lt;stdlib.h&gt;
+#include &lt;mgmapi/mgmapi.h&gt;
+
+int main()
+{
+  NdbMgmHandle handle = ndb_mgm_create_handle();
+  ndb_mgm_set_connectstring(handle,&quot;localhost&quot;);
+  ndb_mgm_connect(handle,0,0,0);
+  struct ndb_mgm_cluster_state *state = ndb_mgm_get_status(handle);
+  for(int i=0; i &lt; state-&gt;no_of_nodes; i++)
+  {
+    struct ndb_mgm_node_state *node_state= &amp;amp;state-&gt;node_states[i];
+    printf(&quot;node with ID=%d &quot;, node_state-&gt;node_id);
+
+    if(node_state-&gt;version != 0)
+      printf(&quot;connected\n&quot;);
+    else
+      printf(&quot;not connected\n&quot;);
+  }
+  free((void*)state);
+  ndb_mgm_destroy_handle(&amp;amp;handle);
+}
+</code></pre>
+
+<h2 id="compile-run">Compile &amp; Run</h2>
+
+<p>Note that it goes all on one line, but you could also paste the following lines in a shell script:</p>
+
+<pre><code class="language-shell">(
+ MYBASE=&quot;/usr/local/mysql&quot;;
+ PATH=&quot;$MYBASE/bin:$PATH&quot;;
+ g++ `mysql_config --libs` `mysql_config --cflags` -lndbclient \
+  -I$MYBASE/include/storage/ndb \
+  -o mgmapi_test mgmapi_test.cc
+)
+</code></pre>
+
+<p>No errors? Lets run it!</p>
+
+<p>Setting <code>LD_LIBRARY_PATH</code> doesn&rsquo;t hurt:</p>
+
+<pre><code class="language-shell">(
+  export LD_LIBRARY_PATH=&quot;/usr/local/mysql/lib&quot;;
+  ./mgmapi_test
+)
+</code></pre>
+
+<h2 id="result">Result</h2>
+
+<p>The result should be something like this:</p>
+
+<pre><code>node with ID=1 connected
+node with ID=2 connected
+node with ID=3 connected
+node with ID=4 connected
+node with ID=10 connected
+node with ID=11 not connected
+node with ID=12 not connected
+node with ID=13 not connected
+..
+
+</code></pre>
+
+<p><strong>FAQ</strong>:</p>
+
+<ul>
+<li><p>Wouldn&rsquo;t it be better to have a <code>Makefile</code>? <em>Absolutely.</em></p></li>
+
+<li><p>Will there be problems doing it above? <em>Sure, but the error message should help; start by checking if the locations are OK.</em></p></li>
+</ul>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mounting-a-macos-x-disk-image-at-login/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/why-it-is-important-to-use-columns-or-aliases-in-mysql-views/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

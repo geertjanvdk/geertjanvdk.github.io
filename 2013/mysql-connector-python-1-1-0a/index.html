@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2013/mysql-connector-python-1-1-0a/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python v1.1.0 alpha</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/mysql-connectorpython-1-0-12/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/installing-gevent-inside-a-virtual-environment-on-osx/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python v1.1.0 alpha
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Jul 8, 2013</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/oracle">oracle</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Finally, <a href="http://forums.mysql.com/read.php?3,589932,589932#msg-589932">Connector/Python v1.1.0</a> is out. It&rsquo;s the first of a series of alpha releases which will bring some new features. Check out the <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/news-1-1.html">Change History</a> if you want to keep up with what is being added and changed.</p>
+
+<p>Notable changes for v1.1.0:</p>
+
+<ul>
+<li>Connector/Python v1.0 <a href="http://dev.mysql.com/doc/connector-python/en/connector-python-versions.html">was known to work</a> with <a href="http://python.org">Python</a> v2.4 and 2.5. We now break compatibility with these older Python versions.</li>
+<li>MySQL Prepared Statements are supported using <code>cursor.MySQLCursorPrepared</code>.</li>
+<li>You can find out whether there is an ongoing transaction by checking <code>MySQLConnection</code> object&rsquo;s property <code>in_transaction</code>.</li>
+<li><code>MySQLConnection.start_transaction</code> was added to make it easier to start a transaction with, for example, a different isolation level.</li>
+<li><code>mysql.connector.__version__</code> and <code>__version_info__</code> are now available, making it easier to get the version of your favorit MySQL database driver.</li>
+</ul>
+
+<p>Although Connector/Python v1.1.0 is alpha and in good shape, it&rsquo;s advised not to use it in production just yet.</p>
+
+<p>Some useful links:</p>
+
+<ul>
+<li>Documentation: <a href="http://dev.mysql.com/doc/connector-python/en/index.html">http://dev.mysql.com/doc/connector-python/en/index.html</a></li>
+<li>Release Notes: <a href="http://dev.mysql.com/doc/relnotes/connector-python/en/index.html">http://dev.mysql.com/doc/relnotes/connector-python/en/index.html</a></li>
+<li>Downloads: <a href="http://dev.mysql.com/downloads/connector/python/#downloads">http://dev.mysql.com/downloads/connector/python/#downloads</a></li>
+<li>Feedback: <a href="http://bugs.mysql.com">http://bugs.mysql.com</a></li>
+<li>Forum: <a href="http://forums.mysql.com/list.php?50">http://forums.mysql.com/list.php?50</a></li>
+</ul>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2013/mysql-connectorpython-1-0-12/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2013/installing-gevent-inside-a-virtual-environment-on-osx/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

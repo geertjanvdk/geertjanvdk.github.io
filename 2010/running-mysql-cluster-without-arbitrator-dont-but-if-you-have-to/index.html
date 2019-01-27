@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/running-mysql-cluster-without-arbitrator-dont-but-if-you-have-to/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Running MySQL Cluster without Arbitrator: don&#39;t, but if you have to..</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mysql-connectorpython-and-database-pooling/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/my-first-thurderstorm-shooting/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Running MySQL Cluster without Arbitrator: don&#39;t, but if you have to..
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Jun 16, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This post explains how to disable <a href="http://dev.mysql.com/doc/refman/5.1/en/faqs-mysql-cluster.html#qandaitem-24-10-1-5">Arbitration</a> when using <a href="http://www.mysql.com/products/database/cluster/">MySQL Cluster</a>. It gives a case where this could be useful.</p>
+
+<p>First, a piece of advice: <strong>you do not want to run MySQL Cluster with arbitration disabled</strong>. But if you must, e.g. because of an oversight in your implementation, you can.
+Arbitration is very important in MySQL Cluster. It makes sure you don&rsquo;t end up with a Split Brain situation: 2 halves working independently, continuing changing data, making it impossible for them to work together later on.</p>
+
+<p><img src="../../assets/2010/the_arbitrator.png" alt="" /></p>
+
+<p>However, Arbitration comes with a price: you need an extra machine. &ldquo;Sure, what&rsquo;s the big deal?&rdquo;. It&rsquo;s not that easy when you lack the money, or more problematic, when you lack the real-estate in your rack.</p>
+
+<p>Everyone running MySQL Cluster should know that <strong>you should not run the <code>ndb_mgmd</code> on the same machines on which the data node processes, <code>ndbd</code> or <code>ndbmtd</code>, are running</strong>. The Management Nodes need to be on a separate machine so it can act as an Arbitrator.</p>
+
+<p>Here&rsquo;s an example why: If you have two hosts A and B and both are running a management and data node process. Host A&rsquo;s <code>ndb_mgmd</code> is currently the Arbitrator. Now unplug host A <em>BANG</em>: one data node and the arbitrator down. The other data node on Host B notices this, and tries to figure out if it can continue. So it checks if it can reach the Arbitrator: but it&rsquo;s gone as well! So, the data node on host B goes faithfully down. This all happens in a few seconds, there is no time to elect a new Arbitrator. &ldquo;Cluster&rsquo;s dead, Jim&rdquo;.</p>
+
+<p>What if you can&rsquo;t get a 3rd machine? <strong>There&rsquo;s an option for that</strong>.. Data nodes can be configured with setting the <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster-ndbd-definition.html#ndbparam-ndbd-arbitration"><code>Arbitration</code></a>-option to <code>WaitExternal</code>. This means you will have to develop your own arbitration application or script. How cool is that? Well, it might be cool, but it&rsquo;s a pain in the butt.</p>
+
+<pre><code>[ndbd default]
+Arbitration = WaitExternal
+ArbitrationTimeout = 3
+</code></pre>
+
+<p>What happens with our 2 host setup with above changes: When Host A, which has the Arbitrator, goes down, the data node on Host B will wait for 3 seconds, i.e. <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster-ndbd-definition.html#ndbparam-ndbd-arbitrationtimeout">ArbitrationTimeout</a>. It will block all incoming transactions, refusing changes. An application, the <strong>External Arbitrator</strong>, running on Host B (actually on all hosts running MySQL Cluster proceses) has 3 seconds to figure out whether Host B can continue running it&rsquo;s <code>ndbd</code> process(es), or not. In this case, it should find out that Host A is down and that Host B should continue keeping the data available.</p>
+
+<p>&ldquo;Ah, easy! Problem solved!&rdquo;, you might joyfully exclaim. No, it isn&rsquo;t. It&rsquo;s more complicated than that.</p>
+
+<p>What happens when Host A doesn&rsquo;t go down, but both hosts can&rsquo;t see each other due to a network issue between them? Both External Arbitrators would figure out that they need to continue: you end up again with a split brain. So you still need someway to handle that.</p>
+
+<p>At this point, I would like to say: &ldquo;Goodluck!&rdquo;.</p>
+
+<p>Every situation is going to be different. Everyone will have his own External Arbitrator requirements or ways to check if a host or blade chassis is up or not. It&rsquo;s a great option, and it puts you more in control of your MySQL Cluster, but it adds a lot of complexity.</p>
+
+<p>So, my advice: revise and correct your MySQL Cluster setup when you think you need to disable Arbitration.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          hingo
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jun 17 2010, 14:52</time>
+      </div>
+    <div>
+      Ah, it&#39;s there now. Excellent!<br /><br />I was the main ideologist behind Arbitration=WaitExternal. (After we discussed the concept for a few weeks on 2 different continents, I believe Jonas coded the bulk of it in 20 minutes :-)<br /><br />Nice to have some signature in MySQL Cluster to leave behind  :-)<br /><br />PS: So is there actually some external arbitrator available now? (Such as Solaris Cluster?)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/mysql-connectorpython-and-database-pooling/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/my-first-thurderstorm-shooting/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

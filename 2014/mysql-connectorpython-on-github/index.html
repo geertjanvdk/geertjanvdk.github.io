@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2014/mysql-connectorpython-on-github/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>MySQL Connector/Python on GitHub</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/mysql-connector-python-2-0-1/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2014/mysql-connector-python-2-0-0/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      MySQL Connector/Python on GitHub
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Aug 1, 2014</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/community">community</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Last week <a href="http://geert.vanderkelen.org/mysql-connector-python-2-0-0/">we released Connector/Python v2.0</a> (alpha); today we publish the <a href="https://github.com/oracle/mysql-connector-python">source on GitHub</a>. Yes, we are using Git internally and are now able to push it out on each release. Previous versions are still available through <a href="https://launchpad.net/myconnpy">LaunchPad</a>.</p>
+
+<p>Here is the full process to get Connector/Python installed in a virtual environment. You&rsquo;ll need <a href="http://git-scm.com">Git</a> installed of course.</p>
+
+<pre><code class="language-shell">$ git clone https://github.com/oracle/mysql-connector-python.git cpy
+$ virtualenv ENVCPY
+$ source ENVCPY/bin/activate
+(ENVCPY)$ cd cpy
+(ENVCPY)$ python setup.py install
+(ENVCPY)$ python
+&gt;&gt;&gt; import mysql.connector
+&gt;&gt;&gt; mysql.connector.__version__
+'2.0.0a1'
+</code></pre>
+
+<p>Please report issues and feature request through the <a href="http://bugs.mysql.com">MySQL Bugs System</a>.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://chriswarrick.com/">Chris &#39;Kwpolska&#39; Warrick</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Aug 1 2014, 14:13</time>
+      </div>
+    <div>
+      Use <code>pip install .</code>, or &mdash; better yet &mdash; <code>pip install -e .</code> instead of setup.py.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://databaseblog.myname.nl">Daniël van Eeden</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Aug 3 2014, 09:49</time>
+      </div>
+    <div>
+      <p>Very nice!</p>
+
+<p>Maybe the summary should be shortened a bit as it doesn&rsquo;t seem to fit.</p>
+
+<p>Maybe use (github flavoured) markdown or restructed text for better layout of the readme?</p>
+
+<p>Please add a link to <a href="http://bugs.mysql.com">http://bugs.mysql.com</a> to the readme.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Aug 16 2014, 16:32</time>
+      </div>
+    <div>
+      <p>The readme should be reStructuredText, unless I&rsquo;m doing something wrong there.. The content is pretty much fixed, I can&rsquo;t change to much or add.</p>
+
+<p>I thought the summary was changed though.. but bit to much happening right now. (Sorry for the late reply.)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://databaseblog.myname.nl">Daniël van Eeden</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Aug 17 2014, 11:48</time>
+      </div>
+    <div>
+      <p>I&rsquo;ve submitted a pull request. (I&rsquo;ve signed the SCA/OCA)
+The filename of the readme should be changed from README.txt to README.rst
+Maybe you can add the bugreport URL? or is the content of the file completely generated/fixed?
+The len(summary) &gt; 350, it should be less than 350 to be visible. There is a URL in the summary, but there is a different field in github for that.</p>
+
+<p>(Looks like OpenID authentication with 2FA is broken on your blog)
+(Should the comments be published to planet mysql?)</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Aug 21 2014, 09:16</time>
+      </div>
+    <div>
+      <p>@Daniël: my blog installation has issues and I&rsquo;m trying to solve it.. I think I need to reboot my WP installation. The comments should now be gone.</p>
+
+<p>The .txt is important because it unifies the name between different types of distributions. It makes it easier to package, change content in some packages and it&rsquo;s more universal and understod. &ldquo;.rst&rdquo; is not.</p>
+
+<p>Would be better for GitHub to have a switch saying which kind of content and which file to show.</p>
+
+<p>[Update] (Ok, really having issues with my blog.. :() I&rsquo;m investigating GitHub Pages.</p>
+
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2014/mysql-connector-python-2-0-1/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2014/mysql-connector-python-2-0-0/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

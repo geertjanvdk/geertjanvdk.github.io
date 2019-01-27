@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2007/making-your-mail-app-cached-email-more-secure/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Making your Mail.app cached email more secure</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2007/figuring-out-the-simple-things/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2007/auto-mounting-encrypted-disk-images-in-macos-10-4/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Making your Mail.app cached email more secure
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Sep 25, 2007</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This is more a follow-up on my previous post about auto-mounting (encrypted) disk images in MacOSX.</p>
+
+<p>I hear that some folks have problems with the Search functionality inside Mail.app. I&rsquo;m doing it a bit differently: not moving everything from Mail.app to the encrypted disk image. So here is how I do it. Make sure you backup your email, especially if you are still using POP3 (you really should use IMAP if you can)</p>
+
+<ul>
+<li>Close Mail.app and make sure your encrypted disk image is mounted.</li>
+<li>Created a Mail subdirectory in the disk image.</li>
+<li>Go to <code>~/Library/Mail/</code> and copy your mail accounts directories to the Mail subdirectory on the disk image. They are called like IMAP-@server. Note: copy, don&rsquo;t move for now, but remove them later when everything is working.</li>
+</ul>
+
+<p>Now a bit more difficult, I haven&rsquo;t found out how to do this within Mail.app (well I know where it is, but it&rsquo;s not editable)</p>
+
+<ul>
+<li>Open <code>~/Library/Preferences/com.apple.mail.plist</code>: double click it in Finder, it will open in Property List Editor.</li>
+<li>Open Root and go MailAccounts. The accounts are numbered, so you have to look a bit.</li>
+<li>Check for each account the AccountPath and change it to the new location on your encrypted disk image.</li>
+<li>Save it.</li>
+<li>Open Mail.app, and it should work!</li>
+</ul>
+
+<p>Don&rsquo;t forget to remove the mail subdirectories in <code>~/Library/Mail</code> once all is working. Don&rsquo;t delete the once you haven&rsquo;t copied of course, and make sure you have made backups before doing anything.</p>
+
+<p>Auto-mounting the secured disk image is discussed in a previous post.</p>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2007/figuring-out-the-simple-things/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2007/auto-mounting-encrypted-disk-images-in-macos-10-4/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

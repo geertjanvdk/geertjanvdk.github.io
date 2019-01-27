@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2011/refactored-poor-mans-mysql-replication-monitoring/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Refactored: Poor man&#39;s MySQL replication monitoring</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/mysql-cluster-rotating-the-log-file-of-the-data-nodes/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/custom-logger-for-your-mysql-cluster-data-nodes/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Refactored: Poor man&#39;s MySQL replication monitoring
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Apr 7, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This is a reply to the blog post <a href="http://www.haidongji.com/2011/04/06/poor-mans-mysql-replication-monitoring/">Poor man&rsquo;s MySQL replication monitoring</a>. Haidong Ji had a few problems using <a href="http://sourceforge.net/projects/mysql-python/files/">MySQLdb</a> (could use the &lsquo;dict&rsquo; cursor) and apparently he doesn&rsquo;t want to much dependencies. I agree that using the <code>[mysql](http://dev.mysql.com/doc/refman/5.5/en/mysql.html)</code> client tool is a nice alternative if you don&rsquo;t want to use any 3rd party <a href="http://python.org">Python</a> modules. And the <a href="http://dev.mysql.com">MySQL</a> client tools are usually and should be installed with the server.</p>
+
+<p>However, since <a href="http://launchpad.net/myconnpy">MySQL Connector/Python</a> only needs itself and Python, dependencies are reduced to a minimum. Here you&rsquo;ll find a refactored version of Haidong&rsquo;s version (can of course be made much more sophisticated) using the connector:</p>
+
+<pre><code class="language-python">import sys
+from socket import gethostname
+import smtplib
+import mysql.connector
+
+emailSubject = &quot;Replication problem on slave %s&quot;
+emailTo = &quot;recipient@example.com&quot;
+emailFrom = &quot;monitor-tool@example.com&quot;
+
+def runCmd(cmd):
+    cnx = mysql.connector.connect(user='root',
+                                  unix_socket='/path/to/mysql.sock')
+    cur = cnx.cursor(buffered=True)
+    cur.execute(cmd)
+    columns = tuple( [d[0].decode('utf8') for d in cur.description] )
+    row = cur.fetchone()
+    if row is None:
+        raise StandardError(&quot;MySQL Server not configured as Slave&quot;)
+    result = dict(zip(columns, row))
+    cur.close()
+    cnx.close()
+    return result
+
+try:
+    slave_status = runCmd(&quot;SHOW SLAVE STATUS&quot;)
+except mysql.connector.
+
+Error, e:
+    print &gt;&gt; sys.stderr, &quot;There was a MySQL error:&quot;, e
+    sys.exit(1)
+except StandardError, e:
+    print &gt;&gt; sys.stderr, &quot;There was an error:&quot;, e
+    sys.exit(1)
+
+if (slave_status['Slave_IO_Running'] == 'Yes' and
+    slave_status['Slave_SQL_Running'] == 'Yes' and
+    slave_status['Last_Errno'] == 0):
+    print &quot;Cool&quot;
+else:
+    emailBody = [
+        &quot;From: %s&quot; % emailFrom,
+        &quot;To: %s&quot; % emailTo,
+        &quot;Subject: %s&quot; % (emailSubject %  gethostname()),
+        &quot;&quot;,
+        '\n'.join([ k + ' : ' + str(v) for k,v in slave_status.iteritems()]),
+        &quot;\r\n&quot;,
+        ]
+    server = smtplib.
+
+SMTP(&quot;localhost&quot;)
+    server.sendmail(emailFrom, [emailTo], '\r\n'.join(emailBody))
+    server.quit()
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://datacharmer.blogspot.com">Giuseppe Maxia</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Apr 7 2011, 12:43</time>
+      </div>
+    <div>
+      Hi Geert!
+I also took the liberty of refactoring the attempt using very poor material, like the bash shell.
+<a href="http://datacharmer.blogspot.com/2011/04/refactored-again-poor-mans-mysql.html">http://datacharmer.blogspot.com/2011/04/refactored-again-poor-mans-mysql.html</a>
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Apr 7 2011, 15:48</time>
+      </div>
+    <div>
+      Looks great Giuseppe! :)
+(corrected your link in the comment)
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.haidongji.com">Ji Village News</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Apr 8 2011, 03:09</time>
+      </div>
+    <div>
+      I have never tried mysql.connector, and your response expanded my horizon. I will definitely try that out. Thanks!
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.mongoosemetrics.com">Joel Chaney</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Feb 3 2012, 21:07</time>
+      </div>
+    <div>
+      <p><a href="#comment-1406" rel="nofollow">@Joel Chaney </a>
+Pushed the wrong code.  use this one.</p>
+
+<p>#!/bin/sh</p>
+
+<h2 id="joel-chaney">Joel Chaney</h2>
+
+<h2 id="joel-chaney-mongoosemetrics-com-look-at-robots-txt">joel.chaney@mongoosemetrics.com  (look at robots.txt)</h2>
+
+<h2 id="2012-02-03">2012-02-03</h2>
+
+<p>repeat_alert_interval=30        # minutes for lock file life
+lock_file=/tmp/slave_alert.lck  # location of lock file</p>
+
+<p>EMAIL=YOURNAME@YOURCOMPANY.DOM  # where to send alerts
+SSTATUS=/tmp/sstatus            # location of sstatus file</p>
+
+<h3 id="code-do-not-edit-below">Code -- do not edit below</h3>
+
+<p>NODE=<code>uname -n</code></p>
+
+<h2 id="check-if-alert-is-locked">Check if alert is locked</h2>
+
+<p>function check_alert_lock () {
+    if [ -f $lock_file ] ; then
+        current_file=<code>find $lock_file -cmin -$repeat_alert_interval</code>
+        if [ -n &ldquo;$current_file&rdquo; ] ; then
+            # echo &ldquo;Current lock file found&rdquo;
+            return 1
+        else
+            # echo &ldquo;Expired lock file found&rdquo;
+            rm $lock_file
+            return 0
+        fi
+    else
+        touch $lock_file
+    return 0
+    fi
+}</p>
+
+<p>SLAVE=mysql</p>
+
+<p>$SLAVE -e &lsquo;SHOW SLAVE STATUS\G&rsquo; &gt; $SSTATUS</p>
+
+<p>function extract_value {
+    FILENAME=$1
+    VAR=$2
+    grep -w $VAR $FILENAME | awk &lsquo;{print $2}&rsquo;
+}</p>
+
+<p>Master_Binlog=$(extract_value $SSTATUS Master_Log_File )
+Master_Position=$(extract_value $SSTATUS Read_Master_Log_Pos )
+Master_Host=$(extract_value $SSTATUS Master_Host)
+Master_Port=$(extract_value $SSTATUS Master_Port)
+Master_Log_File=$(extract_value $SSTATUS Master_Log_File)
+Read_Master_Log_Pos=$(extract_value $SSTATUS Read_Master_Log_Pos)
+Slave_IO_Running=$(extract_value $SSTATUS Slave_IO_Running)
+Slave_SQL_Running=$(extract_value $SSTATUS Slave_SQL_Running)
+Slave_ERROR=$(extract_value $SSTATUS Last_Error)</p>
+
+<p>ERROR_COUNT=0
+if [ &ldquo;$Master_Binlog&rdquo; != &ldquo;$Master_Log_File&rdquo; ]
+then
+    ERRORS[$ERROR_COUNT]=&ldquo;master binlog ($Master_Binlog) and Master_Log_File ($Master_Log_File) differ&rdquo;
+    ERROR_COUNT=$(($ERROR_COUNT+1))
+fi</p>
+
+<p>POS_DIFFERENCE=$(echo ${Master_Position}-${Read_Master_Log_Pos}|bc)</p>
+
+<p>if [ $POS_DIFFERENCE -gt 1000 ]
+then
+    ERRORS[$ERROR_COUNT]=&ldquo;The slave is lagging behind of $POS_DIFFERENCE&rdquo;
+    ERROR_COUNT=$(($ERROR_COUNT+1))
+fi</p>
+
+<p>if [ &ldquo;$Slave_IO_Running&rdquo; == &ldquo;No&rdquo; ]
+then
+    ERRORS[$ERROR_COUNT]=&ldquo;Replication is stopped&rdquo;
+    ERROR_COUNT=$(($ERROR_COUNT+1))
+fi</p>
+
+<p>if [ &ldquo;$Slave_SQL_Running&rdquo; == &ldquo;No&rdquo; ]
+then
+    ERRORS[$ERROR_COUNT]=&ldquo;Replication (SQL) is stopped&rdquo;
+    ERROR_COUNT=$(($ERROR_COUNT+1))
+fi</p>
+
+<p>if [ $ERROR_COUNT -gt 0 ]
+then
+    if [ check_alert_lock == 0 ]
+        then
+          SUBJECT=&ldquo;${NODE}-ERRORS in replication&rdquo;
+          BODY=&rdquo;
+          CNT=0
+          while [ &ldquo;$CNT&rdquo; != &ldquo;$ERROR_COUNT&rdquo; ]
+          do
+             BODY=&ldquo;$BODY ${ERRORS[$CNT]}&rdquo;
+             CNT=$(($CNT+1))
+          done
+          BODY=$BODY&rdquo; \n${Slave_ERROR}&rdquo;
+          echo $BODY  | mail -s &ldquo;$SUBJECT&rdquo; $EMAIL
+        fi
+else
+    echo &ldquo;Replication OK&rdquo;
+fi</p>
+
+<p>&hellip;</p>
+
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/mysql-cluster-rotating-the-log-file-of-the-data-nodes/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/custom-logger-for-your-mysql-cluster-data-nodes/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2015/mysqlcpy-2-1-1/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Connector/Python 2.1.1 Alpha released with C Extension</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/going-static/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/back-on-the-blog/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Connector/Python 2.1.1 Alpha released with C Extension
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Feb 26, 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/work">work</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p><a href="http://www.mysql.com">MySQL</a> <a href="http://forums.mysql.com/read.php?3,628575,628575#msg-628575">Connector/Python 2.1.1</a> took a while to release and that was because we had to add some more packages which contains the optional C Extension. Note that this is still Alpha and we want you guys to <a href="https://bugs.mysql.com">report any problems and requests</a>.</p>
+
+<p>The Connector/Python C Extension was added because in certain situations, for example reading a huge result set, can take a long time with pure Python. That&rsquo;s why we choose to interface with <a href="http://dev.mysql.com/doc/connector-c/en/index.html">Connector/C</a> (libmysqlclient).</p>
+
+<p><strong>Note: Pure Python is still default and it will be kept that way!</strong></p>
+
+<p>Installing Connector/Python 2.1 didn&rsquo;t change much:</p>
+
+<pre><code class="language-sh">$ sudo python setup.py install
+</code></pre>
+
+<p>If you&rsquo;d like the C Extension, you have to first install MySQL Connector/C or have the MySQL Server development packages available. Careful with mixing 32 and 64-bit: make sure Python matches your MySQL libraries. Connector/Python will try to detect the mismatch and notify you.</p>
+
+<p>For example, on OS X with development tools installed, I would do the following:</p>
+
+<pre><code class="language-sh">$ virtualenv CPYENV
+$ source CPYENV/bin/activate
+$ tar xzf ~/Downloads/mysql-connector-c-6.1.5-osx10.7-x86_64.tar.gz
+$ tar xzf ~/Downloads/mysql-connector-python-2.1.1.tar.gz
+$ cd mysql-connector-2.1.1
+$ python setup.py install --with-mysql-capi=../mysql-connector-c-6.1.5-osx10.7-x86_64
+</code></pre>
+
+<p>If all goes well, the above would have compiled and install the C Extension together with the pure Python code inside a virtual environment. Here is how you can check if the C Extension is available:</p>
+
+<pre><code class="language-python">import mysql.connector
+mysql.connector.HAVE_CEXT
+
+# Output == True
+</code></pre>
+
+<p>If you want to see the speed improvements, you can load up the <a href="https://dev.mysql.com/doc/employee/en/">employees sample database</a> and do the following in the Python interpreter:</p>
+
+<pre><code class="language-python">import mysql.connector
+cnx = mysql.connector.connect(user='root', database='employees')
+cnxc = mysql.connector.connect(use_pure=False, user='root', database='employees')
+cur = cnx.cursor()
+q = &quot;SELECT * FROM salaries&quot;
+s=time(); cur.execute(q); r=cur.fetchall(); print(&quot;%.2f&quot; % (time()-s))
+
+# Output ~= 65.57
+
+cur = cnxc.cursor()
+s=time(); cur.execute(q); r=cur.fetchall(); print(&quot;%.2f&quot; % (time()-s))
+
+# Output ~= 13.09
+</code></pre>
+
+<p>That&rsquo;s 66 seconds vs. 13 seconds using the C Extension.</p>
+
+<p>If that is not fast enough, and it is not, you can directly load the C Extension and use the wrapper around the MySQL C API (see <a href="http://dev.mysql.com/doc/connector-python/en/connector-python-cext-reference.html">manual</a>). Here&rsquo;s an example:</p>
+
+<pre><code class="language-python">import _mysql_connector
+cnx = _mysql_connector.MySQL()
+cnx.connect(user='root', database='employees')
+cnx.query(&quot;SELECT emp_no, last_name, hire_date FROM employees&quot;)
+print(cnx.fetch_row())
+cnx.free_result()
+cnx.close()
+
+# Output == (10001, 'Facello', datetime.date(1986, 6, 26))
+</code></pre>
+
+<p>It is a bit different than using mysql.connector, but notice that result coming from the C Extension is also converted to Python data types.</p>
+
+<p>How fast is using _mysql_connector? Lets say we want the raw data, save the following to a Python script file and execute:</p>
+
+<pre><code class="language-python">from time import time
+
+import _mysql_connector
+
+cnx = _mysql_connector.MySQL(raw=True)
+cnx.connect(user='root', database='employees')
+cnx.query(&quot;SELECT * FROM salaries&quot;)
+s = time()
+row = cnx.fetch_row()
+
+while row:
+  row = cnx.fetch_row()
+
+cnx.free_result()
+print(&quot;All fetched in %.2fs&quot; % (time() - s))
+
+cnx.close()
+
+# Output ~= All fetched in 2.25s
+</code></pre>
+
+<p>If you put it all together, and this is not scientific, just on my OS X MacBook, <code>SELECT * FORM slaries</code>:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"><code>SELECT * FORM salaries</code></th>
+<th align="right">Duration</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Pure Python, PEP-249</td>
+<td align="right">66s</td>
+</tr>
+
+<tr>
+<td align="left">Pure + C Extension, PEP-249</td>
+<td align="right">13s</td>
+</tr>
+
+<tr>
+<td align="left">C Extension, direct, with conversion</td>
+<td align="right">12s</td>
+</tr>
+
+<tr>
+<td align="left">C Extension, direct, raw</td>
+<td align="right">3s</td>
+</tr>
+</tbody>
+</table>
+
+<p>If you want to dump big sets of data, and you want to do it the Python way, you can use the C Extension to get it faster.</p>
+
+<p>Yes, the C Extension works and compiles on Windows!</p>
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Wlad
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Feb 27 2015, 03:55</time>
+      </div>
+    <div>
+      What it is exactly that is taking so much in pure python connector? An
+explanation would be nice
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Feb 27 2015, 06:26</time>
+      </div>
+    <div>
+      The issue is with parsing the (text) MySQL packets coming from the server.
+For relatively small result sets it wouldn&rsquo;t show. For big results how ever, it
+starts to matter. There are a few solutions, but to make it really fast, we had
+to put it in a C Extension.
+    </div>
+    </dd>
+  
+    <dt>
+          Luke
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Feb 28 2015, 08:28</time>
+      </div>
+    <div>
+      <p>I think the examples used to illastrate the difference of the speed between
+2 versions are not meaningfull the second is fast than the first maybe
+because the data is already in the buffer pool of MySQL (so actually the second
+fetch with Connector with C Extension just get data from memory and no need for
+physical I/Os)</p>
+
+<p>I think you should restart the mysql server(so the buffer
+pool is empty) to run the second test</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Feb 28 2015, 08:43</time>
+      </div>
+    <div>
+      <p>I actually ran the SELECT * FROM salaries first, then re-run
+while timing it. So the data was warmed up.
+Real benchmarking would evolve more work, but that I think it&rsquo;s
+an exercise for the users to publish that :)</p>
+
+<p>The point is: it is faster, and it will solve a few things for
+people who want to stick with Connector/Python and need to process
+huge result sets.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://ratheryes.com">Darragh McCurragh</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Mar 23 2015, 20:29</time>
+      </div>
+    <div>
+      &ldquo;66 seconds vs. 13 seconds using the C Extension&rdquo; then down to 3 seconds
+is really a twelve-fold improvement. Several hundred calls per day that is the
+difference between &ldquo;life and death&rdquo;. thanks.
+    </div>
+    </dd>
+  
+    <dt>
+          Jacek
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Apr 27 2015, 21:01</time>
+      </div>
+    <div>
+      Is the upcoming version comatible with Django 1.8? Current stable no longer
+works with Django 1.8. Update would be very nice :)
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Apr 28 2015, 04:31</time>
+      </div>
+    <div>
+      @Jacek: Django is releasing fast! Please open a report on bugs.mysql.com
+and ask for it. It is always good to have community pushing :)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/going-static/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/back-on-the-blog/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

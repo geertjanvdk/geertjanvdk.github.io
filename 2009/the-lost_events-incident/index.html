@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/the-lost_events-incident/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>The LOST_EVENTS incident</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/the-lost_events-incident-when-is-it-reported/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/you-have-to-use-utc-time-in-emails/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      The LOST_EVENTS incident
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Thu Sep 17, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>.. it could have been the title for the next James Bond movie, but no.. It&rsquo;s much more exciting!</p>
+
+<p>The LOST_EVENTS incident is reported each time you are starting a <a href="http://dev.mysql.com">MySQL</a> server which is <a href="http://dev.mysql.com/doc/refman/5.1/en/binary-log.html">binary logging</a> and is participating as an SQL Node in <a href="http://www.mysql.com/products/database/cluster/">MySQL Cluster</a> setup. Slaves reading from these binary logs will stop their I/O Thread (the one getting information from the master) and report this incident as an error (see below for example).</p>
+
+<p>It is very important that this incident is reported and is stopping the replication between MySQL Clusters. If not, you could end up with inconsistent data!</p>
+
+<h2 id="a-world-without-lost-events-incidents">A world without LOST_EVENTS incidents</h2>
+
+<p>You have a MySQL Cluster running with two SQL Nodes. One <code>mysqld</code> is binary logging, getting all updates happening in the cluster. You have a Slave MySQL Cluster which has a <code>mysqld</code> reading from this Master and all is replicating just fine, until..</p>
+
+<p>Somebody trips over the wire and the SQL Node doing binary logging goes down. <em>BANG</em>. Luckily this person&rsquo;s head didn&rsquo;t hit the rack and is still conscious enough for quickly putting back the power cord into the socket. The machine spins up and runs happily the SQL node. All is good. Well, not really.. Next day you found your mobile silent because your girlfriend had a headache and you missed an alarm. Few hours later you&rsquo;re getting angry reports from customers: they are missing data on the slave?</p>
+
+<p>What the..?</p>
+
+<p>If your Master SQL Node doing binary logging fails, and you still have other SQL Nodes doing updates on data in your Cluster, you might end up with the following situation:</p>
+
+<p>On Master:</p>
+
+<pre><code>mysql&gt; SELECT * FROM t1 ORDER BY c1;
++----+----------+---------------------+
+| c1 | serverid | c2                  |
++----+----------+---------------------+
+|  1 |        1 | 2009-09-17 12:50:39 |
+|  2 |        2 | 2009-09-17 12:51:03 |
+|  3 |        2 | 2009-09-17 12:51:06 |
+|  4 |        1 | 2009-09-17 12:51:09 |
+|  5 |        2 | 2009-09-17 13:01:46 | **Missing on slave!**
+|  6 |        2 | 2009-09-17 13:01:47 | **Missing on slave!**
+|  7 |        1 | 2009-09-17 13:02:36 |
++----+----------+---------------------+
+</code></pre>
+
+<p>On Slave:</p>
+
+<pre><code>mysql&gt; SELECT * FROM t1 ORDER BY c1;
++----+----------+---------------------+
+| c1 | serverid | c2                  |
++----+----------+---------------------+
+|  1 |        1 | 2009-09-17 12:50:39 |
+|  2 |        2 | 2009-09-17 12:51:03 |
+|  3 |        2 | 2009-09-17 12:51:06 |
+|  4 |        1 | 2009-09-17 12:51:09 |
+|  7 |        1 | 2009-09-17 13:02:36 |
++----+----------+---------------------+
+</code></pre>
+
+<p>The above is actual output of what could happen when LOST_EVENTS incident is not written in the binary logs <a href="http://bugs.mysql.com/bug.php?id=47096">due to a bug</a></p>
+
+<p>The Master has 2 more rows, which were inserted on the 2nd SQL Node, while the SQL node doing binary logging was down. The replication picked up after the failing SQL Node came back, but now there is data missing: the Slave misses or lost events. What&rsquo;s in a name, huh!?</p>
+
+<h2 id="a-world-with-lost-events-incidents">A world with LOST_EVENTS incidents</h2>
+
+<p>If your SQL Node doing binary logging fails, and restarts, it will report in its binary logs that there might be events lost: LOST_EVENTS incident. The Slave&rsquo;s I/O thread will stop and report an error. Good DBA&rsquo;s will of course monitor Slaves and they will have to act upon this.</p>
+
+<p>Here an example of how the Slave looks like when it receives a LOST_EVENTS incident:</p>
+
+<pre><code>mysql&gt; SHOW SLAVE STATUS\G
+  ..
+  Slave_IO_Running: Yes
+  Slave_SQL_Running: No
+  ..
+  Last_Errno: 1590
+  Last_Error: The incident LOST_EVENTS occurred on the master..
+  ..
+</code></pre>
+
+<p>Now, if you had only 1 SQL Node in the Master Cluster, you&rsquo;re done for. You&rsquo;ll have re-initialize your Slave Cluster because you can not guarantee the consistency of the data.</p>
+
+<p>To prevent this, you have to have at least 2 SQL Nodes doing binary logging. This way, if one fails, you can switch to another replication channel. This switching over is <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-cluster-replication-two-channels.html">explained in the MySQL Manual</a>, and will be material for a next article!</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>If you got a LOST_EVENTS incident on the Slave, consider yourself (kind of) lucky! Because then you know there could be something wrong, and not find out later that your Slave is inconsistent with the Master.</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          <strong><a href="http://www.map.kz">torlan</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Feb 3 2011, 06:50</time>
+      </div>
+    <div>
+      There is a solution?
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org">Geert Vanderkelen</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 5 2011, 06:41</time>
+      </div>
+    <div>
+      <a href="#comment-643" rel="nofollow">@torlan </a>
+Depends on what the problem was. The LOST_EVENTS is only there to make sure that you are notified that the Slave might miss data. Why, that&rsquo;s something you need to look for on the Master.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/the-lost_events-incident-when-is-it-reported/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/you-have-to-use-utc-time-in-emails/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

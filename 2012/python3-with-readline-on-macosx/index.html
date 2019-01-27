@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2012/python3-with-readline-on-macosx/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Compiling Python 3.2 with readline support on MacOS X 10.7</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/naming-a-python-package-for-distribution/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/bootstrapping-mysql-on-windows/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Compiling Python 3.2 with readline support on MacOS X 10.7
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Jun 29, 2012</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>This post explains how to compile <a href="http://python.org">Python</a> v3.2 including support for the <a href="http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html">GNU Readline Library</a> on MacOS X 10.7 (Lion), not using tools like <a href="http://en.wikipedia.org/wiki/MacPorts">MacPorts</a>. One of the problems we try to solve is making history work in the interactive Python interpreter.</p>
+
+<p>Pre-requirement is to have Apple&rsquo;s <a href="https://developer.apple.com/xcode/">XCode</a> installed (check the <a href="http://itunes.apple.com/de/app/xcode/id497799835?mt=12">Appstore</a>).</p>
+
+<p>First, you need a <a href="http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html">fresh copy</a> of the GNU Readline Library and compile it.  At the time of writing, readline v6.2 was the latest. Fire up a Terminal and do the following:</p>
+
+<pre><code class="language-shell">$ tar xzf readline-6.2.tar.gz
+$ cd readline-6.2
+$ MACOSX_DEPLOYMENT_TARGET=10.7 ARCHFLAGS=&quot;-arch x86_64&quot; ./configure --prefix=/opt/local
+$ make &amp;&amp; sudo make install
+</code></pre>
+
+<p>Note that you can change the location <code>/opt/local</code> to anything you like, but avoid <code>/usr/lib</code> or other system location.</p>
+
+<p>When readline compiled and installed successfully, compile Python v3.2 as follows:</p>
+
+<pre><code class="language-shell">$ tar xzf Python-3.2.3.tgz
+$ cd Python-3.2.3
+$ LDFLAGS=&quot;-L/opt/local/lib&quot; CFLAGS=&quot;-I/opt/local/include&quot; \
+    ./configure --prefix=/opt/python/3.2.3
+$ make &amp;&amp; sudo make install
+</code></pre>
+
+<p>Note that you might have more arguments to pass to the <code>./configure</code> if you have special needs. Note also that <code>/opt/python/3.2.3</code> is where Python will be installed to avoid clashing with the system provided Python installations.</p>
+
+<p>You should now have history support in the Python interpreter:</p>
+
+<pre><code>$ /opt/python/3.2.3/bin/python3
+&gt;&gt;&gt; import this
+&gt;&gt;&gt;
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2012/naming-a-python-package-for-distribution/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2012/bootstrapping-mysql-on-windows/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

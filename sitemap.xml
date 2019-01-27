@@ -1,0 +1,2560 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2018/go-mysql80-compat/</loc>
+    <lastmod>2018-06-03T07:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2018/mysql8-unattended-dpkg/</loc>
+    <lastmod>2018-05-28T19:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2018/mysql-join-docs/</loc>
+    <lastmod>2018-05-21T18:52:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2018/go-year/</loc>
+    <lastmod>2018-05-03T21:35:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2017/static-homepage-2/</loc>
+    <lastmod>2017-06-13T22:30:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2016/cpy-and-pypi/</loc>
+    <lastmod>2016-02-05T16:51:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2016/view-on-2016/</loc>
+    <lastmod>2016-01-02T16:51:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2015/cmake-ifelse-issue/</loc>
+    <lastmod>2015-07-07T17:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2015/jekyll-30-beta7-trial/</loc>
+    <lastmod>2015-06-23T16:30:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2015/private-share-still-problematic/</loc>
+    <lastmod>2015-06-20T20:30:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2015/mysql577-json-python/</loc>
+    <lastmod>2015-06-18T19:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2015/going-static/</loc>
+    <lastmod>2015-06-14T00:30:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2015/mysqlcpy-2-1-1/</loc>
+    <lastmod>2015-02-26T12:31:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2015/back-on-the-blog/</loc>
+    <lastmod>2015-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/mysql-connector-python-2-1-0-labs/</loc>
+    <lastmod>2014-10-01T15:02:40+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/cpy-on-pypi-201-123/</loc>
+    <lastmod>2014-09-30T11:19:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/relocated-connectorpython-on-github/</loc>
+    <lastmod>2014-09-29T15:13:05+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/mysql-connector-python-2-0-1/</loc>
+    <lastmod>2014-09-29T12:31:09+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/mysql-connectorpython-on-github/</loc>
+    <lastmod>2014-08-01T12:39:17+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/mysql-connector-python-2-0-0/</loc>
+    <lastmod>2014-07-25T20:56:22+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/mysql-connector-python-1-2-2/</loc>
+    <lastmod>2014-06-09T20:12:25+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/fixed-blog-on-nginx-now/</loc>
+    <lastmod>2014-06-09T19:14:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/mysql-connector-python-1-2-1/</loc>
+    <lastmod>2014-04-02T04:46:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/results-after-procedure-call/</loc>
+    <lastmod>2014-03-11T08:06:08+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/mysql-connector-python-1-1-6/</loc>
+    <lastmod>2014-02-21T12:42:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2014/install-mysqlcpy-using-pip/</loc>
+    <lastmod>2014-01-29T11:09:51+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-connector-python-1-1-4/</loc>
+    <lastmod>2013-12-20T11:11:33+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-connector-python-1-1-3b/</loc>
+    <lastmod>2013-11-26T10:15:05+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/column-info-using-connector-python/</loc>
+    <lastmod>2013-10-08T14:12:51+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-fabric-support-in-connectorpython/</loc>
+    <lastmod>2013-09-22T13:05:40+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-connector-python-1-1-1a/</loc>
+    <lastmod>2013-09-11T10:04:06+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-connectorpython-1-0-12/</loc>
+    <lastmod>2013-08-30T10:29:55+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-connector-python-1-1-0a/</loc>
+    <lastmod>2013-07-08T12:26:55+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/installing-gevent-inside-a-virtual-environment-on-osx/</loc>
+    <lastmod>2013-06-23T14:26:50+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-connectorpython-1-0-10-available-for-download/</loc>
+    <lastmod>2013-05-14T14:15:27+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/connectorpython-sqlalchemy/</loc>
+    <lastmod>2013-04-11T11:25:30+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/mysql-connector-python-1-0-9/</loc>
+    <lastmod>2013-02-26T16:11:34+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2013/find-in-rpm-specs/</loc>
+    <lastmod>2013-02-04T15:16:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/mysql-connectorpython-1-0-8-available-for-download/</loc>
+    <lastmod>2012-12-25T12:18:07+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/connector-python-1-0-ga/</loc>
+    <lastmod>2012-09-30T01:57:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/mysql-connect-2012-about-py/</loc>
+    <lastmod>2012-09-21T17:29:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/mysql-connector-python-1-0-6-beta/</loc>
+    <lastmod>2012-09-08T15:19:42+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/connectorpython-custom-cursors/</loc>
+    <lastmod>2012-08-29T10:42:16+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/connectorpython-1-0-5-on-pypi/</loc>
+    <lastmod>2012-08-08T12:10:32+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/mysql-connector-python-1-0-5-beta/</loc>
+    <lastmod>2012-08-07T20:06:43+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/naming-a-python-package-for-distribution/</loc>
+    <lastmod>2012-08-03T14:35:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/python3-with-readline-on-macosx/</loc>
+    <lastmod>2012-06-29T05:04:28+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/bootstrapping-mysql-on-windows/</loc>
+    <lastmod>2012-06-26T08:37:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/wordpressshort-and-descriptive-urls/</loc>
+    <lastmod>2012-06-03T11:18:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/invalid-dates-and-connector-python/</loc>
+    <lastmod>2012-06-01T13:33:37+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2012/connector-python-using-bugs-mysql-com/</loc>
+    <lastmod>2012-03-05T11:26:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/connector-python-auto-reconnect/</loc>
+    <lastmod>2011-12-16T17:22:38+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/mysql-connectorpython-available-through-the-python-package-index/</loc>
+    <lastmod>2011-11-03T12:33:10+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/mysql-connectorpython-bug-category-on-bugs-mysql-com/</loc>
+    <lastmod>2011-11-01T19:38:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/my-new-job-at-oracle-working-on-mysql-connectorpython/</loc>
+    <lastmod>2011-10-28T11:55:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/debugging-mysql-cluster-installed-using-rpms-using-gdb/</loc>
+    <lastmod>2011-07-19T16:22:52+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/mysql-cluster-rotating-the-log-file-of-the-data-nodes/</loc>
+    <lastmod>2011-05-02T13:34:15+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/refactored-poor-mans-mysql-replication-monitoring/</loc>
+    <lastmod>2011-04-07T08:53:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/custom-logger-for-your-mysql-cluster-data-nodes/</loc>
+    <lastmod>2011-04-03T13:05:05+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/nostalgia-past-logos-from-my-past-business/</loc>
+    <lastmod>2011-03-30T23:20:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/collection-of-my-thoughts-quotes-bad-jokes/</loc>
+    <lastmod>2011-03-29T21:44:12+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/technology-slowing-us-down/</loc>
+    <lastmod>2011-03-16T22:09:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/ecology-has-no-color/</loc>
+    <lastmod>2011-02-01T22:29:15+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/virtualbox-give-host-only-access-to-internet/</loc>
+    <lastmod>2011-02-01T21:55:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/tomas-and-the-pearl-jam-body/</loc>
+    <lastmod>2011-01-16T19:04:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/mysql-performance-tuning-at-phpbenelux-2011-conference/</loc>
+    <lastmod>2011-01-11T14:18:17+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/mysql-connectorpython-v0-3-2-devel-released/</loc>
+    <lastmod>2011-01-10T20:21:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/mysql-connectorpython-v0-3-1-devel-released/</loc>
+    <lastmod>2011-01-07T14:21:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2011/settings-client-flags-with-mysql-connectorpython/</loc>
+    <lastmod>2011-01-05T12:05:45+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/my-family-end-2010/</loc>
+    <lastmod>2010-12-20T12:46:30+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-v5-5-and-python/</loc>
+    <lastmod>2010-12-17T18:43:33+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/this-blog-served-by-mysql-v5-5/</loc>
+    <lastmod>2010-12-17T14:12:27+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-connectorpython-0-3-0-has-been-released/</loc>
+    <lastmod>2010-12-10T12:48:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/query-caching-with-mysql-connectorpython/</loc>
+    <lastmod>2010-11-22T21:53:26+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/buffering-results-with-mysql-connectorpython/</loc>
+    <lastmod>2010-11-21T23:54:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/fetching-rows-as-dictionaries-with-mysql-connectorpython/</loc>
+    <lastmod>2010-10-13T13:45:02+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-connectorpython-0-2-devel-available/</loc>
+    <lastmod>2010-10-13T10:59:05+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/farewell-blogger-moving-to-wordpress/</loc>
+    <lastmod>2010-09-24T18:40:15+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-5-5-6-rc-innodb-is-default-storage-engine/</loc>
+    <lastmod>2010-09-20T07:50:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/on-mothers-shoulder/</loc>
+    <lastmod>2010-09-17T17:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/find-out-if-every-element-of-a-list-is-part-of-another-with-python/</loc>
+    <lastmod>2010-08-26T21:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/using-globals-in-pylons-everywhere/</loc>
+    <lastmod>2010-08-26T17:06:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/applescript-exporting-photos-from-aperture/</loc>
+    <lastmod>2010-08-26T16:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/splitting-as-string-and-joining-a-list-using-applescript/</loc>
+    <lastmod>2010-08-26T16:36:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/renaming-a-file-using-applescript/</loc>
+    <lastmod>2010-08-26T16:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-connectorpython-and-database-pooling/</loc>
+    <lastmod>2010-08-26T09:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/running-mysql-cluster-without-arbitrator-dont-but-if-you-have-to/</loc>
+    <lastmod>2010-06-16T17:41:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/my-first-thurderstorm-shooting/</loc>
+    <lastmod>2010-06-13T09:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/check-how-old-your-mysql-books-are-before-usage/</loc>
+    <lastmod>2010-06-01T18:24:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/we-will-not-put-babykids-pictures-online/</loc>
+    <lastmod>2010-05-28T15:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-connectorpython-0-1-5-release-critical-bug-fix/</loc>
+    <lastmod>2010-05-27T09:50:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/the-dragon-and-the-river/</loc>
+    <lastmod>2010-05-22T11:10:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-connectorpython-0-1-4-devel-available/</loc>
+    <lastmod>2010-05-21T08:07:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/krakow-and-poland-preparing-for-next-big-flooding/</loc>
+    <lastmod>2010-05-18T20:26:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/aperture-add-tags-to-multiple-shot-but-beware-of-primary-only/</loc>
+    <lastmod>2010-05-16T19:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/make-your-hostname-stick-in-macosx/</loc>
+    <lastmod>2010-05-14T06:35:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-client-tool-and-how-to-output-newlines/</loc>
+    <lastmod>2010-05-13T11:38:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/if-you-could-send-1-sms-to-everyone-on-earth-whatd-it-say/</loc>
+    <lastmod>2010-05-09T18:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/waiting/</loc>
+    <lastmod>2010-05-04T20:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/signals-to-freeze-a-data-node-simulating-trouble/</loc>
+    <lastmod>2010-05-03T06:54:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mobileme-is-still-useless/</loc>
+    <lastmod>2010-05-02T11:15:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/simulating-server-side-cursors-with-mysql-connectorpython/</loc>
+    <lastmod>2010-04-26T13:09:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/multiple-result-sets-in-mysql-connectorpython/</loc>
+    <lastmod>2010-04-24T17:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/the-wrapped-jumbo-prawns/</loc>
+    <lastmod>2010-04-21T02:37:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/</loc>
+    <lastmod>2010-04-02T18:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/a-new-dutch-word-avonkuren/</loc>
+    <lastmod>2010-03-24T17:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/a-reason-for-these-weird-product-or-website-names/</loc>
+    <lastmod>2010-03-13T14:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/there-are-only-bad-habits/</loc>
+    <lastmod>2010-03-09T10:23:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/how-do-you-name-the-device-found-in-your-pocket/</loc>
+    <lastmod>2010-03-08T08:40:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/</loc>
+    <lastmod>2010-02-19T11:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/stuffing-the-gaps-in-the-collations-table-using-a-stored-procedure/</loc>
+    <lastmod>2010-02-17T11:52:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/first-trials-of-benchmarking-mysqlpython-db-interfaces/</loc>
+    <lastmod>2010-02-16T16:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/change-of-website-causes-a-bit-of-havoc/</loc>
+    <lastmod>2010-02-16T07:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/my-sessions-at-the-mysql-conference-expo-2010/</loc>
+    <lastmod>2010-02-10T17:06:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/dont-forget-the-commit-in-mysql/</loc>
+    <lastmod>2010-02-08T22:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/python-oursql-and-macos-x-10-6-snow-leopard/</loc>
+    <lastmod>2010-02-08T10:09:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/fosdem-connecting-mysql-and-python-handout-wrap-up/</loc>
+    <lastmod>2010-02-07T14:54:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/fosdem-change-pythonmysql-talk-at-1445-in-mysql-dev-room/</loc>
+    <lastmod>2010-02-03T16:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-connectorpython-0-1-3-devel-available/</loc>
+    <lastmod>2010-01-28T16:01:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/small-status-on-sqlalchemy-and-mysql-connectorpython/</loc>
+    <lastmod>2010-01-22T10:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/fosdem-2010-python-sneaks-into-the-mysql-devroom/</loc>
+    <lastmod>2010-01-09T13:31:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/going-chemical-sqlalchemy-and-mysql-connectorpython/</loc>
+    <lastmod>2010-01-08T10:30:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/mysql-5-1-42-available-for-macos-x-10-6-snow-leopard/</loc>
+    <lastmod>2010-01-04T07:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2010/we-got-a-bag-too-much-on-board/</loc>
+    <lastmod>2010-01-03T09:59:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/building-mysql-universal-binaries-using-macos-x-10-6-snow-leopard/</loc>
+    <lastmod>2009-12-31T08:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/chessboard-in-mysql/</loc>
+    <lastmod>2009-12-30T17:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/a-chessboard-in-mysql/</loc>
+    <lastmod>2009-12-23T17:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/using-character-sets-with-mysql-connectorpython/</loc>
+    <lastmod>2009-12-23T14:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-connectorpython-0-1-2-devel-available/</loc>
+    <lastmod>2009-12-23T09:42:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-with-python-v3-1-now-also-possible-using-mysql-connectorpython/</loc>
+    <lastmod>2009-12-21T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-cluster-listen-and-know-whats-going-on/</loc>
+    <lastmod>2009-12-16T09:26:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/clusterious-defined/</loc>
+    <lastmod>2009-12-10T16:35:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/if-your-airport-magically-doesnt-work-anymore-check-ipv6/</loc>
+    <lastmod>2009-12-08T08:35:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-connectorpython-0-1-0-devel-first-development-snapshot/</loc>
+    <lastmod>2009-11-28T07:50:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/</loc>
+    <lastmod>2009-11-25T15:32:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/a-simpler-startup-script-for-mysql-on-macos-x/</loc>
+    <lastmod>2009-11-22T09:25:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mounting-a-macos-x-disk-image-at-login/</loc>
+    <lastmod>2009-11-19T08:54:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/want-to-compile-a-mysql-cluster-mgm-api-application/</loc>
+    <lastmod>2009-11-12T16:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/why-it-is-important-to-use-columns-or-aliases-in-mysql-views/</loc>
+    <lastmod>2009-11-10T19:47:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/readying-first-alpha-release-but-where-to-install-mysql-connectorpython/</loc>
+    <lastmod>2009-11-09T10:23:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/most-popular-websites-are-just-broken-no-language-option/</loc>
+    <lastmod>2009-11-09T09:36:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/reducing-paper-mail/</loc>
+    <lastmod>2009-11-04T17:33:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/make-mysql-refuse-connections-until-data-nodes-are-started/</loc>
+    <lastmod>2009-11-03T13:23:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/resize-and-set-default-column-size-in-mac-os-x-finder/</loc>
+    <lastmod>2009-10-28T08:21:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/a-depressing-chore/</loc>
+    <lastmod>2009-10-24T07:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/adding-mysql-user-and-group-on-red-hatcentos/</loc>
+    <lastmod>2009-10-22T14:31:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-synonym-of-the-day-long-is-mediumtext/</loc>
+    <lastmod>2009-10-19T10:46:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/status-on-mysql-connectorpython-and-python-v3-1/</loc>
+    <lastmod>2009-10-18T09:43:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/what-are-the-timings-shown-in-mysql-query-browser/</loc>
+    <lastmod>2009-10-12T09:24:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-cluster-replication-failover-some-python/</loc>
+    <lastmod>2009-10-09T15:33:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/please-update-outdated-and-maybe-false-info-about-mysql/</loc>
+    <lastmod>2009-10-09T07:15:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/running-python-scripts-within-mysql-workbench/</loc>
+    <lastmod>2009-10-08T13:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-workbench-enabling-python-in-the-grt-shell/</loc>
+    <lastmod>2009-10-08T07:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/which-python-versions-should-mysql-connectorpython-support/</loc>
+    <lastmod>2009-10-07T11:20:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/getting-mysql-connectorpython-compliant-with-pep-249/</loc>
+    <lastmod>2009-10-04T09:58:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/moving-django-backend-out-of-mysql-connectorpythons-trunk/</loc>
+    <lastmod>2009-10-02T10:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/one-month-bye-bye-dsl-and-mobile-phone-contracts/</loc>
+    <lastmod>2009-10-01T09:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/fixing-pythons-deprecationwarning-sha/</loc>
+    <lastmod>2009-09-30T13:25:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/getting-illegal-dates-from-mysql-with-connectorpython/</loc>
+    <lastmod>2009-09-30T13:15:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-connectorpython-and-windows-kinda-works/</loc>
+    <lastmod>2009-09-28T13:39:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/how-to-install-mysql-connectorpython/</loc>
+    <lastmod>2009-09-24T12:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/fixing-iphotos-albumdata-xml-for-importing-into-googles-picasa/</loc>
+    <lastmod>2009-09-24T05:46:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-python-and-macos-x-10-6-snow-leopard/</loc>
+    <lastmod>2009-09-23T11:07:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/macports-and-mac-os-x-10-6-snow-leopard/</loc>
+    <lastmod>2009-09-21T12:07:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-cluster-7-0-careful-with-ndb_mgmd-and-configdir/</loc>
+    <lastmod>2009-09-18T15:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/the-lost_events-incident-when-is-it-reported/</loc>
+    <lastmod>2009-09-17T14:13:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/the-lost_events-incident/</loc>
+    <lastmod>2009-09-17T11:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/you-have-to-use-utc-time-in-emails/</loc>
+    <lastmod>2009-09-16T06:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/java-6-v1-6-developer-documentation-and-source-for-mac-os-x-10-5/</loc>
+    <lastmod>2009-09-04T09:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/</loc>
+    <lastmod>2009-09-01T07:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/how-to-start-mysql-cluster-7-0-with-2-management-nodes/</loc>
+    <lastmod>2009-08-31T13:35:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/traveling-by-train-to-krakow-poland-from-germany/</loc>
+    <lastmod>2009-08-29T12:09:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/routes-crossings-and-pace/</loc>
+    <lastmod>2009-07-26T13:17:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/all-this-whining-about-the-mysql-docs/</loc>
+    <lastmod>2009-07-24T17:20:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/a-workday-between-us/</loc>
+    <lastmod>2009-07-20T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/getting-online-in-poland-using-3g/</loc>
+    <lastmod>2009-07-20T16:06:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/disabling-binary-logging-when-restoring-a-mysql-dump/</loc>
+    <lastmod>2009-07-17T12:30:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/eu-mobile-operators-suck/</loc>
+    <lastmod>2009-07-10T07:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/tip-for-helping-a-snail/</loc>
+    <lastmod>2009-07-06T19:49:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/rock-werchter-2009-simplify-and-renew/</loc>
+    <lastmod>2009-07-06T11:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/i-am-inhuman-i-am-a-pacifist/</loc>
+    <lastmod>2009-06-28T11:22:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/editors-gig-in-aschaffenburg-de/</loc>
+    <lastmod>2009-06-28T10:36:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/hiding-mysql-passwords-in-the-general-query-log/</loc>
+    <lastmod>2009-06-23T13:54:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/things-i-wrote-things-i-said/</loc>
+    <lastmod>2009-06-15T21:37:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/temptation/</loc>
+    <lastmod>2009-06-02T23:21:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/virtualbox-juggling-order-of-network-adapters/</loc>
+    <lastmod>2009-05-25T11:59:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/another-milestone-passed/</loc>
+    <lastmod>2009-05-17T10:34:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/in-love-with-krakow/</loc>
+    <lastmod>2009-05-12T12:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/amoocon-the-open-source-voip-conference/</loc>
+    <lastmod>2009-05-04T11:33:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/open-source-data-center-conference-wrap-up/</loc>
+    <lastmod>2009-05-04T07:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-connectorpython-on-launchpad/</loc>
+    <lastmod>2009-05-02T09:59:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/learning-about-puppet/</loc>
+    <lastmod>2009-04-29T08:39:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/presenting-the-mysql-support-team/</loc>
+    <lastmod>2009-04-24T19:20:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/share-the-road/</loc>
+    <lastmod>2009-04-19T17:24:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/going-more-offline/</loc>
+    <lastmod>2009-04-07T13:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/impressions-of-essen/</loc>
+    <lastmod>2009-04-05T11:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/affection-throughout-the-aging/</loc>
+    <lastmod>2009-03-31T17:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/sight-seeing-on-the-train/</loc>
+    <lastmod>2009-03-31T15:09:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/error-1133-cant-find-any-matching-row-in-the-user-table/</loc>
+    <lastmod>2009-03-27T15:53:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/making-cluster-backups-unique/</loc>
+    <lastmod>2009-03-25T11:37:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/getting-bored-with-the-internet/</loc>
+    <lastmod>2009-03-18T21:22:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/mysql-5-1-mysqlhotcopy-and-log-tables-check-your-backup-scripts/</loc>
+    <lastmod>2009-03-12T13:56:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/when-dhcp-doesnt-work-in-macosx-check-configd/</loc>
+    <lastmod>2009-03-01T21:08:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/happy-bad-poetry/</loc>
+    <lastmod>2009-02-28T14:37:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/iphoto-09-is-disappointing/</loc>
+    <lastmod>2009-02-22T20:42:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/time-machine-unreliable/</loc>
+    <lastmod>2009-02-22T09:40:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/restoring-backup-to-new-external-drive-using-time-machine/</loc>
+    <lastmod>2009-02-21T13:46:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/importing-itunes-library-into-last-fm-on-mac/</loc>
+    <lastmod>2009-02-21T00:24:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/using-raw-host-disks-in-virtualbox-on-mac-os-10-5/</loc>
+    <lastmod>2009-02-17T14:25:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/importing-ken-ishii/</loc>
+    <lastmod>2009-02-16T17:58:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/selective-restoring-using-ndb_restore/</loc>
+    <lastmod>2009-02-16T14:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/opensolaris-bazaar-and-ssh/</loc>
+    <lastmod>2009-02-13T11:54:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/feedback-on-mysql-cluster-talk-at-fosdem/</loc>
+    <lastmod>2009-02-08T14:40:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/ndb-connection-pooling-in-mysql-and-single-user-mode/</loc>
+    <lastmod>2009-01-28T13:11:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/pain-in-the-back/</loc>
+    <lastmod>2009-01-27T22:08:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/almost-a-month-daily-pictures/</loc>
+    <lastmod>2009-01-26T16:28:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/car-still-works/</loc>
+    <lastmod>2009-01-26T16:08:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/cdh-sent-me-its-best-wishes-in-french-in-germany/</loc>
+    <lastmod>2009-01-10T09:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2009/daily-2009-pictures/</loc>
+    <lastmod>2009-01-03T11:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/overcome/</loc>
+    <lastmod>2008-12-30T20:54:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/true-but-lame-excuses/</loc>
+    <lastmod>2008-12-26T17:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/red-or-blue-chair/</loc>
+    <lastmod>2008-12-25T23:45:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/preparing-for-your-own-death/</loc>
+    <lastmod>2008-12-25T22:58:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/freiwild-almost-ready-for-django-1-0-2/</loc>
+    <lastmod>2008-12-19T17:39:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/talking-at-the-mysql-confexpo-2009/</loc>
+    <lastmod>2008-12-16T18:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/sugarcrm-not-committing-transactions-installation/</loc>
+    <lastmod>2008-12-15T21:36:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/damn-websites-switching-to-german/</loc>
+    <lastmod>2008-12-10T08:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/adding-include-exclude-options-to-ndb_restore/</loc>
+    <lastmod>2008-12-07T21:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/doing-laundry-with-a-tripod/</loc>
+    <lastmod>2008-11-08T12:59:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/my-5-macs-again-without-wifi-all-at-once/</loc>
+    <lastmod>2008-11-04T20:13:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/the-green-side-of-some-abstract-type/</loc>
+    <lastmod>2008-10-29T18:50:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/t-dose-2008-a-small-summary/</loc>
+    <lastmod>2008-10-27T19:08:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/atsserver-going-crazy-opening-openoffice-3/</loc>
+    <lastmod>2008-10-22T10:26:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/small-thing-about-restoring-backups-in-mysql-cluster/</loc>
+    <lastmod>2008-10-20T14:22:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/when-macos-10-5-menus-are-unreadable-and-everything-keeps-crashing/</loc>
+    <lastmod>2008-10-12T23:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/at-t-dose-2008-conference-monitoring-mysql/</loc>
+    <lastmod>2008-09-30T09:53:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/gandi-net-dns-gone-banana/</loc>
+    <lastmod>2008-09-24T15:06:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/hamlet-at-courtyard-theatre-in-stratford-upon-avon/</loc>
+    <lastmod>2008-09-20T20:25:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/google-mail-notifier-for-mac-gone-apparently/</loc>
+    <lastmod>2008-09-14T20:11:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/netways-nagios-conference-2008/</loc>
+    <lastmod>2008-09-11T12:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/dommel-com-rommel/</loc>
+    <lastmod>2008-09-03T12:23:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/removing-airport-preferences-on-mac-os-10-5/</loc>
+    <lastmod>2008-08-25T09:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/apple-airport-broke-on-5-macs-simultaneously/</loc>
+    <lastmod>2008-08-21T19:36:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/first-leg-of-my-main-square-project/</loc>
+    <lastmod>2008-08-18T11:41:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/sigur-ros-in-wiesbaden-germany/</loc>
+    <lastmod>2008-08-13T12:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/no-motorcade-coming-home-but-home/</loc>
+    <lastmod>2008-08-11T16:37:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/hasta-pronto-madrid/</loc>
+    <lastmod>2008-08-09T18:49:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/revamping-2-wikipedia-pages/</loc>
+    <lastmod>2008-08-08T20:09:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/el-toro-el-rio-picasso-y-miro/</loc>
+    <lastmod>2008-08-07T18:25:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/the-beard-issue/</loc>
+    <lastmod>2008-08-07T18:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/building-day/</loc>
+    <lastmod>2008-08-06T17:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/must-go-restaurant-sobrino-de-botin/</loc>
+    <lastmod>2008-08-05T21:17:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/strolling-through-malasana/</loc>
+    <lastmod>2008-08-05T16:40:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/chocolate-cake/</loc>
+    <lastmod>2008-08-05T12:52:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/tip-remember-to-take-backup-batteries/</loc>
+    <lastmod>2008-08-05T10:38:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/churros/</loc>
+    <lastmod>2008-08-05T08:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/dinging-in-madrid/</loc>
+    <lastmod>2008-08-04T07:50:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/centro-madrid-in-and-around-plaza-mayor/</loc>
+    <lastmod>2008-08-03T21:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/centro-madrid-puerto-del-sol/</loc>
+    <lastmod>2008-08-03T18:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/off-to-madrid/</loc>
+    <lastmod>2008-08-01T11:13:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/web-montag-franken-in-nurnberg/</loc>
+    <lastmod>2008-07-29T12:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/sharing-my-running-and-cycling-stats/</loc>
+    <lastmod>2008-07-16T17:38:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/moving-away-from-mobileme-going-google/</loc>
+    <lastmod>2008-07-16T14:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/epson-cx11-and-mac-os-x-error-c0082-due-to-upgrades/</loc>
+    <lastmod>2008-07-11T19:01:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/iphonemobileme-useless-for-business-and-travel/</loc>
+    <lastmod>2008-07-11T11:38:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/reflection-on-rock-werchter-2008/</loc>
+    <lastmod>2008-07-10T17:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/apple-itunes-gift-cards-unusable-in-eu/</loc>
+    <lastmod>2008-07-10T17:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/hyperlink-cells-in-openoffice-using-findreplace/</loc>
+    <lastmod>2008-06-18T13:13:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/turning-31-today/</loc>
+    <lastmod>2008-06-14T15:40:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/compiling-stackless-on-mac-os-intel/</loc>
+    <lastmod>2008-06-07T08:26:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/june-web-montag-in-frankfurt-am-main-germany/</loc>
+    <lastmod>2008-06-03T07:58:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/painting-chanting-sea-lions/</loc>
+    <lastmod>2008-05-28T09:52:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/itunes-brain-dead-prices-and-services/</loc>
+    <lastmod>2008-05-26T11:19:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/my-sakila-cube/</loc>
+    <lastmod>2008-05-24T17:36:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/captain-badly-bunkered/</loc>
+    <lastmod>2008-05-22T17:32:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/recycling-old-mysql-business-cards/</loc>
+    <lastmod>2008-05-22T17:25:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/walk-near-ruckersbach-germany/</loc>
+    <lastmod>2008-05-22T17:19:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/pearl/</loc>
+    <lastmod>2008-05-22T17:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/again-mysql-5-1-24-does-not-come-with-cluster/</loc>
+    <lastmod>2008-05-01T08:47:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/at-mysql-confexpo-in-santa-clara/</loc>
+    <lastmod>2008-04-14T16:20:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/xing-becomes-my-favorite/</loc>
+    <lastmod>2008-04-08T15:35:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/webmontag-in-nurnberg-germany/</loc>
+    <lastmod>2008-04-08T07:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/webmontag-in-frankfurt-am-main-germany/</loc>
+    <lastmod>2008-04-07T08:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/an-advantage-of-eu-is/</loc>
+    <lastmod>2008-03-20T13:21:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/review-mysql-belgian-usergroup-meetup-v2008-1/</loc>
+    <lastmod>2008-03-20T06:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/to-the-idiot-who-stole-my-glasses/</loc>
+    <lastmod>2008-03-02T16:40:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/mysql-certified/</loc>
+    <lastmod>2008-02-28T12:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/my-summary-of-fosdem-2008/</loc>
+    <lastmod>2008-02-25T11:46:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/t-hofke-or-perfect-dinner-in-antwerp/</loc>
+    <lastmod>2008-02-23T07:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/attending-fosdem-2008/</loc>
+    <lastmod>2008-02-19T18:46:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/my-next-glasses-from-theo/</loc>
+    <lastmod>2008-02-18T18:59:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/where-is-winter-oh-winter-where-are-you/</loc>
+    <lastmod>2008-02-05T13:46:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2008/moved-from-livejournal-to-blogger/</loc>
+    <lastmod>2008-02-04T22:01:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/postfix-mysql-dovecot-spamassassin-sieve-yes/</loc>
+    <lastmod>2007-10-30T20:20:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/export-apple-numbers-data-to-png/</loc>
+    <lastmod>2007-10-22T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/figuring-out-the-simple-things/</loc>
+    <lastmod>2007-10-15T20:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/making-your-mail-app-cached-email-more-secure/</loc>
+    <lastmod>2007-09-25T10:43:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/auto-mounting-encrypted-disk-images-in-macos-10-4/</loc>
+    <lastmod>2007-09-25T10:21:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/dont-forget-the-european-user-conferences/</loc>
+    <lastmod>2007-09-24T13:17:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/macos-10-4-and-compiling-mysql-stuff/</loc>
+    <lastmod>2007-08-22T12:32:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/rochester-i5os-and-lots-new-stuff/</loc>
+    <lastmod>2007-07-30T19:49:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/mysql-emea-support-team-gathering/</loc>
+    <lastmod>2007-06-16T08:38:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/mysql-5-1-knows-etcmysqlmy-cnf/</loc>
+    <lastmod>2007-06-05T18:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/2-years-at-mysql/</loc>
+    <lastmod>2007-03-28T10:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/mythis-mythat-myspice-mysquel-oh-my/</loc>
+    <lastmod>2007-03-11T19:28:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/vacation-in-and-around-lisboa-portugal/</loc>
+    <lastmod>2007-03-11T18:50:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/helsinki-freezing-my-ears-off/</loc>
+    <lastmod>2007-02-24T20:12:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/making-brownies/</loc>
+    <lastmod>2007-02-17T16:21:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/django-goodies/</loc>
+    <lastmod>2007-02-13T16:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/hanging-out-international-drive-orlando-fl-us/</loc>
+    <lastmod>2007-02-03T20:59:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2007/travel-to-u-s/</loc>
+    <lastmod>2007-01-28T22:09:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/hot-plates-and-all-went-dark/</loc>
+    <lastmod>2006-12-15T19:10:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/sophia/</loc>
+    <lastmod>2006-12-05T22:24:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/t-dose-and-cluster/</loc>
+    <lastmod>2006-12-03T17:58:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/2nd-mysql-usergroup-meeting-in-belgium-recap/</loc>
+    <lastmod>2006-12-01T20:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/global-warming-a-media-hype/</loc>
+    <lastmod>2006-11-27T23:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/ohooh7-and-the-aston-martin/</loc>
+    <lastmod>2006-11-26T08:50:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/5-years-in-germany/</loc>
+    <lastmod>2006-11-11T15:56:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/visiting-florence-siena-and-pisa/</loc>
+    <lastmod>2006-11-11T15:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/the-belgian-mysql-ug-2nd-meetup/</loc>
+    <lastmod>2006-11-09T11:47:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/replacing-mysql-packages-on-fedora-5/</loc>
+    <lastmod>2006-10-26T19:15:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/lost-my-clean-underwear/</loc>
+    <lastmod>2006-10-26T17:10:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/3-days-rome-start-of-7-days-offline/</loc>
+    <lastmod>2006-10-25T07:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/visiting-venice-and-verona-living-milan/</loc>
+    <lastmod>2006-10-09T16:07:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/experiencing-milan-and-italian-daily-life/</loc>
+    <lastmod>2006-10-04T19:15:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/pearl-jam-in-berlin/</loc>
+    <lastmod>2006-09-23T23:39:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/journey-to-perros-guirec/</loc>
+    <lastmod>2006-09-19T00:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/sushi-zen/</loc>
+    <lastmod>2006-09-17T21:01:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/looking-for-calendaring-software/</loc>
+    <lastmod>2006-09-06T15:54:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/where-are-the-mysql-books-in-your-shop/</loc>
+    <lastmod>2006-09-04T14:28:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/pearl-jam-in-belgium-at-last/</loc>
+    <lastmod>2006-08-31T10:47:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/belgian-mysql-ug-a-report/</loc>
+    <lastmod>2006-08-30T12:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/colony-os-bbq-2006-the-evidence/</loc>
+    <lastmod>2006-08-27T14:49:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/ndb-api-and-blobs-some-example/</loc>
+    <lastmod>2006-08-25T00:53:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/trying-out-debian-4-0-etch-beta-3/</loc>
+    <lastmod>2006-08-18T01:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/visiting-koblenz-and-lahnstein/</loc>
+    <lastmod>2006-08-02T21:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/cheap-food-turns-out-to-be-bad-food/</loc>
+    <lastmod>2006-07-23T20:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/visiting-amsterdam-and-leiden/</loc>
+    <lastmod>2006-07-20T15:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/reading-my-first-ebook-on-my-palm/</loc>
+    <lastmod>2006-07-17T09:07:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/dan-browns-angels-and-demons/</loc>
+    <lastmod>2006-07-12T02:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/belgian-mysql-ug-on-meetup-com/</loc>
+    <lastmod>2006-07-11T09:22:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/antwerp-and-visit-of-indian-sultan-on-his-elephant/</loc>
+    <lastmod>2006-07-09T13:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/belgian-mysql-user-group-first-meet-up/</loc>
+    <lastmod>2006-07-07T23:37:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/rock-werchter-2006-day-4/</loc>
+    <lastmod>2006-07-03T22:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/rock-werchter-2006-day-3/</loc>
+    <lastmod>2006-07-02T10:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/rock-werchter-2006-day-2/</loc>
+    <lastmod>2006-07-01T10:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/importing-from-ipod-to-itunes/</loc>
+    <lastmod>2006-06-30T09:24:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/germany-goes-crazy/</loc>
+    <lastmod>2006-06-25T11:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/mysql-cluster-talk-at-froscon-2006/</loc>
+    <lastmod>2006-06-24T16:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/ending-crazy-week-of-party-in-style/</loc>
+    <lastmod>2006-06-15T23:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/visiting-edinburgh-scotland/</loc>
+    <lastmod>2006-06-15T18:41:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/a-colon-in-a-filename/</loc>
+    <lastmod>2006-06-08T18:59:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/visiting-edinburgh-next-week/</loc>
+    <lastmod>2006-06-08T12:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/bicycle-tour-down-the-main-wertheim-miltenberg-part-2/</loc>
+    <lastmod>2006-06-05T23:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/bicycle-tour-down-the-main-germany-part-1/</loc>
+    <lastmod>2006-06-04T13:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/mysql-in-fortune-magazine/</loc>
+    <lastmod>2006-06-01T07:48:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/cleaning-my-apple-wireless-keyboard/</loc>
+    <lastmod>2006-05-28T19:30:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/pearl-jam-life-wasted-video-released-under-cc/</loc>
+    <lastmod>2006-05-21T11:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/talking-at-froscon06/</loc>
+    <lastmod>2006-05-16T14:32:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/c-annotations/</loc>
+    <lastmod>2006-05-16T13:52:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/new-albums-of-pearl-jam-and-tool/</loc>
+    <lastmod>2006-04-30T14:01:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/boiling-rice-with-multigourmet-of-braun/</loc>
+    <lastmod>2006-04-28T17:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/chernobyl/</loc>
+    <lastmod>2006-04-27T00:52:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/yes-i-use-oracle/</loc>
+    <lastmod>2006-04-25T11:39:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/learning-german-pronunciations/</loc>
+    <lastmod>2006-04-24T21:41:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/pearl-jam-comes-to-europe-omfg-even-to-belgium/</loc>
+    <lastmod>2006-04-23T08:22:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/the-loo-international-meeting-point/</loc>
+    <lastmod>2006-04-23T00:35:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/picking-up-cooking/</loc>
+    <lastmod>2006-04-20T19:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/my-cleansing-tools/</loc>
+    <lastmod>2006-04-17T23:44:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/so-whats-a-pagan-like-me-doing-on-easter/</loc>
+    <lastmod>2006-04-17T19:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/personal-status-report-crazy-but-not-stupid-anymore/</loc>
+    <lastmod>2006-04-16T20:34:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/thedontaskwhycollection-something-with-lines/</loc>
+    <lastmod>2006-04-14T22:37:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/my-personal-wiki-is-up/</loc>
+    <lastmod>2006-04-14T13:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/moving-to-livejournal/</loc>
+    <lastmod>2006-04-13T22:56:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/achtung-baby-the-band/</loc>
+    <lastmod>2006-02-12T15:52:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2006/ipod-and-automatically-update-crap/</loc>
+    <lastmod>2006-01-28T19:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/my-new-guitar-named-danni/</loc>
+    <lastmod>2005-12-12T22:16:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/visiting-stockholm-se/</loc>
+    <lastmod>2005-12-12T16:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/sljivovica/</loc>
+    <lastmod>2005-12-04T19:10:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/bulgarian-wine/</loc>
+    <lastmod>2005-11-18T01:55:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/flame-fests-on-slashdot-sick/</loc>
+    <lastmod>2005-10-16T13:34:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/mysql-5-0-readying-the-future/</loc>
+    <lastmod>2005-10-15T01:18:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/visiting-utrecht-nl/</loc>
+    <lastmod>2005-10-02T21:01:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/mysql-5-0-release-candidate-win-a-ipod-nano/</loc>
+    <lastmod>2005-10-02T20:43:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/switch-to-apple/</loc>
+    <lastmod>2005-09-15T10:15:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/queens-of-the-stone-age/</loc>
+    <lastmod>2005-09-02T10:32:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/discontinue-nagat-development-burying-plans-for-nagad/</loc>
+    <lastmod>2005-07-17T20:32:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/2005/stay-hungry-stay-foolish/</loc>
+    <lastmod>2005-07-17T10:27:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/about/</loc>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/abstract/</loc>
+    <lastmod>2010-05-22T11:10:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/aperture/</loc>
+    <lastmod>2010-08-26T16:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/apple/</loc>
+    <lastmod>2010-12-17T18:43:33+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/applescript/</loc>
+    <lastmod>2010-08-26T16:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/backup/</loc>
+    <lastmod>2009-02-22T09:40:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/bazaar/</loc>
+    <lastmod>2009-02-13T11:54:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/belgium/</loc>
+    <lastmod>2009-01-10T09:14:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/bicycle/</loc>
+    <lastmod>2008-08-18T11:41:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/books/</loc>
+    <lastmod>2006-07-17T09:07:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/pcard/</loc>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/centos/</loc>
+    <lastmod>2009-10-22T14:31:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/cluster/</loc>
+    <lastmod>2011-07-19T16:22:52+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/community/</loc>
+    <lastmod>2014-08-01T12:39:17+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/concert/</loc>
+    <lastmod>2009-07-06T11:51:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/conference/</loc>
+    <lastmod>2012-09-21T17:29:11+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/contact/</loc>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/cooking/</loc>
+    <lastmod>2008-03-20T13:21:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/crap/</loc>
+    <lastmod>2006-09-06T15:54:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/debian/</loc>
+    <lastmod>2018-05-28T19:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/django/</loc>
+    <lastmod>2008-12-19T17:39:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/family/</loc>
+    <lastmod>2010-12-20T12:46:30+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/food/</loc>
+    <lastmod>2010-04-21T02:37:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/fosdem/</loc>
+    <lastmod>2010-02-07T14:54:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/fun/</loc>
+    <lastmod>2010-08-26T21:12:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/</loc>
+    <lastmod>2018-06-03T07:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/germany/</loc>
+    <lastmod>2009-05-04T07:05:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/go/</loc>
+    <lastmod>2018-06-03T07:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/google/</loc>
+    <lastmod>2009-11-09T09:36:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/hacking/</loc>
+    <lastmod>2014-06-09T19:14:56+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/hacks/</loc>
+    <lastmod>2015-07-07T17:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/health/</loc>
+    <lastmod>2008-07-16T17:38:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/hiking/</loc>
+    <lastmod>2008-05-22T17:19:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/home/</loc>
+    <lastmod>2011-01-16T19:04:39+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/household/</loc>
+    <lastmod>2009-11-04T17:33:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/howto/</loc>
+    <lastmod>2015-06-18T19:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/hugo/</loc>
+    <lastmod>2017-06-13T22:30:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/itunes/</loc>
+    <lastmod>2009-02-21T13:46:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/java/</loc>
+    <lastmod>2009-09-04T09:12:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/jekyll/</loc>
+    <lastmod>2017-06-13T22:30:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/labs/</loc>
+    <lastmod>2015-06-18T19:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/lighttpd/</loc>
+    <lastmod>2012-06-03T11:18:21+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/macos/</loc>
+    <lastmod>2013-06-23T14:26:50+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/madrid/</loc>
+    <lastmod>2008-08-09T18:49:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/music/</loc>
+    <lastmod>2009-07-06T11:51:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/myconnpy/</loc>
+    <lastmod>2016-02-05T16:51:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/mysql/</loc>
+    <lastmod>2018-06-03T07:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/categories/mysql/</loc>
+    <lastmod>2013-04-11T11:25:30+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/nagios/</loc>
+    <lastmod>2008-09-11T12:27:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/nginx/</loc>
+    <lastmod>2014-06-09T19:14:56+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/noise/</loc>
+    <lastmod>2006-09-23T23:39:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/nuremberg/</loc>
+    <lastmod>2009-05-04T07:05:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/nuumlrnberg/</loc>
+    <lastmod>2008-07-29T12:05:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/openoffice/</loc>
+    <lastmod>2008-10-22T10:26:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/opensolaris/</loc>
+    <lastmod>2009-02-17T14:25:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/opensource/</loc>
+    <lastmod>2005-07-17T20:32:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/opinion/</loc>
+    <lastmod>2016-01-02T16:51:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/oracle/</loc>
+    <lastmod>2014-10-01T15:02:40+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/osx/</loc>
+    <lastmod>2013-06-23T14:26:50+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/painting/</loc>
+    <lastmod>2008-05-28T09:52:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/person/</loc>
+    <lastmod>2010-12-20T12:46:30+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/personal/</loc>
+    <lastmod>2016-01-02T16:51:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/categories/personal/</loc>
+    <lastmod>2006-10-25T07:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/photography/</loc>
+    <lastmod>2010-06-13T09:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/plaza-mayor/</loc>
+    <lastmod>2008-08-03T21:05:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/poetry/</loc>
+    <lastmod>2010-03-09T10:23:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/poland/</loc>
+    <lastmod>2009-07-20T16:06:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/politics/</loc>
+    <lastmod>2009-01-10T09:14:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/post/</loc>
+    <lastmod>2018-06-03T07:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/projects/</loc>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/puerto-del-sol/</loc>
+    <lastmod>2008-08-03T18:44:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/pyhon/</loc>
+    <lastmod>2013-11-26T10:15:05+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/pylons/</loc>
+    <lastmod>2010-08-26T17:06:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/python/</loc>
+    <lastmod>2016-02-05T16:51:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/categories/python/</loc>
+    <lastmod>2013-04-11T11:25:30+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/quote/</loc>
+    <lastmod>2011-02-01T22:29:15+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/red-hat/</loc>
+    <lastmod>2009-10-22T14:31:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/report/</loc>
+    <lastmod>2010-05-18T20:26:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/snippet/</loc>
+    <lastmod>2014-03-11T08:06:08+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/spain/</loc>
+    <lastmod>2008-08-09T18:49:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/spessart/</loc>
+    <lastmod>2008-08-18T11:41:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/sport/</loc>
+    <lastmod>2009-05-17T10:34:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/stackless/</loc>
+    <lastmod>2008-06-07T08:26:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/story/</loc>
+    <lastmod>2010-05-22T11:10:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/sun/</loc>
+    <lastmod>2009-02-17T14:25:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/sysadmin/</loc>
+    <lastmod>2014-06-09T19:14:56+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/t-dose/</loc>
+    <lastmod>2008-10-27T19:08:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/</loc>
+    <lastmod>2010-05-22T11:10:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/talk/</loc>
+    <lastmod>2011-01-11T14:18:17+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/theatre/</loc>
+    <lastmod>2008-09-20T20:25:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/toys/</loc>
+    <lastmod>2006-07-17T09:07:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/travel/</loc>
+    <lastmod>2010-01-03T09:59:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/uncategorized/</loc>
+    <lastmod>2009-07-06T19:49:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/categories/uncategorized/</loc>
+    <lastmod>2006-12-05T22:24:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/usa/</loc>
+    <lastmod>2010-04-21T02:37:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/vacation/</loc>
+    <lastmod>2009-05-12T12:12:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/virtualbox/</loc>
+    <lastmod>2011-02-01T21:55:11+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/webmontag/</loc>
+    <lastmod>2008-07-29T12:05:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/wikipedia/</loc>
+    <lastmod>2008-08-08T20:09:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/wordpress/</loc>
+    <lastmod>2012-06-03T11:18:21+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/work/</loc>
+    <lastmod>2018-05-03T21:35:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/categories/work/</loc>
+    <lastmod>2013-04-11T11:25:30+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://geert.vanderkelen.org/tags/workbench/</loc>
+    <lastmod>2009-10-08T07:48:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

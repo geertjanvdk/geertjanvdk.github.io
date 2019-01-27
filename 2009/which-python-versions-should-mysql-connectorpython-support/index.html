@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/which-python-versions-should-mysql-connectorpython-support/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Which Python versions should MySQL Connector/Python support?</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-workbench-enabling-python-in-the-grt-shell/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/getting-mysql-connectorpython-compliant-with-pep-249/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Which Python versions should MySQL Connector/Python support?
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Oct 7, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Today we had a <a href="https://bugs.launchpad.net/myconnpy/+bug/445002">bug report</a> that one of the tests failed. The <code>as</code>-keyword was used in exception handling, which is only supported since Python v2.6.</p>
+
+<p>Currently, <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a> should work with <a href="http://www.python.org/">Python</a> v2.4 and greater, but not Python v3.x. The Connector/Python README said we supported v2.3, but that&rsquo;s not the case (anymore) since  <a href="http://docs.python.org/whatsnew/2.4.html#pep-318-decorators-for-functions-and-methods">decorators</a> are used, e.g. @classmethod.</p>
+
+<p>I&rsquo;ll have to pull the trigger, but I think it&rsquo;s safe to say that we&rsquo;re only going to support Python v2.4 and greater. For Python v3 we&rsquo;ll probably have to make an additional branch and release later on. I still have to check what the impact is.</p>
+
+<p>If anyone has compelling reasons why we still should support Python v2.3 or earlier, please let us know. Also, tips on making it backward compatible are welcome.</p>
+
+<p>Currently, the status of compatibility is as follows (output of shell script):</p>
+
+<pre><code>Checking Python v2.3.. Failed!
+Checking Python v2.4.. Success!
+Checking Python v2.5.. Success!
+Checking Python v2.6.. Success!
+Checking Python v3.0.. Failed!
+Checking Python v3.1.. Failed!
+</code></pre>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Carlos Valiente
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 7 2009, 12:37</time>
+      </div>
+    <div>
+      The following should work in Python 2.4 to Python 3.1:<br /><br />&hellip;.try:<br />&hellip;&hellip;..raise Exception(&ldquo;Oops!&rdquo;)<br />&hellip;.except:<br />&hellip;&hellip;..e = sys.exc_info()[1]<br />&hellip;&hellip;..# Do things with <code>e</code>
+    </div>
+    </dd>
+  
+    <dt>
+          serverhorror
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 7 2009, 13:54</time>
+      </div>
+    <div>
+      I&#39;d try to stay compatible with the python version RHEL$LATEST_STABLE provides. Fortunately I don&#39;t have to work with RHs limited support of packages but it&#39;s safer to stay with this as a lot of people depend on it.<br /><br />As for Py3K I&#39;d honestly do it the other way around. Start developing for Py3K and then backport to 2.x.<br /><br />Maintaining forwards compatibility is more of a nightmare than maintaining backwards compatibility&hellip;
+    </div>
+    </dd>
+  
+    <dt>
+          享受生活 - Enjoy life
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 7 2009, 14:18</time>
+      </div>
+    <div>
+      When could we get 3.0/3.1 support? Thanks.
+    </div>
+    </dd>
+  
+    <dt>
+          illume
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Oct 7 2009, 15:14</time>
+      </div>
+    <div>
+      For me, it&#39;s 2.4 - 2.6, and 3.1.<br /><br />However, you still do find old pythons on old web hosts&hellip;<br /><br />cpanel in 2008 had python2.3 being used as the default python (but also had 2.4 available as a separate path).<br /><br />2.4 onwards is a nice balance at this point I think.<br /><br />Everyone who supports py3k gets a special prize!
+    </div>
+    </dd>
+  
+    <dt>
+          regebro
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Feb 16 2010, 06:16</time>
+      </div>
+    <div>
+      There&#39;s so much FUD when it comes to Python 3. Sure, supporting Python 3 can be a lot of work, especially if you use doctests. There are some problems in handling binary data vs strings, since that&#39;s separate datatypes in Python 3. Otherwise 2to3 works reasonably well, and porting is usually not a big deal. Distribute has support for running 2to3 on code during the build, and makes the porting easier.<br /><br />There is no need to use sys.exc_info(), and porting to Python 3 and then backporting means you can&#39;t use 2to3.<br /><br />Hopefully the January Issue of Python Magazine should come out sometime in February (in typical Python Magazine style), I start an article series on Python 3 porting there.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-workbench-enabling-python-in-the-grt-shell/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/getting-mysql-connectorpython-compliant-with-pep-249/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

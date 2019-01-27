@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2015/jekyll-30-beta7-trial/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Jekyll 3.0 beta7, looking good</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/cmake-ifelse-issue/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/private-share-still-problematic/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Jekyll 3.0 beta7, looking good
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Jun 23, 2015</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/jekyll">jekyll</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>Putting on my adventure boots, I have installed <a href="http://jekyllrb.com">Jekyll</a> 3.0 beta7. Since <a href="https://www.ruby-lang.org/en/">Ruby</a> and the whole gem realm is completely new to me, I expect things wrong to go sougth. But it wasn&rsquo;t that bad.
+This blog post is probably meant for those trying out the Jekyll 3.0 beta, but also for those upgrading.</p>
+
+<h2 id="liquid-syntax">Liquid syntax</h2>
+
+<p>First, a few error messages and maybe it is something that will hit a few folks out there. Jekyll 3.0 is using <a href="http://liquidmarkup.org">Liquid</a> 3.0 and it seems to be not so forgiving when it comes to unescaped syntax. Since I have quite a few examples in <a href="http://python.org">Python</a>, I have code which potentially does weird things with <code>str.format()</code>.</p>
+
+<pre><code>  Liquid Exception: Liquid syntax error: Expected end_of_string but found colon in &quot;{{nr:3}}&quot; in ...
+</code></pre>
+
+<p>This is simply matter of putting the code in a raw-block:</p>
+
+<pre><code class="language-text"> {% raw %}
+ `` `python
+ print(&quot;{{nr:{0}}}&quot;.format(2))
+ `` `
+ {% raw %}
+</code></pre>
+
+<h2 id="default-now-kramdown">Default now kramdown</h2>
+
+<p>The default <a href="http://daringfireball.net/projects/markdown">Markdown</a> converter is now <a href="http://kramdown.gettalong.org">kramdown</a> (was maruku). I had already configured <a href="http://kramdown.gettalong.org">kramdown</a>, but this what you probably want in your <code>_config.yml</code> in the future:</p>
+
+<pre><code class="language-yaml">markdown: kramdown
+</code></pre>
+
+<p>If you like the <a href="http://github.org">GitHub</a> Markdown variation, for example, fenced code blocks, you still can set options for kramdown like this:</p>
+
+<pre><code class="language-yaml">kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+</code></pre>
+
+<p>I only use GFM because of the backticks. Using anything else makes little sense to me.</p>
+
+<h2 id="syntax-highlighter">Syntax Highlighter</h2>
+
+<p>Jekyll seems to slowly move away from <a href="http://pygments.org">Pygments</a> towards <a href="http://rouge.jneen.net">Rouge</a>. The simple rational is to remove the Python dependency. As a Python guy, I encourage this. I wouldn&rsquo;t like to be dependent on Ruby in my Python projects either.</p>
+
+<p>One issue I had with Jekyll 3.0 beta is that suddenly, Rouge was not doing its magic. I had a hard time debugging it and finally found the issue <a href="https://github.com/gettalong/kramdown/issues/263">while &lsquo;fixing&rsquo; kramdown</a>. The problem was that kramdown could not load the <code>rouge</code> file.</p>
+
+<p>Once I knew the issue with the <code>require</code> in kramdown, the problem was rather quickly found: Rouge is not in the `<code>$LOAD_PATH</code>. But why? It&rsquo;s an issue with <a href="http://bundler.io">Bundler</a> and Jekyll, and Jekyll guys are a bit fighting with it apparently.</p>
+
+<p>The following works (if you use Bundler of course):</p>
+
+<pre><code class="language-shell">$ bundle exec jekyll build
+</code></pre>
+
+<p>It&rsquo;s ungly to use <code>bundle exec</code>, so I did a final <code>bundle update</code>, and that seemed to have done the trick. Now Jekyll had the correct <code>$LOAD_PATH</code> and it is generating syntax highlighted code again.</p>
+
+<p>I still don&rsquo;t really understand all the magic there though. Ah yeas, make sure to uninstall previous version of Jekyll and adapt your Gemfile. At a minimum, the following:</p>
+
+<pre><code>gem 'jekyll', '&gt;= 3.0.0.beta'
+gem 'rouge', '= 1.9.0'
+gem 'liquid', '~&gt; 3.0'
+</code></pre>
+
+<h2 id="incremental-regeneration">Incremental Regeneration</h2>
+
+<p>I have a relative small blog, like 400 blog posts. Regeneration of the site takes like 7 seconds with Jekyll 3.0. It&rsquo;s a bit fast than Jekyll 2.5. If you choose not the make the full site, it&rsquo;s indeed much faster.</p>
+
+<p>If you add a blog post, the post will be generated quickly and available right away to view offline. It will, however, not be available in your post overview. Maybe this is something that still needs to be worked out, but it might confuse you. Just don&rsquo;t push the reload button like mad (like I did).</p>
+
+<h2 id="further-hacking">Further hacking</h2>
+
+<p>I will use the new documents feature in Jekyll 3.0 as well as hooks. I currently have a plugin for creating redirects, but it is going to be perfect for making my first hook. Since I have the beta now generating my site just like it does with Jekyll 2.5, I will start playing soon.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2015/cmake-ifelse-issue/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2015/private-share-still-problematic/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

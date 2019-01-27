@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2011/virtualbox-give-host-only-access-to-internet/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>VirtualBox: give Host-Only access to internet</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/ecology-has-no-color/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/tomas-and-the-pearl-jam-body/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      VirtualBox: give Host-Only access to internet
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Tue Feb 1, 2011</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/virtualbox">virtualbox</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/oracle">oracle</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      
+
+<p>This post describes a simple trick for <a href="http://virtualbox.org">VirtualBox</a> to give <a href="http://www.virtualbox.org/manual/ch06.html#network_hostonly">host-only</a> virtual machines access the internet or access your host from the guest <a href="http://www.virtualbox.org/manual/ch06.html#network_nat">using NAT</a>.</p>
+
+<h2 id="problem">Problem</h2>
+
+<p>The original problem or requirements were as follows:</p>
+
+<ul>
+<li>The host should be able to browser the webserver on the Guest (the virtual machine)</li>
+<li>The guest should be able to access the outside world (intranet/internet)</li>
+<li>Use fixed IP address</li>
+</ul>
+
+<div style="text-align: center; margin-bottom:20px">
+<img src="../../assets/vm_host_nat_outside-300x274.png" alt="" title="VirtualBox: Guest accessible and going outside" width="300" height="274" >
+</div>
+
+<p>Yes, you can use <a href="http://www.virtualbox.org/manual/ch06.html#natforward">port-forwarding using NAT</a> network interface for the virtual machine. But configuring this is just way to complicate and error prone. A few googles more, and I couldn&rsquo;t find anything good.</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>The solution I came up with: configure 2 network interfaces for your Virtual Box host. Simple, isn&rsquo;t it?</p>
+
+<p>First, we need to <strong>make a new network in VirtualBox</strong>. You can do this in the GUI preference, which is a bit platform specific, but it&rsquo;s not easy to miss.</p>
+
+<p>Create a new network in VirtualBox, named like <code>vboxnet2</code> with following settings (change to suit your needs):</p>
+
+<ul>
+<li>IPv4 Address: 10.88.12.0</li>
+<li>IPv4 Network Mask: 255.0.0.0</li>
+<li>Leave DHCP disabled if you don&rsquo;t need it. Fixed IP addresses are just more predictable</li>
+</ul>
+
+<p><strong>Setup your virtual machine using 2 network adapters</strong>. The order doesn&rsquo;t really matter, but you&rsquo;ll need one <code>NAT</code> and one <code>Host-Only</code>:</p>
+
+<ol>
+<li>NAT (not much to configure).</li>
+<li>Host-Only using the network you created earlier, for example, <code>vboxnet2</code>.</li>
+</ol>
+
+<p>Boot your virtual machine, and <strong>configure the network interfaces in your guest OS</strong> (same order as previous point):</p>
+
+<ol>
+<li>First interface using NAT, which you can use with the internal DHCP</li>
+<li>Second interface using Host-Only will use a fixed IP address and netmask which you configured earlier for the <code>vboxnet2</code> VirtualBox network. For example, 10.88.12.4.</li>
+</ol>
+
+<p><strong>Guest has access to outside, and host can access services running on guest</strong>. This is handy when you have a demo or develop using a service running in the virtual machine, and the virtual machine needs to access the outside world.</p>
+
+<p>(If the above has been posted somewhere else: I was either blind, or it was not visible or indexed enough.)</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Emin
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jul 28 2011, 14:21</time>
+      </div>
+    <div>
+      No one commented here, but this is really good article. I too was not able to find  solution and I did not like port forwarding either, so this is exactly what I needed. Thanks very much!
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://geert.vanderkelen.org/post/581/">Lili</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Aug 9 2011, 23:35</time>
+      </div>
+    <div>
+      This is great, I was trying to figure this out and no one was able to explain as simple as you did.  Thanks!
+    </div>
+    </dd>
+  
+    <dt>
+          Reynold
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Feb 13 2012, 14:52</time>
+      </div>
+    <div>
+      <p>Check this out:)</p>
+
+<p><a href="http://jackal777.wordpress.com/2012/02/13/internet-access-in-virtualbox-host-only-networking/">http://jackal777.wordpress.com/2012/02/13/internet-access-in-virtualbox-host-only-networking/</a></p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Alex
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Apr 5 2012, 15:26</time>
+      </div>
+    <div>
+      Thanks, is what i want. :) good luck in your projects
+    </div>
+    </dd>
+  
+    <dt>
+          Andi
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Fri Apr 6 2012, 19:48</time>
+      </div>
+    <div>
+      it works :-)
+Thanks a lot.
+    </div>
+    </dd>
+  
+    <dt>
+          Jurgen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Apr 19 2012, 08:55</time>
+      </div>
+    <div>
+      <p>Thanks for great solution. Although I&rsquo;ve got one trouble on a guest system. When configuring two network adapters the guest system gets two default routes. In my case I&rsquo;ve got default route to Host-only adapter going first and for NAT adapter going after.
+route -n showed something like this:
+default 10.88.12.0 - which is HOST-only
+default 10.0.2.2 - which is NAT</p>
+
+<p>Guest system couldn&rsquo;t ping Internet. After deleting first default route - everything wen well.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://www.mariuzzo.com/">Rubens Mariuzzo</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Apr 25 2012, 01:40</time>
+      </div>
+    <div>
+      Great post ever!
+    </div>
+    </dd>
+  
+    <dt>
+          Adrian Lee
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon May 28 2012, 06:04</time>
+      </div>
+    <div>
+      <p>I got my solution from this link:
+<a href="http://www.youtube.com/watch?v=zR_TwPaWw8k">http://www.youtube.com/watch?v=zR_TwPaWw8k</a>
+Easy.</p>
+
+<p>Cheers</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Bjoern
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Jul 10 2012, 16:30</time>
+      </div>
+    <div>
+      <p>it&rsquo;s quite horrible that I did not even think of this&hellip;</p>
+
+<p>Thank you dude!!</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Don
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun Aug 19 2012, 15:43</time>
+      </div>
+    <div>
+      <p>Thank you so much! It couldn&rsquo;t have been any easier than this and exactly what I wanted!
+I did it with a Debian Guest and set the NAT as the default during installation. After installation I changed my /etc/network/interfaces file:</p>
+
+<h1 id="the-loopback-network-interface">The loopback network interface</h1>
+
+<p>auto lo
+iface lo inet loopback</p>
+
+<h1 id="the-primary-network-interface">The primary network interface</h1>
+
+<p>auto eth0
+iface eth0 inet dhcp</p>
+
+<h1 id="the-seconday-network-interface">The seconday network interface</h1>
+
+<p>auto eth1
+iface eth1 inet static
+address 10.88.12.4
+netmast 255.0.0.0</p>
+
+<p>It does complain when restarting the network that it can&rsquo;t bring up the network, but it does work when you tried to access the Guest&rsquo;s web server. You might have to do an additional &lsquo;ifconfig eth1 up&rsquo; to get it going, but it usually works without that.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Joe
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Nov 13 2012, 15:45</time>
+      </div>
+    <div>
+      <a href="#comment-1892" rel="nofollow">@Don </a>
+Perhaps it is because you spelled &lsquo;netmask&rsquo; incorrectly (&lsquo;netmast&rsquo;)?
+    </div>
+    </dd>
+  
+    <dt>
+          haythem
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jan 3 2013, 21:19</time>
+      </div>
+    <div>
+      Thank guys :)
+    </div>
+    </dd>
+  
+    <dt>
+          haythem
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jan 3 2013, 21:22</time>
+      </div>
+    <div>
+      <blockquote cite="#commentbody-2281">
+**<a href="#comment-2281" rel="nofollow">haythem</a> :**
+Thank you guys :)
+</blockquote>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Szymon
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jan 10 2013, 09:39</time>
+      </div>
+    <div>
+      <p>Hey.</p>
+
+<p>Thanks for that!!! The idea is simple and working perfectly. Hit this wall yesterday and couldn&rsquo;t figure it out how without setting up local router to provide Internet within Host-Only network. it has to be set up on every single host within your Host-Only network but still, saves a lot of time.</p>
+
+<p>Cheers.</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          andriy
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Feb 18 2013, 12:42</time>
+      </div>
+    <div>
+      It&rsquo;s so easy! Thank you!
+    </div>
+    </dd>
+  
+    <dt>
+          Alex
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Mon Mar 4 2013, 14:50</time>
+      </div>
+    <div>
+      I&rsquo;ve been struggling all day to get this working. And i finally did. Thank you very much
+    </div>
+    </dd>
+  
+    <dt>
+          noone
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Mar 7 2013, 14:56</time>
+      </div>
+    <div>
+      Would like to pretend that I thought of this myself. I should have. But the fact is that I didn&rsquo;t, and got it from here! Thanks.
+    </div>
+    </dd>
+  
+    <dt>
+          Ralf
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Apr 17 2013, 12:34</time>
+      </div>
+    <div>
+      Wow, exactly what I wanted to do. Thanks so much!
+    </div>
+    </dd>
+  
+    <dt>
+          kjv007
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu May 2 2013, 09:32</time>
+      </div>
+    <div>
+      Awesome&hellip; this saves me a lot of time :)
+    </div>
+    </dd>
+  
+    <dt>
+          Adam Plocher
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Jun 27 2013, 06:13</time>
+      </div>
+    <div>
+      I just wanted to say THANK YOU.  This saved me some trouble.  I was pretty familiar with NAT and Bridged networks but I have a demo machine with some VMs running different server software.  I was having a hard time getting the host machine to access the guest IPs and it has to be able to run offline (with the option of going online, too).  This was perfect.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://b0zmeister.wordpress.com">B0zmeister!</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Aug 10 2013, 13:53</time>
+      </div>
+    <div>
+      <p>Yeah I had this problem it was a total pain! But I solved it by simply installing Squid Cache Proxy server on my physical PC, and that way - my host-only internet virtualbox PCs could connect to the internet !</p>
+
+<p>I did a quick 3 minute guide here - for anyone who want&rsquo;s to how it works !
+<a href="http://b0zmeister.wordpress.com/allowing-host-only-virtualbox-guest-to-connect-to-the-internet/">http://b0zmeister.wordpress.com/allowing-host-only-virtualbox-guest-to-connect-to-the-internet/</a></p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://gerionsecurity.com">Geri</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sat Nov 23 2013, 17:09</time>
+      </div>
+    <div>
+      Thanks!
+    </div>
+    </dd>
+  
+    <dt>
+          Asad Hasan
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Apr 9 2014, 23:11</time>
+      </div>
+    <div>
+      wow Boss Man, you really made my day.
+    </div>
+    </dd>
+  
+    <dt>
+          <strong><a href="http://gnie.vai.la">Thiago</a></strong>
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue May 20 2014, 01:10</time>
+      </div>
+    <div>
+      <p>I did set up
+ vboxnet0 : IP 192.168.56.1 // mask /24</p>
+
+<p>#interface 1&ordm; (NAT)
+ iface inet eth0 dhcp</p>
+
+<p>#interface 2&ordm; (hostonly)
+ iface inet eth1 static
+IP: 192.168.56.101
+mask /24</p>
+
+<p>and I did restart it
+but my vm not has internet
+i tested with sudo apt-get install&rsquo;</p>
+
+    </div>
+    </dd>
+  
+    <dt>
+          Avi
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Dec 30 2014, 00:09</time>
+      </div>
+    <div>
+      Exactly what I was looking for. Thank you.
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2011/ecology-has-no-color/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2011/tomas-and-the-pearl-jam-body/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

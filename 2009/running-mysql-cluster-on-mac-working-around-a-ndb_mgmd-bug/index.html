@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Running MySQL Cluster on Mac: working around a ndb_mgmd bug</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-connectorpython-0-1-0-devel-first-development-snapshot/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/a-simpler-startup-script-for-mysql-on-macos-x/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Running MySQL Cluster on Mac: working around a ndb_mgmd bug
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Nov 25, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>A week ago we found a workaround for <a href="http://bugs.mysql.com/bug.php?id=47214">a bug</a> in <a href="http://dev.mysql.com/downloads/select.php?id=14">MySQL Cluster</a> making it impossible to run a management node on MacOS X. Until the bug is fixed, you should use the <code>--nodaemon</code> option for the <code>ndb_mgmd</code> executable. Both MySQL Cluster v6.3 and v7.0 are affected.</p>
+
+<p>Currently, I&rsquo;m starting the management node like this:</p>
+
+<pre><code class="language-shell">(
+    cd /opt/mysql/mysql;
+    ./libexec/ndb_mgmd -f /opt/mysql/config.ini \
+        --nodaemon 2&gt;/dev/null 1&gt;&amp;2 &lt;/dev/null &amp;
+)
+</code></pre>
+
+<p>Obviously, you&rsquo;ll want to change the paths.</p>
+
+<p>Eventually, the bug will get fixed, but until then you got no excuse to not try MySQL Cluster on Mac!</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Johan Andersson
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Nov 26 2009, 21:26</time>
+      </div>
+    <div>
+      Funny, I have never noticed this problem. <br /><br />I run MySQL Cluster with ndb_mgmd in daemon mode using my <a href="http://www.severalnines.com/sandbox" rel="nofollow">sandboxes</a>!
+    </div>
+    </dd>
+  
+    <dt>
+          Johan Andersson
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Nov 26 2009, 21:27</time>
+      </div>
+    <div>
+      But OTOH, i think i disabled ipv6 for localhost&hellip;
+    </div>
+    </dd>
+  
+    <dt>
+          Kai Voigt
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Tue Dec 1 2009, 08:56</time>
+      </div>
+    <div>
+      Confirmed from me, without --nodaemon, cluster hangs, it doesn&#39;t even respond to ndb_mgm -e show, with --nodaemon, everything works as expected.<br /><br />Kai
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/mysql-connectorpython-0-1-0-devel-first-development-snapshot/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/a-simpler-startup-script-for-mysql-on-macos-x/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

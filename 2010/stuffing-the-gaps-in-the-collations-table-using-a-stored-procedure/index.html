@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2010/stuffing-the-gaps-in-the-collations-table-using-a-stored-procedure/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>Stuffing the gaps in the COLLATIONS table using a stored procedure</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/first-trials-of-benchmarking-mysqlpython-db-interfaces/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      Stuffing the gaps in the COLLATIONS table using a stored procedure
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Feb 17, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>To far fetched (pun inteded), some might think.. Below you&rsquo;ll find a procedure to get a list of <a href="http://dev.mysql.com">MySQL</a> supported <a href="http://dev.mysql.com/doc/refman/5.1/en/charset.html">character sets</a> and their collations. The output is <a href="http://python.org">Python</a> and can be used to build a (big) <code>tuple</code>.</p>
+
+<p><strong>The problem</strong> is that character set IDs in MySQL have &lsquo;gaps&rsquo;. For example <code>hebrew</code> has ID 16, and the next character set in the <code>COLLATIONS</code>-table, <code>tis620</code>, has ID 18. Not a big problem, just a bit annoying. This list is hardcoded in <a href="https://launchpad.net/myconnpy">MySQL Connector/Python</a> and I needed something to easily maintain it.</p>
+
+<p><strong>Solutions</strong> were using text editing skills, parsing it in Python to produce a list, etc.. But why not a <a href="http://dev.mysql.com/doc/refman/5.1/en/stored-programs-views.html">Stored Routine</a>? The following stored procedure is looping over a cursor, calculating the number of rows the gap has, and inserts blanks as needed.</p>
+
+<pre><code class="language-sql">DROP PROCEDURE IF EXISTS python_getcharsets;
+DELIMITER //
+CREATE PROCEDURE python_getcharsets()
+BEGIN
+  DECLARE i,diff,cid,done INT DEFAULT 0;
+  DECLARE chname,coname VARCHAR(32);
+  DECLARE cur CURSOR FOR SELECT ID,CHARACTER_SET_NAME,
+    COLLATION_NAME FROM INFORMATION_SCHEMA.COLLATIONS
+    ORDER BY ID;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+  OPEN cur;
+  loop_cur: LOOP
+    FETCH cur INTO cid,chname,coname;
+    IF done THEN LEAVE loop_cur; END IF;
+    SET i = i + 1; SET diff = cid - i;
+    WHILE diff DO
+      SELECT &quot;None,&quot;;
+      SET diff = diff - 1; SET i = i + 1;
+    END WHILE;
+    SELECT CONCAT('(&quot;',chname,'&quot;,&quot;',coname,'&quot;), # ',cid);
+  END LOOP loop_cur;
+  CLOSE cur;
+END//
+DELIMITER ;
+
+CALL python_getcharsets();
+DROP PROCEDURE IF EXISTS python_getcharsets;
+</code></pre>
+
+<p>You would save the above to a file called <code>getcharsets.sql</code> for example, and execute it like this:</p>
+
+<pre><code class="language-shell">shell&gt; mysql -N test &lt; getcharsets.sql
+..
+(&quot;cp1251&quot;,&quot;cp1251_bulgarian_ci&quot;), # 14
+(&quot;latin1&quot;,&quot;latin1_danish_ci&quot;), # 15
+(&quot;hebrew&quot;,&quot;hebrew_general_ci&quot;), # 16
+None,
+(&quot;tis620&quot;,&quot;tis620_thai_ci&quot;), # 18
+(&quot;euckr&quot;,&quot;euckr_korean_ci&quot;), # 19
+..
+</code></pre>
+
+<p>I&rsquo;ll spare you the complete output, but as you can see from above sample: the gap has been stuffed with a <code>None</code>-Python value. Taking this output, you&rsquo;ll inserted it your code:</p>
+
+<pre><code class="language-python">desc = (
+    None,
+    (&quot;big5&quot;,&quot;big5_chinese_ci&quot;), # 1
+    (&quot;latin2&quot;,&quot;latin2_czech_cs&quot;), # 2
+    (&quot;dec8&quot;,&quot;dec8_swedish_ci&quot;), # 3
+    (&quot;cp850&quot;,&quot;cp850_general_ci&quot;), # 4
+..
+</code></pre>
+
+<p>Silly? Definitely basic stuff, but I got my code a bit faster, and cleaner!</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Roland Bouman
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Feb 17 2010, 19:25</time>
+      </div>
+    <div>
+      Nice, but what about this:select      concat(                &#39;desc = (&#39;            ,   group_concat(                    &#39;\n   &#39;<br />                ,   if( collations.id is null, &#39;None&#39;                    ,   concat(<br />                            &#39;(&#39;                        ,   &#39;&ldquo;&#39;, character_set_name, &#39;&ldquo;&#39;                        ,   &#39;,&#39;<br />                        ,   &#39;&ldquo;&#39;, collation_name, &#39;&ldquo;&#39;<br />                        ,   &#39;)&#39;                        )                     <br />                    )                ,   if(ids.id=255, &#39;&#39;, &#39;,&#39;)                ,   &#39; #&#39;, ids.id                order by ids.id                separator &#39;&#39;                    )<br />            ,   &#39;\n)&#39;            )from        (<br />            select (t0.id &lt;&lt; 0)            +      (t1.id &lt;&lt; 1)<br />            +      (t2.id &lt;&lt; 2)            +      (t3.id &lt;&lt; 3)<br />            +      (t4.id &lt;&lt; 4)            +      (t5.id &lt;&lt; 5)<br />            +      (t6.id &lt;&lt; 6)            +      (t7.id &lt;&lt; 7)                     id<br />            from   (select 0 id union all select 1) t0            ,      (select 0 id union all select 1) t1            ,      (select 0 id union all select 1) t2            ,      (select 0 id union all select 1) t3<br />            ,      (select 0 id union all select 1) t4            ,      (select 0 id union all select 1) t5            ,      (select 0 id union all select 1) t6            ,      (select 0 id union all select 1) t7<br />            )                                       idsleft join   information_schema.collations<br />on          ids.id = collations.id
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed Feb 17 2010, 19:39</time>
+      </div>
+    <div>
+      @Roland: crazyness! But seems to work! :)
+    </div>
+    </dd>
+  
+    <dt>
+          Roland Bouman
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Thu Feb 18 2010, 00:50</time>
+      </div>
+    <div>
+      Geert, here&#39;s some background to the craziness :) <a href="http://rpbouman.blogspot.com/2010/02/mysql-best-stored-routine-is-one-you.html" rel="nofollow"><a href="http://rpbouman.blogspot.com/2010/02/mysql-best-stored-routine-is-one-you.html">http://rpbouman.blogspot.com/2010/02/mysql-best-stored-routine-is-one-you.html</a></a>
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2010/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2010/first-trials-of-benchmarking-mysqlpython-db-interfaces/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+

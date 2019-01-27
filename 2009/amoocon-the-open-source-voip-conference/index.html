@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0001, user-scalable=no, minimum-scale=1.0001, maximum-scale=1.0001" />
+  <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+
+  <meta name="description" content="Personal blog and homepage of Geert JM Vanderkelen" />
+
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="canonical" href="https://geert.vanderkelen.org/2009/amoocon-the-open-source-voip-conference/">
+  
+  <link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" />
+  <title>AMOOCON, the Open-Source VoIP Conference</title>
+</head>
+<body>
+<div id="container">
+  <nav id="site-nav">
+    <div class="site-logo">
+<img src="../../images/GeertAvatar.svg" />
+</div>
+
+<div class="site-title">
+<a href="https://geert.vanderkelen.org">Geert JM Vanderkelen</a>
+</div>
+
+<div class="site-menu-icon">
+  <a href="#" id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</div>
+
+<div class="site-menu">
+  <ul>
+    
+    <li><i class='fa fa-list fa-fw'></i><a class="page-link" href="../../">Blog</a></li>
+    
+    <li><i class='fa fa-user fa-fw'></i><a class="page-link" href="../../about/">About</a></li>
+    
+    <li><i class='fa fa-address-card-o fa-fw'></i><a class="page-link" href="../../contact/">Contact</a></li>
+    
+    <li><i class='fa fa-wrench fa-fw'></i><a class="page-link" href="../../projects/">Projects</a></li>
+    
+  </ul>
+</div>
+
+  </nav>
+
+    <div id="content">
+    
+<div class="content-meta top">
+    
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/in-love-with-krakow/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/open-source-data-center-conference-wrap-up/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+<div>
+
+<article class="single">
+  <header>
+    <h1>
+    
+      AMOOCON, the Open-Source VoIP Conference
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 4, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/community">community</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p>I must admit that I&rsquo;m a bit lost when people are starting to discuss during the Q&amp;A of presentations, here at <a href="http://www.amoocon.de/">AMOOCON</a>, Rostock (Germany). The <a href="http://en.wikipedia.org/wiki/Private_branch_exchange">PBX</a> or &lsquo;business communication&rsquo; world is a bit unknown to me, but hearing that the Open Source solutions are market leader in North America came as a surprise. 88% of this share is <a href="http://www.asterisk.org/">Asterisk</a>. This fact was for me the most remarkable thing to remember from <a href="http://en.wikipedia.org/wiki/Mark_Spencer">Mark Spencer</a>&rsquo;s keynote.</p>
+
+<p>Jim Van Meggelen talked about high availability in setups using PBX. It&rsquo;s more an ongoing exercise using <a href="http://www.linux-ha.org/">Linux Heartbeat</a>, patching cables and other stuff. The database part is tricky, he mentioned, but I&rsquo;ve commented that moving this out and using <a href="http://www.mysql.com/products/database/cluster/">MySQL Cluster</a> could solve this. Replication would however be a better because it is easier. Talking to Tim Panton I agreed that MySQL Cluster would add more complexity.</p>
+
+<p>Lenz Grimmer gave an excellent overview on how to achieve (near) high availability using MySQL. Pity his talk collided with the lunch being served in the corridors. At 16:15 I&rsquo;m giving my MySQL Cluster talk in 30 minutes. Trying to make people warm using it more!</p>
+
+    
+  </div>
+
+  
+
+  
+  <div class="article-comments">
+    <h1><i class="fa fa-comments" aria-hidden="true"></i> Comments</h1>
+    
+
+  <dl>
+  
+    <dt>
+          Ayuda
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Wed May 13 2009, 21:37</time>
+      </div>
+    <div>
+      Could be 18% of the share? <br /><a href="http://www.linuxnewstoday.org/linux-news-mar-2009-archives/1146-mar-02-2009-linux-news.shtml">http://www.linuxnewstoday.org/linux-news-mar-2009-archives/1146-mar-02-2009-linux-news.shtml</a>
+    </div>
+    </dd>
+  
+    <dt>
+          Geert JM Vanderkelen
+        
+    </dt>
+    <dd>
+      <div class="post-meta">
+        <i class="fa fa-calendar fa-fw"></i>
+        <time>Sun May 17 2009, 11:20</time>
+      </div>
+    <div>
+      88% of the 18%, something like that :)
+    </div>
+    </dd>
+  
+  </dl>
+
+
+  </div>
+  
+
+  
+</article>
+
+</div>
+
+<div class="content-meta bottom">
+  
+<div class="post-nav">
+
+  <div class="page-prev">
+  
+  <a href="../../2009/in-love-with-krakow/" title="Previous post"><i class="fa fa-chevron-left arrow-nav"></i></a>
+  
+  </div>
+
+  <div class="page-list">
+    <a href="../../" title="Post list"><i class="fa fa-list arrow-nav"></i></a>
+  </div>
+
+  <div class="page-next">
+  
+  <a href="../../2009/open-source-data-center-conference-wrap-up/" title="Next post"><i class="fa fa-chevron-right arrow-nav"></i></a>
+  
+  </div>
+
+</div>
+
+
+</div>
+
+
+    </div>
+</div> 
+<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>
+
