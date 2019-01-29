@@ -99,6 +99,64 @@
   <header>
     <h1>
     
+      <a href="../../2010/dont-forget-the-commit-in-mysql/">Don&#39;t forget the COMMIT in MySQL</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Feb 8, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Yes, MySQL has transactions if you use InnoDB or NDB Cluster for example. Using these transactional storage engines, you&rsquo;ll have to commit (or roll back) your inserts, deletes or updates.
+I&rsquo;ve seen it a few times now with people being surprised that no data is going into the tables. It&rsquo;s not so a silly problem in the end. If you are used to the defaults in MySQL you don&rsquo;t have to commit anything since it is automatically done for you.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2010/dont-forget-the-commit-in-mysql/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2010/python-oursql-and-macos-x-10-6-snow-leopard/">Python, oursql and MacOS X 10.6 (Snow Leopard)</a>
     
     </h1>
@@ -335,64 +393,6 @@ Highlights for this v0.1.3-devel:
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2010/small-status-on-sqlalchemy-and-mysql-connectorpython/">Small status on SQLAlchemy and MySQL Connector/Python</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Fri Jan 22, 2010</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">Using SQLAlchemy unit test cases to further develop MySQL Connector/Python. It&rsquo;s probably debatable whether that&rsquo;s a good method or just lame. But it sure helps lots!
-We&rsquo;ve been pushing some code past days that makes Connector/Python almost pass all tests. Well, 4% is still failing, but I&rsquo;m confident that in a few most problems will be dealt with. I had to make some changes to the SQLAlchemy v0.6 dialect as well, and some test cases had to be corrected.</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2010/small-status-on-sqlalchemy-and-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -433,7 +433,7 @@ We&rsquo;ve been pushing some code past days that makes Connector/Python almost 
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

@@ -99,6 +99,63 @@
   <header>
     <h1>
     
+      <a href="../../2009/making-cluster-backups-unique/">Making cluster backups &#39;unique&#39;</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Mar 25, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">MySQL Cluster supports online backups using the ndb_mgm client tool with the START BACKUP statement. If you omit the ID, it will take automatically the next value.
+Problem is that when you do a system restart, this ID is reset to 1. If you didn&rsquo;t move your backups from your data nodes to another machine (which is of course something you should do), you might get errors.
+A rather easy trick is to provide a timestamp as ID, for example using Unix time.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/making-cluster-backups-unique/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2009/getting-bored-with-the-internet/">Getting bored with the Internet</a>
     
     </h1>
@@ -318,64 +375,6 @@ In between I am running and burning fat With Mr. Lazy lurking me back to bed Say
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2009/iphoto-09-is-disappointing/">iPhoto &#39;09 is disappointing..</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Sun Feb 22, 2009</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/opinion">opinion</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/apple">apple</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/photography">photography</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">The two, new features in iPhoto &lsquo;09 I was interested in turned out to be uninteresting, for now..
- Places: Only works if the camera has GPS tracking. My Canon 450D and 30D don&rsquo;t have that. You can put a photo on the map, but you can&rsquo;t move the pin to the exact location. Flickr Uploader: Really, really lame! FlickrExport for iPhoto is much more superior!  I&rsquo;m wondering with the Faces feature: if I&rsquo;m splitting up my iPhoto library into years, can I share the Faces information between libraries?</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2009/iphoto-09-is-disappointing/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -416,7 +415,7 @@ In between I am running and burning fat With Mr. Lazy lurking me back to bed Say
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

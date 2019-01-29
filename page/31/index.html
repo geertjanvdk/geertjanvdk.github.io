@@ -99,6 +99,64 @@
   <header>
     <h1>
     
+      <a href="../../2009/mysql-cluster-replication-failover-some-python/">MySQL Cluster: replication failover (&#43; some Python)</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Oct 9, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Replication channel failover is discussed in the MySQL manual and it is quite easy to implement. When the primary replication channel fails, all you need to do is some SQL queries, do a CHANGE MASTER TO, issue a START SLAVE and it should be replicating again.
+This fail-over procedure is also very useful if you are upgrading the Master MySQL Cluster mysqld processes doing binary logging. For this you do not need a (controlled) fail-over to the Slave Cluster.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/mysql-cluster-replication-failover-some-python/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2009/please-update-outdated-and-maybe-false-info-about-mysql/">Please update outdated and maybe false info about MySQL!</a>
     
     </h1>
@@ -323,62 +381,6 @@ I&rsquo;ll have to pull the trigger, but I think it&rsquo;s safe to say that we&
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2009/getting-mysql-connectorpython-compliant-with-pep-249/">Getting MySQL Connector/Python compliant with PEP 249</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Sun Oct 4, 2009</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">This weekend I&rsquo;m pushing more code which makes MySQL Connector/Python more and ultimately fully compliant with the Python Database API v2.0 specification, aka PEP 249. I wrote my own unittests for this, but later I stumbled upon already made cases form which I&rsquo;m stealing some ideas.
-$ ./unittests.py -t pep249 Connection object has close()-method ... ok Connection object has commit()-method ... ok Connection object has cursor()-method ... ok Connection object has rollback()-method .</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2009/getting-mysql-connectorpython-compliant-with-pep-249/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -419,7 +421,7 @@ $ ./unittests.py -t pep249 Connection object has close()-method ... ok Connectio
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

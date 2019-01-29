@@ -99,6 +99,62 @@
   <header>
     <h1>
     
+      <a href="../../2010/signals-to-freeze-a-data-node-simulating-trouble/">Signals to freeze a Data Node: simulating trouble</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon May 3, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Last week I was struggling to find an easy way to simulate a troubled *Data Node* (ndbd process) using MySQL Cluster. It&rsquo;s as simple as pancackes: using the kill command!
+To freeze a process you just need to kill the process using the SIGSTOP signal. To let the processes continue, use SIGCONT. Here&rsquo;s an example shell script showing how you would use these two signals on a data node:</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2010/signals-to-freeze-a-data-node-simulating-trouble/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2010/mobileme-is-still-useless/">MobileMe is still useless</a>
     
     </h1>
@@ -329,64 +385,6 @@ This evening I went for pasta at the restaurant. I started with chowder, which w
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Insert data into a VARCHAR field using NDB API: a solution</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Fri Apr 2, 2010</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">You are using MySQL Cluster and crazy enough to digest NDB API? Sick of SQL? Here&rsquo;s a treat: a function to make C/C++ strings ready for inserting into a VARCHAR field. The special thing about them is that the length is prefixed in the first 2 bytes.
-void make_ndb_varchar(char *buffer, char *str) { int len = strlen(str); int hlen = (len &gt; 255) ? 2 : 1; buffer[0] = len &amp; 0xff; if( len &gt; 255 ) buffer[1] = (len / 256); strcpy(buffer+hlen, str); }  Yes, you can use memcpy.</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -427,7 +425,7 @@ void make_ndb_varchar(char *buffer, char *str) { int len = strlen(str); int hlen
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

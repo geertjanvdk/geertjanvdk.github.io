@@ -99,6 +99,62 @@
   <header>
     <h1>
     
+      <a href="../../2009/getting-mysql-connectorpython-compliant-with-pep-249/">Getting MySQL Connector/Python compliant with PEP 249</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Sun Oct 4, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">This weekend I&rsquo;m pushing more code which makes MySQL Connector/Python more and ultimately fully compliant with the Python Database API v2.0 specification, aka PEP 249. I wrote my own unittests for this, but later I stumbled upon already made cases form which I&rsquo;m stealing some ideas.
+$ ./unittests.py -t pep249 Connection object has close()-method ... ok Connection object has commit()-method ... ok Connection object has cursor()-method ... ok Connection object has rollback()-method .</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/getting-mysql-connectorpython-compliant-with-pep-249/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2009/moving-django-backend-out-of-mysql-connectorpythons-trunk/">Moving Django backend out of MySQL Connector/Python&#39;s trunk</a>
     
     </h1>
@@ -315,63 +371,6 @@ A few lines of Python:
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/">MySQL Connector/Python and Windows: kinda works</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Mon Sep 28, 2009</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">I didn&rsquo;t test MySQL Connector/Python on a Microsoft Windows machine, but after somebody did and filed a bug report, I couldn&rsquo;t resist launching VirtualBox.
-Fixing the problem with socket.MSG_WAITALL not being available on Windows wasn&rsquo;t much work. However, adding support for MySQL&rsquo;s Named Pipe on Windows seems to be a bigger challenge.
-I couldn&rsquo;t find docs for win32api anymore on Python&rsquo;s doc website for win32api, which is referenced everywhere, so I guess somebody needs to give a hint or write a patch.</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -412,7 +411,7 @@ I couldn&rsquo;t find docs for win32api anymore on Python&rsquo;s doc website fo
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

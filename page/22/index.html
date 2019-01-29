@@ -99,6 +99,64 @@
   <header>
     <h1>
     
+      <a href="../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Insert data into a VARCHAR field using NDB API: a solution</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Apr 2, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">You are using MySQL Cluster and crazy enough to digest NDB API? Sick of SQL? Here&rsquo;s a treat: a function to make C/C++ strings ready for inserting into a VARCHAR field. The special thing about them is that the length is prefixed in the first 2 bytes.
+void make_ndb_varchar(char *buffer, char *str) { int len = strlen(str); int hlen = (len &gt; 255) ? 2 : 1; buffer[0] = len &amp; 0xff; if( len &gt; 255 ) buffer[1] = (len / 256); strcpy(buffer+hlen, str); }  Yes, you can use memcpy.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2010/insert-data-into-a-varchar-field-using-ndb-api-a-solution/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2010/a-new-dutch-word-avonkuren/">A new dutch word? &#39;avonkuren&#39;</a>
     
     </h1>
@@ -323,64 +381,6 @@ Break your habits Stop living by one&rsquo;s wits Take another curve And make so
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2010/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/">Status report No.2 on SQLAlchemy and MySQL Connector/Python</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Fri Feb 19, 2010</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">Few days ago, the folks at SQLAlchemy pushed some proposed modification to the MySQL Connector/Python dialect. Before this patch, previous report yielded 72 errors and 11 failures. Now we got down to 9 errors, but the failures are still lingering. Is this an improvement? Yes and no, failures should go down, but there are some SQLAlchemy tests I just can&rsquo;t figure out, yet.. clues are welcome!
-Here are some detailed results which also included MySQLdb and oursql.</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2010/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -421,7 +421,7 @@ Here are some detailed results which also included MySQLdb and oursql.</p>
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

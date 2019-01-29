@@ -99,6 +99,64 @@
   <header>
     <h1>
     
+      <a href="../../2009/mysql-cluster-7-0-careful-with-ndb_mgmd-and-configdir/">MySQL Cluster 7.0: careful with ndb_mgmd and --configdir</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Sep 18, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Using MySQL Cluster 7.0, if you start the management node it will write a binary, cached version of the configuration. The default location is (currently) a bit tricky, if you compile yourself, you&rsquo;ll find it in: &lt;BASEDIR&gt;/mysql-cluster.
+Make sure to specify everytime the --configdir option when starting the ndb_mgmd.
+$ ndb_mgmd -f config.ini --configdir=/path/to/cachedir  I&rsquo;m using the same value as Datadir for the --configdir option.
+An elegant solution it is not, IMHO.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/mysql-cluster-7-0-careful-with-ndb_mgmd-and-configdir/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2009/the-lost_events-incident-when-is-it-reported/">The LOST_EVENTS incident: When is it reported?</a>
     
     </h1>
@@ -322,64 +380,6 @@ Mac OS X 10.5 comes with Java 5 and 6 (v1.5 and v1.6 respectively). By default, 
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/">Configuration change and rolling restart with MySQL Cluster 7.0</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Tue Sep 1, 2009</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/howto">howto</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">In a previous post we discussed how to start MySQL Cluster 7.0 with two management nodes. A nice new feature is that the 2nd ndb_mgmd doesn&rsquo;t need the configuration file: it is fetching it from the other management node. In this article I will describe how we start this cluster after a shut down, changing configuration and do a rolling restart.
-The configuration The config.ini stored on the first management node:</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2009/configuration-change-and-rolling-restart-with-mysql-cluster-7-0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -420,7 +420,7 @@ The configuration The config.ini stored on the first management node:</p>
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

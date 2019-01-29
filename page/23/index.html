@@ -99,6 +99,64 @@
   <header>
     <h1>
     
+      <a href="../../2010/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/">Status report No.2 on SQLAlchemy and MySQL Connector/Python</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Fri Feb 19, 2010</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">Few days ago, the folks at SQLAlchemy pushed some proposed modification to the MySQL Connector/Python dialect. Before this patch, previous report yielded 72 errors and 11 failures. Now we got down to 9 errors, but the failures are still lingering. Is this an improvement? Yes and no, failures should go down, but there are some SQLAlchemy tests I just can&rsquo;t figure out, yet.. clues are welcome!
+Here are some detailed results which also included MySQLdb and oursql.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2010/status-report-no-2-on-sqlalchemy-and-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2010/stuffing-the-gaps-in-the-collations-table-using-a-stored-procedure/">Stuffing the gaps in the COLLATIONS table using a stored procedure</a>
     
     </h1>
@@ -322,64 +380,6 @@ Sorry for the noise.</p>
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2010/dont-forget-the-commit-in-mysql/">Don&#39;t forget the COMMIT in MySQL</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Mon Feb 8, 2010</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">Yes, MySQL has transactions if you use InnoDB or NDB Cluster for example. Using these transactional storage engines, you&rsquo;ll have to commit (or roll back) your inserts, deletes or updates.
-I&rsquo;ve seen it a few times now with people being surprised that no data is going into the tables. It&rsquo;s not so a silly problem in the end. If you are used to the defaults in MySQL you don&rsquo;t have to commit anything since it is automatically done for you.</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2010/dont-forget-the-commit-in-mysql/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -420,7 +420,7 @@ I&rsquo;ve seen it a few times now with people being surprised that no data is g
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

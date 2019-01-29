@@ -99,6 +99,63 @@
   <header>
     <h1>
     
+      <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/">MySQL Connector/Python and Windows: kinda works</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Mon Sep 28, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">I didn&rsquo;t test MySQL Connector/Python on a Microsoft Windows machine, but after somebody did and filed a bug report, I couldn&rsquo;t resist launching VirtualBox.
+Fixing the problem with socket.MSG_WAITALL not being available on Windows wasn&rsquo;t much work. However, adding support for MySQL&rsquo;s Named Pipe on Windows seems to be a bigger challenge.
+I couldn&rsquo;t find docs for win32api anymore on Python&rsquo;s doc website for win32api, which is referenced everywhere, so I guess somebody needs to give a hint or write a patch.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/mysql-connectorpython-and-windows-kinda-works/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2009/how-to-install-mysql-connectorpython/">How to install MySQL Connector/Python</a>
     
     </h1>
@@ -330,64 +387,6 @@ Get the latest XCode first: the one you installed on Leopard might not work.</p>
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2009/mysql-cluster-7-0-careful-with-ndb_mgmd-and-configdir/">MySQL Cluster 7.0: careful with ndb_mgmd and --configdir</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Fri Sep 18, 2009</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">Using MySQL Cluster 7.0, if you start the management node it will write a binary, cached version of the configuration. The default location is (currently) a bit tricky, if you compile yourself, you&rsquo;ll find it in: &lt;BASEDIR&gt;/mysql-cluster.
-Make sure to specify everytime the --configdir option when starting the ndb_mgmd.
-$ ndb_mgmd -f config.ini --configdir=/path/to/cachedir  I&rsquo;m using the same value as Datadir for the --configdir option.
-An elegant solution it is not, IMHO.</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2009/mysql-cluster-7-0-careful-with-ndb_mgmd-and-configdir/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -428,7 +427,7 @@ An elegant solution it is not, IMHO.</p>
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>

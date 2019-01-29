@@ -99,6 +99,65 @@
   <header>
     <h1>
     
+      <a href="../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/">Running MySQL Cluster on Mac: working around a ndb_mgmd bug</a>
+    
+    </h1>
+    <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>Wed Nov 25, 2009</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/cluster">cluster</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/macos">macos</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  </header>
+
+  <div class="article-content clearfix">
+    
+      <p class="summary">A week ago we found a workaround for a bug in MySQL Cluster making it impossible to run a management node on MacOS X. Until the bug is fixed, you should use the --nodaemon option for the ndb_mgmd executable. Both MySQL Cluster v6.3 and v7.0 are affected.
+Currently, I&rsquo;m starting the management node like this:
+( cd /opt/mysql/mysql; ./libexec/ndb_mgmd -f /opt/mysql/config.ini \ --nodaemon 2&gt;/dev/null 1&gt;&amp;2 &lt;/dev/null &amp; )  Obviously, you&rsquo;ll want to change the paths.</p>
+    
+  </div>
+
+  
+
+  
+
+  
+  <footer>
+    <a href="../../2009/running-mysql-cluster-on-mac-working-around-a-ndb_mgmd-bug/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
+  </footer>
+  
+</article>
+
+  
+  
+<article class="">
+  <header>
+    <h1>
+    
       <a href="../../2009/a-simpler-startup-script-for-mysql-on-macos-x/">A simpler startup script for MySQL on MacOS X</a>
     
     </h1>
@@ -327,66 +386,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 </article>
 
   
-  
-<article class="">
-  <header>
-    <h1>
-    
-      <a href="../../2009/readying-first-alpha-release-but-where-to-install-mysql-connectorpython/">Readying first alpha release, but where to install MySQL Connector/Python?</a>
-    
-    </h1>
-    <div class="post-meta">
-
-  <div>
-    <i class="fa fa-calendar fa-fw"></i>
-    <time>Mon Nov 9, 2009</time>
-  </div>
-
-  
-
-  
-
-  
-  
-  
-  <div>
-    <i class="fa fa-tags fa-fw"></i>
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/mysql">mysql</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/python">python</a>&nbsp;&#47;
-    
-      <a class="post-taxonomy-tag" href="https://geert.vanderkelen.orgtags/myconnpy">myconnpy</a>
-    
-  </div>
-  
-  
-
-</div>
-
-  </header>
-
-  <div class="article-content clearfix">
-    
-      <p class="summary">I&rsquo;m currently planning a first &lsquo;alpha&rsquo; release of MySQL Connector/Python, but I&rsquo;m now doubting whether the naming and installation of the module is actually good.
-Currently, the module lives, in site-packages/mysql/connector/, or import mysql.connector. Since this is an official MySQL, sorry, Sun Microsystems, project, I thought that the &lsquo;parent&rsquo; module mysql would be good enough.
-But is it? Would it break your modules with the same name?
-The idea was to make more tools for Python and have them all under the mysql module, but maybe we need a smarter name for this?</p>
-    
-  </div>
-
-  
-
-  
-
-  
-  <footer>
-    <a href="../../2009/readying-first-alpha-release-but-where-to-install-mysql-connectorpython/">Read more<i class="fa fa-angle-double-right fa-fw"></i></i></a>
-  </footer>
-  
-</article>
-
-  
   </div>
   
   <div class="content-meta bottom">
@@ -427,7 +426,7 @@ The idea was to make more tools for Python and have them all under the mysql mod
 
     </div>
 </div> 
-<div id="footer">© 2005-2018 Geert JM Vanderkelen</div>
+<div id="footer">© 2005-2019 Geert JM Vanderkelen</div>
 <script type="text/javascript" src="../../js/main.js"></script>
 </body>
 </html>
